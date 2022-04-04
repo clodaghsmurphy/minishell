@@ -8,6 +8,10 @@ NAME = minishell
 
 OBJ = $(SRC:.c=.o)
 
+Libft = libft/libft.a
+
+LIBFT_PATH = ./libft/
+
 GREEN = \033[32m
 
 YELLOW = "\033[33m"
@@ -28,15 +32,19 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo -n "\n"
-	@$(CC) $(OBJ) $(READLINE) $(CFLAGS) -o $(NAME) $(INCLUDE)
+	@make -C libft
+	@$(CC) $(OBJ) $(READLINE)  $(Libft) $(CFLAGS) -o $(NAME) $(INCLUDE)
 	@echo "$(GREEN)	\nMINISHELL READY 💪!"
 
 
 clean:
 	@rm -f $(OBJ)
+	@$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_PATH) fclean
+
 
 .PHONY: all re fclean clean
 

@@ -1,5 +1,6 @@
 NAME = libft.a
 CC = gcc
+GREEN = \033[1;32m
 CFLAGS = -Wall -Wextra -Werror
 SRC = ft_memset.c\
       ft_bzero.c\
@@ -51,21 +52,23 @@ OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
+%.o : %.c
+	@$(CC) -o $@ -c $^ $(CFLAGS)
+
 $(NAME) : $(OBJ)
-	ar crs $@ $^
+	@ ar -crs $(NAME) $(OBJ)
+	@ echo -n "$(GREEN)	\nLibft compiled successfully!"
+	@ echo -n "\n"
 
 bonus:
-			$(CC) $(CFLAGS) -c $(SRC) $(BONUS)
-			ar rc $(NAME) $(OBJ) $(BONUS:.c=.o)
-
-%.o : %.c
-	$(CC) -o $@ -c $^ $(CFLAGS) 
+	@$(CC) $(CFLAGS) -c $(SRC) $(BONUS)
+	@ar rc $(NAME) $(OBJ) $(BONUS:.c=.o)
 
 clean :
-	rm -rf *.o
+	@rm -rf *.o
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re : fclean all
 
