@@ -2,6 +2,7 @@ NAME = libft.a
 CC = gcc
 GREEN = \033[1;32m
 CFLAGS = -Wall -Wextra -Werror
+NO_OF_FILES := $(words $(SRC))
 INCLUDE = -I ./includes/ \
 SRC = ft_memset.c\
       ft_bzero.c\
@@ -55,14 +56,18 @@ all : $(NAME)
 
 %.o : %.c
 	@$(CC) -o $@ -c $^ $(CFLAGS)
+	@echo -n $(YELLOW)
+	@echo -n "\r[Compiling $(nb) / $(NO_OF_FILES) Libft Objects]"
+	$(eval nb=$(shell echo $$(($(nb)+1))))
 
 $(NAME) : $(OBJ)
-	@ ar -crs $(NAME) $(OBJ)
-	@ echo -n "$(GREEN)	\nLibft compiled successfully!"
-	@ echo -n "\n"
+	@ar -crs $(NAME)  $(OBJ)
+	@echo -n "$(GREEN)	\n    LIBFT READY! ✅\n"
+	@echo -n "\n"
+	@echo -n $(YELLOW)
 
 bonus:
-	@$(CC) $(CFLAGS) -c $(SRC) $(BONUS)
+	@$(CC)   $(CFLAGS) -c $(SRC) $(BONUS)
 	@ar rc $(NAME) $(OBJ) $(BONUS:.c=.o)
 
 clean :
