@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/04 15:09:44 by clmurphy         ###   ########.fr       */
+/*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
+/*   Updated: 2022/04/04 15:10:35 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	check_args(int ac, char **av)
 {
-	char	*str;
-
-	(void)env;
-	if (!check_args(ac, av))
-		return (1);
-	str = NULL;
-	while (1)
+	if (ac != 1)
 	{
-		str = readline("\033[1;33m  Shell  ✗ \033[0m");
-		if (str)
-		{
-			printf("%s\n", str);
-		}
-		else
-			break ;
-		free (str);
+		printf("%s %s directory not found\n", av[0], av[1]);
+		exit(0);
 	}
-	return (0);
+	return (1);
 }

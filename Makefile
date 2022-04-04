@@ -1,4 +1,5 @@
 SRC = src/main.c \
+	parse/parse.c \
 
 CFLAGS = -Wall -Wextra -Werror
 CC = clang

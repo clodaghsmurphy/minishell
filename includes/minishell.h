@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/04 12:10:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/04 15:17:27 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
+
+typedef struct s_mshell
+{
+	char	**env;
+	char	**path;
+}	t_mshell;
+
+int	check_args(int ac, char **av);
 
 #endif
