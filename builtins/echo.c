@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/04 16:40:42 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:59:16 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,16 @@ void	echo(char **args)
 	int	i;
 
 	arg = get_opt(args);
-	i = 0;
+	i = arg;
+	while (args[i] != NULL)
+	{
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
 	if (arg == 0)
-	{
-		while (args[i] != NULL)
-		{
-			ft_putstr(args[i]);
-			i++;
-		}
-		ft_putchar("\n");
-	}
-	else
-	{
-		i = arg;
-		while (args[i])
-		{
-			ft_putstr(args[i]);
-			i++;
-		}
-	}
+		ft_putchar_fd('\n', 1);
 }
 
 int	get_opt(char **args)
@@ -84,14 +75,21 @@ int	is_valid_opt(char *arg)
 int	main(int ac, char **av)
 {
 	char **av_null;
+	int i;
 
-	av_null = malloc(size_of(char *) * (ac));
+	av_null = malloc(sizeof(char *) * (ac));
 	av_null[ac - 1] = NULL;
 	while (ac > 1)
 	{
 		av_null[ac - 2] = av[ac - 1];
 		ac --;
 	}
-
-	
+	i = 0;
+	// while(av[i])
+	// {
+	// 	ft_putstr_fd(av[i], 1);
+	// 	i++;
+	// }
+	echo(av_null);
+	return 0;
 }
