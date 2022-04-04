@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/04 16:33:01 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/04 18:49:18 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,26 @@
 # include <signal.h>
 # include "libft.h"
 
+struct	s_command;
+struct	s_mshell;
+
+typedef struct s_command
+{
+	char				**commands;
+	struct s_command	*next;
+}	t_command;
+
 typedef struct s_mshell
 {
-	char	**env;
-	char	**path;
+	char		**env;
+	char		**path;
+	t_command	*command;
 }	t_mshell;
 
+/**************PARSE****************/
 int	check_args(int ac, char **av);
+int	parse_command(char *str, t_mshell *mshell);
+/**************INIT*****************/
+int	init_mshell(t_mshell *mshell);
 
 #endif

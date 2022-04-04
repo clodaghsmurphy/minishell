@@ -1,4 +1,5 @@
 SRC = src/main.c \
+	src/init.c \
 	parse/parse.c \
 
 NO_OF_FILES := $(words $(SRC)) 
@@ -17,6 +18,8 @@ LIBFT_PATH = ./libft/
 GREEN = "\033[1;32m"
 
 YELLOW = "\033[1;33m"
+
+NO_COLOUR = "\033[0m"
 
 INCLUDE = -I ./includes/ \
 
@@ -41,7 +44,8 @@ $(NAME): $(OBJ)
 	@echo -n $(GREEN)
 	@echo "\n	DONE ✅\n"
 	@echo -n $(YELLOW)
-	@echo -n "\nCOMPILING LIBFT"
+	@echo -n "\nCOMPILING LIBFT\n"
+	@echo -n $(NO_COLOUR)
 	@make -C libft
 	@echo -n $(YELLOW)
 	@$(CC) $(OBJ) $(READLINE)  $(Libft) $(CFLAGS) -o $(NAME) $(INCLUDE)
