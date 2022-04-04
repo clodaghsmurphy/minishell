@@ -2,6 +2,7 @@ NAME = libft.a
 CC = gcc
 GREEN = \033[1;32m
 CFLAGS = -Wall -Wextra -Werror
+INCLUDE = -I ./includes/ \
 SRC = ft_memset.c\
       ft_bzero.c\
       ft_memcpy.c\
