@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 15:07:20 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:49:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_command	*command_lstnew(char **commands)
 	new = malloc(sizeof(t_command));
 	if (!new)
 		return (NULL);
-	new->commands = commands;
+	new->value = commands;
 	new->next = NULL;
 	return (new);
 }

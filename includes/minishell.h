@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 15:22:17 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:08:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,21 @@ struct	s_mshell;
 
 typedef struct s_command
 {
-	char				**commands;
+	char				**value;
 	struct s_command	*next;
 }	t_command;
+
+typedef struct s_split
+{
+	char				c;
+	struct s_split		*next;
+}	t_split;
+
+typedef struct s_phrase
+{
+	char				*str;
+	struct s_phrase		*next;
+}	t_phrase;
 
 typedef struct s_env
 {
