@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/04 18:49:18 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:22:17 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 struct	s_command;
 struct	s_mshell;
@@ -31,17 +31,27 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
+typedef struct s_env
+{
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}	t_env;
+
 typedef struct s_mshell
 {
-	char		**env;
+	t_env		*env;
 	char		**path;
 	t_command	*command;
 }	t_mshell;
 
 /**************PARSE****************/
-int	check_args(int ac, char **av);
-int	parse_command(char *str, t_mshell *mshell);
+int			check_args(int ac, char **av);
+int			parse_command(char *str, t_mshell *mshell);
+/************COMMAND_UTILS**********/
+void		command_lstadd_back(t_command **alst, t_command *new);
+t_command	*command_lstnew(char **commands);
 /**************INIT*****************/
-int	init_mshell(t_mshell *mshell);
+int			init_mshell(t_mshell *mshell);
 
 #endif

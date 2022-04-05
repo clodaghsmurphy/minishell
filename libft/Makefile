@@ -2,8 +2,7 @@ NAME = libft.a
 CC = gcc
 GREEN = \033[1;32m
 CFLAGS = -Wall -Wextra -Werror
-NO_OF_FILES := $(words $(SRC))
-INCLUDE = -I ./includes/ \
+INCLUDE = -I ../includes/ 
 SRC = ft_memset.c\
       ft_bzero.c\
       ft_memcpy.c\
@@ -52,13 +51,15 @@ BONUS	=     ft_lstnew.c \
             
 OBJ = $(SRC:.c=.o)
 
+NO_OF_FILES := $(words $(SRC))
+
 all : $(NAME)
 
-%.o : %.c
-	@$(CC) -o $@ -c $^ $(CFLAGS)
-	@echo -n $(YELLOW)
-	@echo -n "\r[Compiling $(nb) / $(NO_OF_FILES) Libft Objects]"
+.c.o:
+	@$(CC) $(CFLAGS) -g -c $< -o $(<:.c=.o)
 	$(eval nb=$(shell echo $$(($(nb)+1))))
+	@echo -n $(YELLOW)
+	@echo -n $(YELLOW)" \r[Compiling $(nb) / $(NO_OF_FILES) Libft Objects]"
 
 $(NAME) : $(OBJ)
 	@ar -crs $(NAME)  $(OBJ)
@@ -67,7 +68,7 @@ $(NAME) : $(OBJ)
 	@echo -n $(YELLOW)
 
 bonus:
-	@$(CC)   $(CFLAGS) -c $(SRC) $(BONUS)
+	@$(CC) $(INCLUDE) $(CFLAGS) -c $(SRC) $(BONUS)
 	@ar rc $(NAME) $(OBJ) $(BONUS:.c=.o)
 
 clean :
