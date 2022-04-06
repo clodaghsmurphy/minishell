@@ -6,42 +6,43 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/06 12:04:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:08:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**split_command(char *str, t_mshell *mshell)
+void	split_command(char *str, t_mshell *mshell)
 {
 	t_split		*word;
-	t_phrase	*phrase;
 	int			i;
 	int			quote;
 	int			type;
 
 	word = NULL;
-	phrase = NULL;
+	mshell->phrase = NULL;
 	quote = 0;
 	i = 0;
 	while (str[i] != '\0')
 	{
-		while (str[i] != 32 && str[i] != '|')
+		while (str[i] != 32 && str[i] != '|' && str[i] != '\0')
 		{
 			if (str[i] == 44 || str[i] == 34)
 			{
-				quote == 1;
+				quote = 1;
 				type = str[i];
+				i++;
 				while (str[i] != type && str[i] != '\0')
 				{
 					split_lstadd_back(&word, split_lstnew(str[i]));
 					i++;
 				}
+				print_split(&word);
 				if (str[i] == '\0')
 					printf("quote error\n");
 				else
 				{
-					make_word(word, phrase);
+					make_word(&word, mshell);
 					i++;
 					quote = 0;
 				}
@@ -49,87 +50,59 @@ char	**split_command(char *str, t_mshell *mshell)
 			split_lstadd_back(&word, split_lstnew(str[i]));
 			i++;
 		}
-		make_word(word, phrase);
+		if (str[i] != 32 && str[i] != '|' && str[i] != '\0')
+		{
+			while (str[i] != 32)
+			{
+				if (str[i] == '|')
+					break ;
+				i++;
+			}
+			if (str[i] == '|')
+				break ;
+		}
+		if (str[i] == '|')
+		{
+			if (str[i + 1] == '|')
+			{
+				printf("syntax error\n");
+				return ;
+			}
+			else
+			{
+				i++;
+				continue ;
+			}
+		}
+		printf("str[i] is %d\n", str[i]);
+		make_word(&word, mshell);
 		i++;
 	}
+	print_phrase(&mshell->phrase);
 }
 
-void	make_word(t_split *word, t_phrase *phrase)
+void	make_word(t_split **word, t_mshell *mshell)
 {
 	int		size;
 	t_split	*temp;
 	int		i;
+	char	*str;
 
 	i = 0;
-	temp = word;
-	size = split_lstsize(word) + 1;
-	phrase->str = malloc(sizeof(char) * size);
-	while (temp ->next != NULL)
+	temp = *word;
+	size = split_lstsize(*word) + 1;
+	str = malloc(sizeof(char) * size);
+	while (temp != NULL)
 	{
-		phrase->str[i] = temp->c;
+		str[i] = temp->c;
 		i++;
+		temp = temp->next;
 	}
-}
-
-t_split	*split_lstnew(char c)
-{
-	t_split	*new;
-
-	new = malloc(sizeof(t_split));
-	if (!new)
-		return (NULL);
-	new->c = c;
-	new->next = NULL;
-	return (new);
-}
-
-void	split_lstadd_back(t_split **alst, t_split *new)
-{
-	t_split	*current;
-
-	if (!alst || *alst == NULL)
+	str[i] = '\0';
+	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
+	if (*word)
 	{
-		*alst = new;
-		return ;
+		ft_wordclear(word);
+		*word = NULL;
 	}
-	current = *alst;
-	if (!new)
-		return ;
-	while (current->next != NULL)
-	{
-		current = current->next;
-	}
-	current->next = new;
-}
-
-int	split_lstsize(t_split *lst)
-{
-	t_split	*current;
-	int		i;
-
-	current = lst;
-	i = 0;
-	while (current != NULL)
-	{
-		i++;
-		current = current->next;
-	}
-	return (i);
-}
-
-void	ft_wordclear(t_split **lst)
-{
-	t_split	*current;
-	t_split	*temp;
-
-	if (*lst == NULL)
-		return ;
-	current = *lst;
-	while (current != NULL)
-	{
-		temp = current;
-		current = current->next;
-		free(temp);
-	}
-	*lst = NULL;
 }

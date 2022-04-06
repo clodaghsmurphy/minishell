@@ -1,6 +1,9 @@
 SRC = src/main.c \
 	src/init.c \
 	parse/parse.c \
+	parse/split.c \
+	parse/split_utils.c \
+	parse/word_utils.c \
 	parse/command_utils.c \
 
 NO_OF_FILES := $(words $(SRC)) 

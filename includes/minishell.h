@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 19:08:32 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:45:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,33 @@ typedef struct s_mshell
 	t_env		*env;
 	char		**path;
 	t_command	*command;
+	t_phrase	*phrase;
 }	t_mshell;
 
 /**************PARSE****************/
 int			check_args(int ac, char **av);
 int			parse_command(char *str, t_mshell *mshell);
+
+/***********SPLIT*******************/
+void		split_command(char *str, t_mshell *mshell);
+void		make_word(t_split **word, t_mshell *mshell);
+
+/***********SPLIT_UTILS*******************/
+t_split		*split_lstnew(char c);
+void		split_lstadd_back(t_split **alst, t_split *new);
+int			split_lstsize(t_split *lst);
+void		phrase_lstadd_back(t_phrase **alst, t_phrase *new);
+void		print_split(t_split **split);
+
+/***********WORD_UTILS*******************/
+void		print_phrase(t_phrase **phrase);
+void		ft_wordclear(t_split **lst);
+t_phrase	*phrase_lstnew(char *str);
+
 /************COMMAND_UTILS**********/
 void		command_lstadd_back(t_command **alst, t_command *new);
 t_command	*command_lstnew(char **commands);
+
 /**************INIT*****************/
 int			init_mshell(t_mshell *mshell);
 
