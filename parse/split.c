@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 19:27:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/06 12:04:49 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**split_command(char *str, t_mshell *mshell)
 					i++;
 				}
 				if (str[i] == '\0')
-					print("quote error\n");
+					printf("quote error\n");
 				else
 				{
 					make_word(word, phrase);
