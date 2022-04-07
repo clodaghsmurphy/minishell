@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/06 18:45:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:40:53 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int			parse_command(char *str, t_mshell *mshell);
 /***********SPLIT*******************/
 void		split_command(char *str, t_mshell *mshell);
 void		make_word(t_split **word, t_mshell *mshell);
+void		parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i);
+void		parse_string(t_split **word, t_mshell *mshell, char *str, int *i);
+void		parse_delimiter(char *str, int *i);
 
 /***********SPLIT_UTILS*******************/
 t_split		*split_lstnew(char c);

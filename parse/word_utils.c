@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/06 18:34:05 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:35:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	print_phrase(t_phrase **phrase)
 {
 	t_phrase	*temp;
 
-	printf("in print phrase and str is %s\n", (*phrase)->str);
 	temp = *phrase;
 	while (temp != NULL)
 	{

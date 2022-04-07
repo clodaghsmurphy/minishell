@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:36:25 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/06 17:26:10 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:35:04 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	print_split(t_split **split)
 {
 	t_split	*temp;
 
-	printf("in print split and str is %c\n", (*split)->c);
 	temp = *split;
 	while (temp != NULL)
 	{
