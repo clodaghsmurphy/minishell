@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:27:45 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/05 18:02:38 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:03:20 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,20 @@ void	env_free(t_env *env)
 		temp = env;
 		env = env->next;
 		free(temp);
+	}
+}
+
+void	print_env(t_env *env)
+{
+	t_env	*current;
+
+	current = env;
+	while (current)
+	{
+		ft_putstr_fd(current->name, 1);
+		ft_putstr_fd("=", 1);
+		ft_putstr_fd(current->value, 1);
+		ft_putstr_fd("\n", 1);
+		current = current->next;
 	}
 }
