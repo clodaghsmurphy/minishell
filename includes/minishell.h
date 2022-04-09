@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/07 16:40:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:22:02 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_split
 typedef struct s_phrase
 {
 	char				*str;
+	int					token;
 	struct s_phrase		*next;
 }	t_phrase;
 
@@ -66,8 +67,9 @@ int			parse_command(char *str, t_mshell *mshell);
 void		split_command(char *str, t_mshell *mshell);
 void		make_word(t_split **word, t_mshell *mshell);
 void		parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i);
-void		parse_string(t_split **word, t_mshell *mshell, char *str, int *i);
-void		parse_delimiter(char *str, int *i);
+int			parse_string(t_split **word, t_mshell *mshell, char *str, int *i);
+void		parse_delimiter(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
 
 /***********SPLIT_UTILS*******************/
 t_split		*split_lstnew(char c);

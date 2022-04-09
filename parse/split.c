@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/07 18:05:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:22:13 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ void	split_command(char *str, t_mshell *mshell)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		parse_delimiter(str, &i);
-		parse_string(&word, mshell, str, &i);
-		parse_delimiter(str, &i);
-		print_split(&word);
-		make_word(&word, mshell);
-		//i++;
+		if (parse_string(&word, mshell, str, &i) == 2)
+			continue ;
+		parse_delimiter(&word, mshell, str, &i);
 	}
 	print_phrase(&mshell->phrase);
 }
@@ -48,7 +45,6 @@ void	make_word(t_split **word, t_mshell *mshell)
 	while (temp != NULL)
 	{
 		str[i] = temp->c;
-		printf("temp->c is %d\n", temp->c);
 		i++;
 		temp = temp->next;
 	}
@@ -74,7 +70,6 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 			split_lstadd_back(word, split_lstnew(str[*i]));
 			(*i)++;
 		}
-		printf("word after quote\n");
 		print_split(word);
 		if (str[*i] == '\0')
 		{
@@ -88,33 +83,37 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		}
 		if (str[*i] == 32)
 		{
-			printf("str[i] in quote is %c\n", str[*i - 1]);
 			while (str[*i] == 32)
 			(*i)++;
 		}
 	}
 }
 
-void	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
+int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	while (str[*i] != 32 && str[*i] != '|' && str[*i] != '\0')
 	{
 		if (str[*i] == 44 || str[*i] == 34)
 		{
 			parse_quotes(word, mshell, str, i);
-			printf("in parse quote\n");
-			return ;
+			return (2);
 		}
-		printf("after quote if and str[*i] is %c\n", str[*i]);
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
 	}
+	return (1);
 }
 
-void	parse_delimiter(char *str, int *i)
+void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 {
+	t_split	*delimiter;
+
+	delimiter = NULL;
 	if (str[*i] == '\0')
+	{
+		make_word(word, mshell);
 		return ;
+	}
 	if (str[*i] == 32)
 	{
 		while (str[*i] == 32)
@@ -127,6 +126,7 @@ void	parse_delimiter(char *str, int *i)
 			printf("syntax error\n");
 			return ;
 		}
+		split_lstadd_back(&delimiter, split_lstnew(str[*i]));
 		(*i)++;
 		if (str[*i] == 32)
 		{
@@ -134,4 +134,6 @@ void	parse_delimiter(char *str, int *i)
 			(*i)++;
 		}
 	}
+	make_word(word, mshell);
+	make_word(&delimiter, mshell);
 }
