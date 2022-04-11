@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:27:45 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/08 16:29:36 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:25:37 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	env_add_back(t_env **alst, t_env *new)
+void	env_add_back(t_env **alst, t_env *new_elem)
 {
 	t_env	*current;
 
 	if (!alst || *alst == NULL)
 	{
-		*alst = new;
+		*alst = new_elem;
 		return ;
 	}
 	current = *alst;
-	if (!new)
+	if (!new_elem)
 		return ;
 	while (current->next != NULL)
 	{
 		current = current->next;
 	}
-	current->next = new;
+	current->next = new_elem;
 }
 
 t_env	*env_new(char *name, char *value)

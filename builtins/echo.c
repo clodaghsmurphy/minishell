@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/04 16:59:16 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:13:04 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,4 @@ int	is_valid_opt(char *arg)
 		i++;
 	}
 	return (1);
-}
-
-int	main(int ac, char **av)
-{
-	char **av_null;
-	int i;
-
-	av_null = malloc(sizeof(char *) * (ac));
-	av_null[ac - 1] = NULL;
-	while (ac > 1)
-	{
-		av_null[ac - 2] = av[ac - 1];
-		ac --;
-	}
-	i = 0;
-	// while(av[i])
-	// {
-	// 	ft_putstr_fd(av[i], 1);
-	// 	i++;
-	// }
-	echo(av_null);
-	return 0;
 }

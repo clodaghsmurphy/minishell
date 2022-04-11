@@ -3,30 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/08 17:29:22 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:26:29 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	del_one(t_env **lst, t_env *to_del);
-char	*get_value(char *line);
-char	*get_name(char *line);
-t_env	*env_new(char *name, char *value);
-void	env_add_back(t_env **alst, t_env *new);
-void	env_free(t_env *env);
-void	export_variable(t_env **env, char *new_v);
-void	export(t_env	**env, char **params);
-int		check_valid_variable(char *variable);
-void	print_env(t_env *env);
-void	del_one(t_env **lst, t_env *to_del);
-void	check_rm_double(t_env **env);
-void	unset(t_env	**env, char **params);
-void	unset_variable(t_env **env, char *variable_name);
-
+#include "../includes/builtins.h"
 
 t_env	*parse_env(char **env_t)
 {
@@ -43,7 +28,7 @@ t_env	*parse_env(char **env_t)
 	return (env);
 }
 
-void	export(t_env	**env, char **params)
+void	ft_export(t_env	**env, char **params)
 {
 	int	i;
 
