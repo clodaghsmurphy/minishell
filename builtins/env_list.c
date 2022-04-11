@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:27:45 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/07 17:03:20 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/08 16:29:36 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,19 @@ void	print_env(t_env *env)
 		current = current->next;
 	}
 }
+
+void	del_one(t_env **lst, t_env *to_del)
+{
+	t_env	*current;
+	t_env	*save;
+
+	current = *lst;
+	while (current->next != to_del)
+		current = current->next;
+	free(current->next->name);
+	free(current->next->value);
+	save = current->next;
+	current->next = current->next->next;
+	free(to_del);
+}
+

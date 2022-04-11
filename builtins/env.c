@@ -6,12 +6,13 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/07 19:42:17 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/08 17:29:22 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	del_one(t_env **lst, t_env *to_del);
 char	*get_value(char *line);
 char	*get_name(char *line);
 t_env	*env_new(char *name, char *value);
@@ -23,6 +24,9 @@ int		check_valid_variable(char *variable);
 void	print_env(t_env *env);
 void	del_one(t_env **lst, t_env *to_del);
 void	check_rm_double(t_env **env);
+void	unset(t_env	**env, char **params);
+void	unset_variable(t_env **env, char *variable_name);
+
 
 t_env	*parse_env(char **env_t)
 {
@@ -39,63 +43,6 @@ t_env	*parse_env(char **env_t)
 	return (env);
 }
 
-char	*get_name(char *line)
-{	
-	int		i;
-	char	*name;
-
-	i = 0;
-	while (line[i] && line[i] != '=')
-		i++;
-	name = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (line[i] && line[i] != '=')
-	{
-		name[i] = line[i];
-		i++;
-	}
-	name[i] = 0;
-	return (name);
-}
-
-char	*get_value(char *line)
-{	
-	int		i;
-	int		count;
-	char	*value;
-
-	i = 0;
-	count = 0;
-	while (line[i] && line[i] != '=')
-		i++;
-	while (line[i + count])
-		count ++;
-	value = malloc(sizeof(char) * (count));
-	count = 0;
-	i++;
-	while (line[i])
-	{
-		value[count] = line[i];
-		i++;
-		count ++;
-	}
-	value[count] = 0;
-	return (value);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	char	*s1;
-	char	*s2;
-	t_env	*salam;
-
-	salam = parse_env(env);
-	//print_env(salam);
-	export(&salam, av);
-	print_env(salam);
-	env_free(salam);
-	return 0;
-}
 void	export(t_env	**env, char **params)
 {
 	int	i;
@@ -113,6 +60,7 @@ void	export(t_env	**env, char **params)
 		}
 	}
 }
+
 void	export_variable(t_env **env, char *new_v)
 {
 	char	*name;
@@ -125,105 +73,15 @@ void	export_variable(t_env **env, char *new_v)
 	env_add_back(env, env_new(name, value));
 }
 
-int	check_valid_variable(char *variable)
+int	main(int ac, char **av, char **env)
 {
-	int	i;
-	i = 0;
-	while (variable[i])
-	{
-		i++;
-		if (variable[i] == '=')
-			return(1);
-	}
-	return (0);
+	char	*s1;
+	char	*s2;
+	t_env	*salam;
+
+	salam = parse_env(env);
+	unset(&salam, av);
+	print_env(salam);
+	env_free(salam);
+	return 0;
 }
-
-void	check_rm_double(t_env **env)
-{
-	t_env	*i;
-	t_env	*j;
-	t_env	*save;
-
-	i = *env;
-	while (i)
-	{
-		j = i->next;
-		while (j)
-		{
-			if (!ft_strncmp(i->name, j->name, ft_strlen(i->name) + 1))
-			{
-				printf("trouvé\n");
-				save = i;
-				i = i->next;
-				del_one(env, save);
-				//break;
-			}
-			j = j->next;
-		}
-		i = i->next;
-	}
-}
-
-void	del_one(t_env **lst, t_env *to_del)
-{
-	t_env	*current;
-	t_env	*save;
-
-	current = *lst;
-	while (current->next != to_del)
-		current = current->next;
-	free(current->next->name);
-	free(current->next->value);
-	save = current->next;
-	current->next = current->next->next;
-	free(to_del);
-}
-
-// int	main(int ac, char **av, char **env)
-// {
-	// char	*s1;
-	// char	*s2;
-	// t_env	*salam;
-	// t_env	*current;
-	// t_env	*save;
-
-	// salam = NULL;
-	// env_add_back(&salam, env_new(ft_strdup("salut"), ft_strdup("slt")));
-	// env_add_back(&salam, env_new(ft_strdup("achille"), ft_strdup("salut")));
-	// env_add_back(&salam, env_new(ft_strdup("eric"), ft_strdup("salut")));
-	// env_add_back(&salam, env_new(ft_strdup("patrick"), ft_strdup("salut")));
-	// env_add_back(&salam, env_new(ft_strdup("seliset"), ft_strdup("salut")));
-	// env_add_back(&salam, env_new(ft_strdup("cash"), ft_strdup("salut"))); 
-	// env_add_back(&salam, env_new(ft_strdup("salut"), ft_strdup("salut")));
-	// print_env(salam);
-	// current = salam;
-	// while (current)
-	// {
-	// 	if (!ft_strncmp(current->name, "cash", 1000))
-	// 	{
-	// 		save = current;
-	// 		current = current->next;
-	// 		del_one(&salam, save);
-	// 	}
-	// 	current = current->next;
-	// }
-	// print_env(salam);
-	// env_free(salam);
-	// return 0;
-// 	int i;
-// 	int j;
-
-// 	i = j = 0;
-// 	while (i < 10)
-// 	{
-// 		j = 0;
-// 		while (j < 10)
-// 		{
-// 			if (j == 3)
-// 				break;
-// 			printf("i = %d j = %d\n",i,j);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
