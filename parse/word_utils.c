@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 16:16:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:17:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	phrase_lstsize(t_phrase *lst)
 
 	current = lst;
 	i = 0;
-	while (current != NULL)
+	while (current != NULL && ft_strncmp(current->str, "|", 10) != 0)
 	{
 		i++;
 		current = current->next;

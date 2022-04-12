@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/12 12:02:17 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/12 18:57:14 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,15 @@ void	command_lstadd_back(t_command **alst, t_command *new)
 	current->next = new;
 }
 
-int	count_delim(t_phrase **phrase)
-{
-	t_phrase	*temp;
-	int 		count;
-	
-	count = 0;
-	temp = *phrase;
-	while (temp != NULL)
-	{
-		if (ft_strncmp(temp->str, "|", 10) == 0)
-			count++;
-		temp = temp->next;
-	}
-	return (count);
-}
-
-void	print_tab(char **tab, int size)
+void	print_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
+	if (!tab[i])
+		return ;
+	while (tab[i] != NULL)
 	{
-		printf("in loop\n");
 		printf("tab[%d] is %s\n", i, tab[i]);
 		i++;
 	}
@@ -82,14 +67,17 @@ void	freetab(char **tab)
 	free(tab);
 }
 
-void	print_command(t_command **command, int size)
+void	print_command(t_mshell *mshell)
 {
 	t_command	*temp;
+	int			i;
 
-	temp = *command;
-	while (temp != NULL)
+	i = 0;
+	temp = mshell->command;
+	while (temp->next != NULL)
 	{
-		print_tab(temp->value, size);
+		i++;
+		print_tab(temp->value);
 		temp = temp->next;
 	}
 }
