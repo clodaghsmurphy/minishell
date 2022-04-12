@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:06:00 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 16:54:39 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/12 12:01:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ int			phrase_lstsize(t_phrase *lst);
 /************COMMAND_UTILS**********/
 void		command_lstadd_back(t_command **alst, t_command *new);
 t_command	*command_lstnew(char **commands);
+void		print_tab(char **tab, int size);
+int			count_delim(t_phrase **phrase);
+void		freetab(char **tab);
+void		print_command(t_command **command, int size);
 
 /**************INIT*****************/
 int			init_mshell(t_mshell *mshell);
