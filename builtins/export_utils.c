@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/13 13:57:12 by amontant          #+#    #+#             */
+/*   Updated: 2022/04/13 13:57:13 by amontant         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	del_one(t_env **lst, t_env *to_del);
@@ -30,12 +42,13 @@ void	check_rm_double(t_env **env)
 int	check_valid_variable(char *variable)
 {
 	int	i;
+
 	i = 0;
 	while (variable[i])
 	{
 		i++;
 		if (variable[i] == '=')
-			return(1);
+			return (1);
 	}
 	return (0);
 }

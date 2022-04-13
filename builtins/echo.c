@@ -6,14 +6,12 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/11 16:13:04 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 13:52:53 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-
-int	is_valid_opt(char *arg);
-int	get_opt(char **args);
+#include "../includes/builtins.h"
 
 void	echo(char **args)
 {
@@ -21,7 +19,7 @@ void	echo(char **args)
 	int	i;
 
 	arg = get_opt(args);
-	i = arg;
+	i = arg + 1;
 	while (args[i] != NULL)
 	{
 		ft_putstr_fd(args[i], 1);
@@ -39,7 +37,7 @@ int	get_opt(char **args)
 	int	i;
 
 	arg = 0;
-	i = 0;
+	i = 1;
 	while (args[i])
 	{
 		if (!is_valid_opt(args[i]))

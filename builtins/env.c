@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/11 16:26:29 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:31:49 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,4 @@ void	export_variable(t_env **env, char *new_v)
 	name = get_name(new_v);
 	value = get_value(new_v);
 	env_add_back(env, env_new(name, value));
-}
-
-int	main(int ac, char **av, char **env)
-{
-	char	*s1;
-	char	*s2;
-	t_env	*salam;
-
-	salam = parse_env(env);
-	unset(&salam, av);
-	print_env(salam);
-	env_free(salam);
-	return 0;
 }

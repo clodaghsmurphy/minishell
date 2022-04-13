@@ -1,35 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_pwd.c                                           :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:24:03 by amontant         ###   ########.fr       */
+/*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
+/*   Updated: 2022/04/13 14:03:53 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdio.h>
+#include "../includes/minishell.h"
 
-void	cd(char **params)
-{
-	char	*error;
-
-	if (!params[1])
-		return ;
-	error = ft_strjoin("cd: ", params[1]);
-	if (chdir(params[1]) != 0)
-		perror(error);
-}
-
-void	pwd(void)
-{
-	char	wd[10000];
-
-	getcwd(wd, 10000);
-	ft_putstr_fd(wd, 1);
-	ft_putchar_fd('\n', 1);
-}
-
+void	exec()

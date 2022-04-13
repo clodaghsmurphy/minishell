@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:27:45 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/11 16:25:37 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 13:53:08 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,3 @@ void	del_one(t_env **lst, t_env *to_del)
 	current->next = current->next->next;
 	free(to_del);
 }
-
