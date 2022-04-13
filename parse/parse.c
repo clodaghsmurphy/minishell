@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 16:34:43 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:56:35 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	parse_command(char *str, t_mshell *mshell)
 	mshell->command = NULL;
 	if (!str)
 		return (-1);
+	if (ft_strncmp(str, "", 10) == 0)
+		return (0);
 	split_command(str, mshell);
 	create_command(mshell);
 	ft_exe(mshell);
