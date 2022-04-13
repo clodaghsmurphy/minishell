@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_utils.c                                    :+:      :+:    :+:   */
+/*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 15:49:44 by clmurphy         ###   ########.fr       */
+/*   Created: 2022/04/06 15:36:25 by clmurphy          #+#    #+#             */
+/*   Updated: 2022/04/07 17:35:04 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command	*command_lstnew(char **commands)
+t_split	*split_lstnew(char c)
 {
-	t_command	*new;
+	t_split	*new;
 
-	new = malloc(sizeof(t_command));
+	new = malloc(sizeof(t_split));
 	if (!new)
 		return (NULL);
-	new->value = commands;
+	new->c = c;
 	new->next = NULL;
 	return (new);
 }
 
-void	command_lstadd_back(t_command **alst, t_command *new)
+void	split_lstadd_back(t_split **alst, t_split *new)
 {
-	t_command	*current;
+	t_split	*current;
 
 	if (!alst || *alst == NULL)
 	{
@@ -41,4 +41,31 @@ void	command_lstadd_back(t_command **alst, t_command *new)
 		current = current->next;
 	}
 	current->next = new;
+}
+
+int	split_lstsize(t_split *lst)
+{
+	t_split	*current;
+	int		i;
+
+	current = lst;
+	i = 0;
+	while (current != NULL)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+void	print_split(t_split **split)
+{
+	t_split	*temp;
+
+	temp = *split;
+	while (temp != NULL)
+	{
+		printf("%c\n", temp->c);
+		temp = temp->next;
+	}
 }

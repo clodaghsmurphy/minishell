@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_utils.c                                    :+:      :+:    :+:   */
+/*   word_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 15:49:44 by clmurphy         ###   ########.fr       */
+/*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
+/*   Updated: 2022/04/07 17:35:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command	*command_lstnew(char **commands)
+t_phrase	*phrase_lstnew(char *str)
 {
-	t_command	*new;
+	t_phrase	*new;
 
-	new = malloc(sizeof(t_command));
+	new = malloc(sizeof(t_phrase));
 	if (!new)
 		return (NULL);
-	new->value = commands;
+	new->str = str;
 	new->next = NULL;
 	return (new);
 }
 
-void	command_lstadd_back(t_command **alst, t_command *new)
+void	phrase_lstadd_back(t_phrase **alst, t_phrase *new)
 {
-	t_command	*current;
+	t_phrase	*current;
 
 	if (!alst || *alst == NULL)
 	{
@@ -41,4 +41,34 @@ void	command_lstadd_back(t_command **alst, t_command *new)
 		current = current->next;
 	}
 	current->next = new;
+}
+
+void	ft_wordclear(t_split **lst)
+{
+	t_split	*current;
+	t_split	*temp;
+
+	if (*lst == NULL)
+		return ;
+	current = *lst;
+	while (current != NULL)
+	{
+		temp = current;
+		temp->c = 0;
+		current = current->next;
+		free(temp);
+	}
+	*lst = NULL;
+}
+
+void	print_phrase(t_phrase **phrase)
+{
+	t_phrase	*temp;
+
+	temp = *phrase;
+	while (temp != NULL)
+	{
+		printf("%s\n", temp->str);
+		temp = temp->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/05 15:16:56 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:15:23 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 int	parse_command(char *str, t_mshell *mshell)
 {
-	char		**tab;
-
-	mshell->command->commands = NULL;
+	mshell->command = NULL;
 	if (!str)
 		return (-1);
-	tab = ft_split(str, '=');
-	command_lstadd_back(&mshell->command, command_lstnew(tab));
+	split_command(str, mshell);
 	return (0);
 }
 
