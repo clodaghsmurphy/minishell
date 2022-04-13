@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:15:52 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/11 16:27:12 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:56:42 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		check_valid_variable(char *variable);
 void	print_env(t_env *env);
 void	del_one(t_env **lst, t_env *to_del);
 void	check_rm_double(t_env **env);
-void	unset(t_env	**env, char **params);
+void	ft_unset(t_env	**env, char **params);
 void	unset_variable(t_env **env, char *variable_name);
 void	cd(char *path);
 void	pwd(void);

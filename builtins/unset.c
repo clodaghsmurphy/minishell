@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:56:46 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 13:56:47 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:56:18 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	del_one(t_env **lst, t_env *to_del);
 void	unset_variable(t_env **env, char *variable_name);
 
-void	unset(t_env	**env, char **params)
+void	ft_unset(t_env	**env, char **params)
 {
 	int	i;
 

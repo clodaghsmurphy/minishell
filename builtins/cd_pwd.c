@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:24:03 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:48:22 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ void	pwd(void)
 	ft_putstr_fd(wd, 1);
 	ft_putchar_fd('\n', 1);
 }
-
