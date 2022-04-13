@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 15:01:10 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:04:00 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,4 @@ void	exec_builtins(char **params, t_env **env)
 	if (!ft_strncmp(params[0], "env", 5))
 		print_env(*env);
 }
+
