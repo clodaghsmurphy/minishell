@@ -1,10 +1,12 @@
 SRC = src/main.c \
 	src/init.c \
+	src/arm_signals.c \
 	parse/parse.c \
 	parse/split.c \
 	parse/split_utils.c \
 	parse/word_utils.c \
 	parse/command_utils.c \
+	parse/assign_tokens.c \
 
 NO_OF_FILES := $(words $(SRC)) 
 

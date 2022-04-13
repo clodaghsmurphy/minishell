@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/09 19:22:13 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:59:38 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,19 @@
 
 void	split_command(char *str, t_mshell *mshell)
 {
-	t_split		*word;
 	int			i;
 
-	word = NULL;
+	mshell->word = NULL;
 	mshell->phrase = NULL;
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (parse_string(&word, mshell, str, &i) == 2)
+		if (parse_string(&mshell->word, mshell, str, &i) == 2)
 			continue ;
-		parse_delimiter(&word, mshell, str, &i);
+		parse_delimiter(&mshell->word, mshell, str, &i);
 	}
+	assign_tokens(mshell);
 	print_phrase(&mshell->phrase);
-}
-
-void	make_word(t_split **word, t_mshell *mshell)
-{
-	int		size;
-	t_split	*temp;
-	int		i;
-	char	*str;
-
-	i = 0;
-	if (!word)
-		return ;
-	temp = *word;
-	size = split_lstsize(*word) + 1;
-	str = malloc(sizeof(char) * size);
-	while (temp != NULL)
-	{
-		str[i] = temp->c;
-		i++;
-		temp = temp->next;
-	}
-	str[i] = '\0';
-	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
-	if (*word)
-	{
-		ft_wordclear(word);
-		*word = NULL;
-	}
 }
 
 void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
@@ -70,7 +42,6 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 			split_lstadd_back(word, split_lstnew(str[*i]));
 			(*i)++;
 		}
-		print_split(word);
 		if (str[*i] == '\0')
 		{
 			printf("quote error\n");
@@ -107,7 +78,9 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	t_split	*delimiter;
+	int		flag;
 
+	flag = 0;
 	delimiter = NULL;
 	if (str[*i] == '\0')
 	{
@@ -127,13 +100,15 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 			return ;
 		}
 		split_lstadd_back(&delimiter, split_lstnew(str[*i]));
+		flag = 1;
 		(*i)++;
 		if (str[*i] == 32)
 		{
 			while (str[*i] == 32)
-			(*i)++;
+				(*i)++;
 		}
 	}
 	make_word(word, mshell);
-	make_word(&delimiter, mshell);
+	if (flag == 1)
+		make_word(&delimiter, mshell);
 }

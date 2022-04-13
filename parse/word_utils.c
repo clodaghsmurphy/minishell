@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/07 17:35:47 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:17:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ void	phrase_lstadd_back(t_phrase **alst, t_phrase *new)
 	current->next = new;
 }
 
+int	phrase_lstsize(t_phrase *lst)
+{
+	t_phrase	*current;
+	int			i;
+
+	current = lst;
+	i = 0;
+	while (current != NULL && ft_strncmp(current->str, "|", 10) != 0)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}
+
 void	ft_wordclear(t_split **lst)
 {
 	t_split	*current;
@@ -68,7 +83,7 @@ void	print_phrase(t_phrase **phrase)
 	temp = *phrase;
 	while (temp != NULL)
 	{
-		printf("%s\n", temp->str);
+		printf("COMMAND : [%s] || TOKEN : %d\n", temp->str, temp->token);
 		temp = temp->next;
 	}
 }

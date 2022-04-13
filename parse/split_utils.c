@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:36:25 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/07 17:35:04 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:18:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,34 @@ void	print_split(t_split **split)
 	temp = *split;
 	while (temp != NULL)
 	{
-		printf("%c\n", temp->c);
 		temp = temp->next;
+	}
+}
+
+void	make_word(t_split **word, t_mshell *mshell)
+{
+	int		size;
+	t_split	*temp;
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (!word)
+		return ;
+	temp = *word;
+	size = split_lstsize(*word) + 1;
+	str = malloc(sizeof(char) * size);
+	while (temp != NULL)
+	{
+		str[i] = temp->c;
+		i++;
+		temp = temp->next;
+	}
+	str[i] = '\0';
+	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
+	if (*word)
+	{
+		ft_wordclear(word);
+		*word = NULL;
 	}
 }
