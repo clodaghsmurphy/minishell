@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 13:36:38 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:05:33 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include "../libft/libft.h"
+# include "builtins.h"
 
 # define KEY_UP 38
 
@@ -85,6 +86,16 @@ int			check_args(int ac, char **av);
 int			parse_command(char *str, t_mshell *mshell);
 void		create_command(t_mshell *mshell);
 
+/*************ENV_LIST****************/
+void		print_env(t_env *env);
+void		del_one(t_env **lst, t_env *to_del);
+t_env		*env_new(char *name, char *value);
+void		env_add_back(t_env **alst, t_env *new_elem);
+void		env_free(t_env *env);
+
+/************ENV*************************/
+t_env		*parse_env(char **env_t);
+
 /***********SPLIT*******************/
 void		split_command(char *str, t_mshell *mshell);
 void		make_word(t_split **word, t_mshell *mshell);
@@ -115,7 +126,7 @@ void		freetab(char **tab);
 void		print_command(t_mshell *mshell);
 
 /**************INIT*****************/
-int			init_mshell(t_mshell *mshell);
+int			init_mshell(t_mshell *mshell, char **env);
 
 /**************ARM_SIGNAL************/
 void		armsignals(void);
@@ -125,5 +136,20 @@ void		sig_handler(int signum);
 void		assign_tokens(t_mshell *mshell);
 int			is_variable(char *str);
 int			is_builtin(char *str);
+
+/************BUILTINS*****************/
+void		del_one(t_env **lst, t_env *to_del);
+char		*get_value(char *line);
+char		*get_name(char *line);
+void		export_variable(t_env **env, char *new_v);
+void		ft_export(t_env **env, char **params);
+int			check_valid_variable(char *variable);
+void		check_rm_double(t_env **env);
+void		ft_unset(t_env	**env, char **params);
+void		unset_variable(t_env **env, char *variable_name);
+void		cd(char **params);
+void		pwd(void);
+int			is_valid_opt(char *arg);
+int			get_opt(char **args);
 
 #endif

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:56:46 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:56:18 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:17:51 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	del_one(t_env **lst, t_env *to_del);
 void	unset_variable(t_env **env, char *variable_name);
@@ -35,7 +35,6 @@ void	ft_unset(t_env	**env, char **params)
 void	unset_variable(t_env **env, char *variable_name)
 {
 	t_env	*current;
-	t_env	*save;
 
 	current = *env;
 	while (current)

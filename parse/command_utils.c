@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/12 18:57:14 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:09:09 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	print_command(t_mshell *mshell)
 	while (temp->next != NULL)
 	{
 		i++;
+		printf("<--------CHAR ** DANS COMMAND NO %d ----------->\n", i);
 		print_tab(temp->value);
 		temp = temp->next;
 	}
