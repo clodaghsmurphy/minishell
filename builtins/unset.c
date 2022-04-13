@@ -6,7 +6,11 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:56:46 by amontant          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/04/13 15:06:27 by clmurphy         ###   ########.fr       */
+=======
+/*   Updated: 2022/04/13 14:56:18 by amontant         ###   ########.fr       */
+>>>>>>> 9f7997886c58acfb8134be2c62903f7c9511f487
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +19,7 @@
 void	del_one(t_env **lst, t_env *to_del);
 void	unset_variable(t_env **env, char *variable_name);
 
-void	unset(t_env	**env, char **params)
+void	ft_unset(t_env	**env, char **params)
 {
 	int	i;
 
