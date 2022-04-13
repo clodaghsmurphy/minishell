@@ -6,20 +6,20 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 15:35:03 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:59:46 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char	**env)
 {
 	char		*str;
 	t_mshell	mshell;
 
 	if (!check_args(ac, av))
 		return (1);
-	if (!init_mshell(&mshell))
+	if (!init_mshell(&mshell, env))
 		return (1);
 	str = NULL;
 	while (1)

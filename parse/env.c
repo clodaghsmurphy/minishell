@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:31:49 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:55:09 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/builtins.h"
+#include "minishell.h"
 
 t_env	*parse_env(char **env_t)
 {

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 14:59:38 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:09:50 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	split_command(char *str, t_mshell *mshell)
 		parse_delimiter(&mshell->word, mshell, str, &i);
 	}
 	assign_tokens(mshell);
-	print_phrase(&mshell->phrase);
 }
 
 void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)

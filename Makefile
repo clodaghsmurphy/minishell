@@ -5,8 +5,16 @@ SRC = src/main.c \
 	parse/split.c \
 	parse/split_utils.c \
 	parse/word_utils.c \
+	parse/env_list.c \
+	parse/env.c \
 	parse/command_utils.c \
 	parse/assign_tokens.c \
+	builtins/cd_pwd.c \
+	builtins/echo.c \
+	builtins/exit.c \
+	builtins/export_utils.c \
+	builtins/unset.c \
+
 
 NO_OF_FILES := $(words $(SRC)) 
 
