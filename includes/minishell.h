@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 16:05:54 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:29:24 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void		freetab(char **tab);
 void		print_command(t_mshell *mshell);
 
 /**************INIT*****************/
-int			init_mshell(t_mshell *mshell, char **env);
+t_mshell	*init_mshell(char **env);
 
 /**************ARM_SIGNAL************/
 void		armsignals(void);

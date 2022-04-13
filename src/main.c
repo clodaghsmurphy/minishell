@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 15:36:25 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:32:52 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int	main(int ac, char **av, char	**env)
 {
 	char		*str;
-	t_mshell	mshell;
+	t_mshell	*mshell;
 
 	if (!check_args(ac, av))
 		return (1);
-	if (!init_mshell(&mshell, env))
-		return (1);
+	mshell = init_mshell(env);
+	if (mshell == NULL)
+		return (-1);
+	print_env(mshell->env);
 	str = NULL;
 	while (1)
 	{
@@ -54,7 +56,7 @@ void	free_mshell(t_mshell *mshell, char *str)
 {
 	if (str)
 		free (str);
- 	//if (mshell)
-	//	free(mshell); 
+ 	if (mshell)
+		free(mshell); 
 }
 	
