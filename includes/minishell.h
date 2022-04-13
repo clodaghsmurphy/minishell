@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 15:05:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:05:54 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,11 @@ void		cd(char **params);
 void		pwd(void);
 int			is_valid_opt(char *arg);
 int			get_opt(char **args);
+void		echo(char **args);
+
+
+/*************EXEC*********************/
+void		ft_exe(t_mshell *mini);
+void		exe_builtins(char **params, t_env **env);
 
 #endif

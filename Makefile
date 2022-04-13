@@ -14,11 +14,12 @@ SRC = src/main.c \
 	builtins/exit.c \
 	builtins/export_utils.c \
 	builtins/unset.c \
+	exec/exec.c \
 
 
 NO_OF_FILES := $(words $(SRC)) 
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =# -Wall -Wextra -Werror
 CC = clang
 
 NAME = minishell

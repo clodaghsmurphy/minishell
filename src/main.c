@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 14:59:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:36:25 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ int	ft_read(char *str, t_mshell *mshell)
 
 void	free_mshell(t_mshell *mshell, char *str)
 {
-	(void)mshell;
 	if (str)
 		free (str);
- 	if (mshell)
-		free(mshell); 
+ 	//if (mshell)
+	//	free(mshell); 
 }
 	
