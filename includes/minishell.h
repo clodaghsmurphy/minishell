@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 16:29:24 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:53:30 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,13 @@ void		echo(char **args);
 /*************EXEC*********************/
 void		ft_exe(t_mshell *mini);
 void		exe_builtins(char **params, t_env **env);
+void		exec_cmd_1(t_env *env, char **cmd_params);
+int			lst_env_size(t_env *env);
+char		**env_to_tab(t_env *env);
+char	**create_paths(t_env *env);
+void	free_tab(char **tab);
+char	*ft_strjoin_f(char *s1, char const *s2);
+char	*find_path(t_env *env, char **cmd_params);
+char	*check_absolute_path(char *path);
 
 #endif

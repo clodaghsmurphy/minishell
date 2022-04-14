@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 16:32:52 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:40:04 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ int	main(int ac, char **av, char	**env)
 	mshell = init_mshell(env);
 	if (mshell == NULL)
 		return (-1);
-	print_env(mshell->env);
 	str = NULL;
 	while (1)
 	{
-		if (ft_read(str, &mshell) == -1)
+		if (ft_read(str, mshell) == -1)
 			break ;
 		if (str)
 			free (str);
