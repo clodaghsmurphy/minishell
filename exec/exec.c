@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/14 19:33:14 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/15 12:03:07 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	ft_exe(t_mshell *mini)
 {
-	//exe_builtins(mini->command->value, &mini->env);
-	exec_cmd_1(mini->env, mini->command->value);
+	if (is_builtins(mini->command->value))
+		exe_builtins(mini->command->value, &mini->env);
+	else
+		exec_cmd_1(mini->env, mini->command->value);
 }
 
 void	exe_builtins(char **params, t_env **env)
@@ -36,6 +38,25 @@ void	exe_builtins(char **params, t_env **env)
 	{
 		print_env(*env);
 	}
+}
+
+int	is_builtins(char **params)
+{
+	if (!ft_strncmp(params[0], "pwd", 5))
+		return(1);
+	if (!ft_strncmp(params[0], "cd", 5))
+		return(1);
+	if (!ft_strncmp(params[0], "echo", 5))
+		return(1);
+	if (!ft_strncmp(params[0], "export", 7))
+		return(1);
+	if (!ft_strncmp(params[0], "unset", 7))
+		return(1);
+	if (!ft_strncmp(params[0], "exit", 5))
+		return(1);
+	if (!ft_strncmp(params[0], "env", 5))
+		return(1);
+	return (0);
 }
 
 void	exec_cmd_1(t_env *env, char **cmd_params)
