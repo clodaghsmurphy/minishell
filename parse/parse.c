@@ -6,11 +6,11 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 16:56:35 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/17 15:00:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	parse_command(char *str, t_mshell *mshell)
 {
