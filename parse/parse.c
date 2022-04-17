@@ -6,11 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/04/17 15:00:16 by clmurphy         ###   ########.fr       */
-=======
-/*   Updated: 2022/04/17 15:02:42 by clmurphy         ###   ########.fr       */
->>>>>>> 4a9fa6a91a3e85bfc6e7b17d1ea83f2a39392b21
+/*   Updated: 2022/04/17 16:57:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +20,29 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
-	create_command(mshell);
+	printf("after split command\n");
+	mshell->command = create_command(mshell);
+	printf("command size : %d\n", command_size(mshell->command));
 	ft_exe(mshell);
 	return (0);
 }
 
-void	create_command(t_mshell *mshell)
+t_command	*create_command(t_mshell *mshell)
 {
 	t_phrase	*temp_phrase;
+	t_command	*command;
 	t_command	*temp_command;
 	int			size;
 	int			i;
 
-	i = 0;
-	command_lstadd_back(&mshell->command, command_lstnew(NULL));
-	temp_command = mshell->command;
+	command = NULL;
+	command_lstadd_back(&command, command_lstnew(NULL));
+	temp_command = command;
 	temp_phrase = mshell->phrase;
 	while (temp_phrase != NULL)
 	{
 		i = 0;
-		size = phrase_lstsize(mshell->phrase);
+		size = phrase_lstsize(temp_phrase);
 		temp_command->value = malloc(sizeof(char) * size + 1);
 		while (temp_phrase != NULL && strncmp(temp_phrase->str, "|", 10) != 0)
 		{
@@ -53,13 +52,22 @@ void	create_command(t_mshell *mshell)
 			i++;
 			temp_phrase = temp_phrase->next;
 		}
-		temp_command->value[i] = 0;
-		command_lstadd_back(&mshell->command, command_lstnew(NULL));
-		temp_command = temp_command->next;
-		if (temp_phrase != NULL)
+		if (temp_phrase != NULL && strncmp(temp_phrase->str, "|", 10) == 0)
+		{
+			temp_command->value[i] = 0;
 			temp_phrase = temp_phrase->next;
+			if (temp_phrase == NULL)
+				break ;
+			command_lstadd_back(&command, command_lstnew(NULL));
+			temp_command = temp_command->next;
+		}
+		else
+			break ;
 	}
-	print_command(mshell);
+	//printf("command size : %d\n",command_size(command));
+	//print_command(command);
+	//rintf("after command\n");
+	return (command);
 }
 
 int	check_args(int ac, char **av)
