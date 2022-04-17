@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:27:45 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:55:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/14 18:56:09 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	env_add_back(t_env **alst, t_env *new_elem)
 {
