@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/17 16:57:32 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/17 18:47:49 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
-	printf("after split command\n");
 	mshell->command = create_command(mshell);
-	printf("command size : %d\n", command_size(mshell->command));
 	ft_exe(mshell);
+	free_command(&mshell->command);
 	return (0);
 }
 
@@ -43,10 +42,10 @@ t_command	*create_command(t_mshell *mshell)
 	{
 		i = 0;
 		size = phrase_lstsize(temp_phrase);
-		temp_command->value = malloc(sizeof(char) * size + 1);
+		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
 		while (temp_phrase != NULL && strncmp(temp_phrase->str, "|", 10) != 0)
 		{
-			temp_command->value[i] = malloc(sizeof(char) * \
+			temp_command->value[i] = (char *)malloc(sizeof(char) * \
 			ft_strlen(temp_phrase->str) + 1);
 			temp_command->value[i] = temp_phrase->str;
 			i++;
@@ -62,11 +61,13 @@ t_command	*create_command(t_mshell *mshell)
 			temp_command = temp_command->next;
 		}
 		else
+		{
+			temp_command->value[i] = 0;
+			temp_command->next = NULL;
 			break ;
+		}
 	}
-	//printf("command size : %d\n",command_size(command));
 	//print_command(command);
-	//rintf("after command\n");
 	return (command);
 }
 

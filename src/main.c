@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/14 14:40:04 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/17 18:56:03 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	free_mshell(t_mshell *mshell, char *str)
 {
 	if (str)
 		free (str);
+	free_command(&mshell->command);
+	env_free(mshell->env);
  	if (mshell)
 		free(mshell); 
 }

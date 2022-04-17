@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/17 15:30:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/17 18:06:59 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int				count_delim(t_phrase **phrase);
 void			freetab(char **tab);
 void			print_command(t_command *command);
 int				command_size(t_command*command);
+void			free_command(t_command **command);
 /**************INIT*****************/
 t_mshell		*init_mshell(char **env);
 

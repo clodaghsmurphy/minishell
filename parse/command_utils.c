@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/17 16:00:13 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/17 18:10:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	freetab(char **tab)
 
 	i = 0;
 	while (tab[i])
+	
 		free(tab[i]);
 	free(tab);
 }
@@ -72,7 +73,6 @@ void	print_command(t_command *command)
 	t_command	*temp;
 	int			i;
 
-	printf("in print command\n");
 	i = 0;
 	temp = command;
 	while (temp != NULL)
@@ -97,4 +97,21 @@ int	command_size(t_command*command)
 		i++;
 	}
 	return (i);
+}
+
+void	free_command(t_command **command)
+{
+	t_command	*temp;
+	t_command	*current;
+
+	if (command == NULL)
+		return ;
+	current = *command;
+	while (current != NULL)
+	{
+		free_tab(current->value);
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
 }
