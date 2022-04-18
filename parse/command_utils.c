@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 15:09:09 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/17 18:10:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_command	*command_lstnew(char **commands)
 {
 	t_command	*new;
 
-	new = malloc(sizeof(t_command));
+	new = ft_calloc(sizeof(t_command), 1);
 	if (!new)
 		return (NULL);
 	new->value = commands;
@@ -63,22 +63,55 @@ void	freetab(char **tab)
 
 	i = 0;
 	while (tab[i])
+	
 		free(tab[i]);
 	free(tab);
 }
 
-void	print_command(t_mshell *mshell)
+void	print_command(t_command *command)
 {
 	t_command	*temp;
 	int			i;
 
 	i = 0;
-	temp = mshell->command;
-	while (temp->next != NULL)
+	temp = command;
+	while (temp != NULL)
 	{
 		i++;
 		printf("<--------CHAR ** DANS COMMAND NO %d ----------->\n", i);
 		print_tab(temp->value);
 		temp = temp->next;
+	}
+}
+
+int	command_size(t_command*command)
+{
+	t_command	*temp;
+	int			i;
+
+	i = 0;
+	temp = command;
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return (i);
+}
+
+void	free_command(t_command **command)
+{
+	t_command	*temp;
+	t_command	*current;
+
+	if (command == NULL)
+		return ;
+	current = *command;
+	while (current != NULL)
+	{
+		free_tab(current->value);
+		temp = current;
+		current = current->next;
+		free(temp);
 	}
 }
