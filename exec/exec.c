@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/17 20:15:40 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/18 14:36:16 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ void	exe_builtins(char **params, t_env **env)
 int	is_builtins(char **params)
 {
 	if (!ft_strncmp(params[0], "pwd", 5))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "cd", 5))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "echo", 5))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "export", 7))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "unset", 7))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "exit", 5))
-		return(1);
+		return (1);
 	if (!ft_strncmp(params[0], "env", 5))
-		return(1);
+		return (1);
 	return (0);
 }
 
@@ -91,19 +91,18 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 	char	*path;
 	int		pid;
 	int		pipe_fd[2];
-	char *str = malloc(1000);
+	char	*str = malloc(1000);
 	int i;
 	i = 0;
 	
 	if (pipe(pipe_fd) == -1)
 		exit(0);
-	while (i < 2)
+	while (current)
 	{
 		pid = fork();
-		wait(0);
 		if (pid == 0)
 		{
-			ft_dup(pipe_fd, command, current);
+			//ft_dup(pipe_fd, command, current);
 			if (is_builtins(current->value))
 			{
 				exe_builtins(current->value, &env);
@@ -113,15 +112,15 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 			execve(path, current->value, env_to_tab(env));
 			exit(0);
 		}
-		//wait();
-		//else
-		//{
-		//	read(pipe_fd[0], str, 1000);
-		//	printf("recu : %s\n", str);
-		//}
+		// else
+		// {
+		// 	read(pipe_fd[0], str, 1000);
+		// 	printf("recu : %s\n", str);
+		// }
 		current = current->next;
-		i ++;
-		printf("i = %d", i);
+		//i ++;
+		//printf("i = %d", i);
+		wait(0);
 	}
 }
 
