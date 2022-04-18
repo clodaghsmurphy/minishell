@@ -1,0 +1,15 @@
+a.out
+builtins
+cat
+exec
+includes
+libft
+ls
+main_test.c
+Makefile
+minishell
+parse
+src
+temp
+test.txt
+valgrind_readline_leaks_ignore.txt

@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/18 14:39:38 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/18 17:57:16 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h>
 # include "../libft/libft.h"
 # include "builtins.h"
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define KEY_UP 38
 
@@ -31,6 +33,7 @@ struct	s_mshell;
 typedef struct s_command
 {
 	char				**value;
+	int					pipe_fd[2];
 	struct s_command	*next;
 }	t_command;
 
@@ -53,6 +56,12 @@ typedef struct s_split
 	char				c;
 	struct s_split		*next;
 }	t_split;
+
+typedef struct s_pipe
+{
+	int					pipe_fd[2];
+	struct s_pipe		*next;
+}	t_pipe;
 
 typedef struct s_phrase
 {
@@ -171,5 +180,8 @@ int				is_builtins(char **params);
 int				cmd_list_size(t_command *lst);
 int				cmd_lst_pos(t_command *lst, t_command *current);
 void			ft_dup(int pipe[2], t_command *command, t_command *current);
+t_pipe			*set_lst_pipe(t_command *command);
+void			add_back_pipe(t_pipe **pipe);
+
 
 #endif
