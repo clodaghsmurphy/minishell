@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/15 12:03:46 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/16 15:03:00 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void		echo(char **args);
 /*************EXEC*********************/
 void		ft_exe(t_mshell *mini);
 void		exe_builtins(char **params, t_env **env);
-void		exec_cmd_1(t_env *env, char **cmd_params);
+void		exec_cmd(t_env *env, t_command *command, t_command *current);
 int			lst_env_size(t_env *env);
 char		**env_to_tab(t_env *env);
 char		**create_paths(t_env *env);
@@ -166,6 +166,8 @@ char		*ft_strjoin_f(char *s1, char const *s2);
 char		*find_path(t_env *env, char **cmd_params);
 char		*check_absolute_path(char *path);
 int			is_builtins(char **params);
-
+int			cmd_list_size(t_command *lst);
+int			cmd_lst_pos(t_command *lst, t_command *current);
+void		ft_dup(int pipe[2], t_command *command, t_command *current);
 
 #endif

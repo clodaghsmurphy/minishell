@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 20:06:52 by amontant          #+#    #+#             */
-/*   Updated: 2022/03/21 19:01:34 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/16 12:15:52 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	exec_cmd_1(char **av, char **env, t_process *process)
 	int		temp_fd;
 	int		pid;
 
-	if (pipe(process->pipe_fd) == -1)
-		error("PROCESS CAN'T PIPE");
+	// if (pipe(process->pipe_fd) == -1)
+	// 	error("PROCESS CAN'T PIPE");
 	pid = fork();
 	if (pid == 0)
 		exec_cmd_2(av, env, process);
@@ -84,13 +84,15 @@ int	main(int ac, char **av, char **env)
 {
 	t_process	*process;
 	int			pid;
-
+	
 	if (ac != 5 || env[0] == NULL)
 	{
 		error("BAD ARGUMENTS OR ENV NULL\n");
 		return (0);
 	}
 	process = set_process(av, env);
+	if (pipe(process->pipe_fd) == -1)
+		error("PROCESS CAN'T PIPE");
 	pid = fork();
 	if (pid == -1)
 		error("PROCESS CAN'T FORK\n");

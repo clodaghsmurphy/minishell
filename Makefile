@@ -16,7 +16,7 @@ SRC = src/main.c \
 	builtins/unset.c \
 	exec/exec.c \
 	exec/utils.c\
-
+	exec/cmd_list_utils.c\
 
 NO_OF_FILES := $(words $(SRC)) 
 
