@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/19 17:23:57 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/19 21:34:48 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_exe(t_mshell *mini)
 		exe_builtins(mini->command->value, &mini->env);
 	else
 	{
-		pid = fork();
-		if (pid == 0)
-		{
+		//pid = fork();
+		//if (pid == 0)
+		//{
 			exec_cmd(mini->env, mini->command, mini->command);
-		}
-		wait(0);
+		//}
+		//waitpid(pid, 0, 0);
 	}
 }
 
@@ -75,6 +75,12 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 {
 	char	*path;
 	int		pid;
+	int		tab_pid[100];
+
+	int i = 0;
+	while (i < 100)
+		tab_pid[i++] = 0;
+	i = 0;
 	
 	while (current)
 	{
@@ -84,6 +90,8 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 			exit(0);
 		}
 		pid = fork();
+		if (pid != 0)
+			tab_pid[i++] = pid;
 		if (pid == 0)
 		{
 			ft_dup(command, current);
@@ -96,10 +104,15 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 			execve(path, current->value, env_to_tab(env));
 			exit(0);
 		}
-		else
-			current = current->next;
+		current = current->next;
 	}
-	//wait(0);
+	i = 0;
+	while (tab_pid[i] != 0)
+	{
+		printf("j'attend pid %d et je suis pid %d\n", tab_pid[i], pid);		
+		waitpid(tab_pid[i++], 0, 0);
+		printf("c bon !\n");
+	}
 }
 
 void	ft_dup(t_command *command, t_command *current)
@@ -116,6 +129,8 @@ void	ft_dup(t_command *command, t_command *current)
 	}
 	else
 	{
+		close(current->next->pipe_fd[0]);
+		close(current->pipe_fd[1]);
 		dup2(current->pipe_fd[0], 0);
 		dup2(current->next->pipe_fd[1], 1);
 	}
