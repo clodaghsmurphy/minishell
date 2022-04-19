@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/19 15:39:29 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/19 17:23:57 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ void	ft_exe(t_mshell *mini)
 		exe_builtins(mini->command->value, &mini->env);
 	else
 	{
-		// pid = fork();
-		// if (pid == 0)
-		// {
+		pid = fork();
+		if (pid == 0)
+		{
 			exec_cmd(mini->env, mini->command, mini->command);
-		//}
+		}
+		wait(0);
 	}
 }
 
@@ -97,14 +98,8 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 		}
 		else
 			current = current->next;
-		//wait(0);
 	}
-	wait(0);	
-	// while (i > 0)
-	// {
-	// 	waitpid(-1, NULL, 0);
-	// 	test = test->next;
-	// }
+	//wait(0);
 }
 
 void	ft_dup(t_command *command, t_command *current)
