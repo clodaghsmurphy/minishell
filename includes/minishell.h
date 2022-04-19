@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/18 17:57:16 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:09:05 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char			*check_absolute_path(char *path);
 int				is_builtins(char **params);
 int				cmd_list_size(t_command *lst);
 int				cmd_lst_pos(t_command *lst, t_command *current);
-void			ft_dup(int pipe[2], t_command *command, t_command *current);
+void			ft_dup(t_command *command, t_command *current);
 t_pipe			*set_lst_pipe(t_command *command);
 void			add_back_pipe(t_pipe **pipe);
 

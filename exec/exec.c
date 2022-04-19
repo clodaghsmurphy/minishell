@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/18 18:00:52 by amontant         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:39:29 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,18 @@
 
 void	ft_exe(t_mshell *mini)
 {
+	int	pid;
+
 	if (is_builtins(mini->command->value) && cmd_list_size(mini->command) == 1)
 		exe_builtins(mini->command->value, &mini->env);
 	else
-		exec_cmd(mini->env, mini->command, mini->command);
+	{
+		// pid = fork();
+		// if (pid == 0)
+		// {
+			exec_cmd(mini->env, mini->command, mini->command);
+		//}
+	}
 }
 
 void	exe_builtins(char **params, t_env **env)
@@ -62,49 +70,22 @@ int	is_builtins(char **params)
 	return (0);
 }
 
-// void	exec_cmd(t_env *env, t_command *command, t_command *current)
-// {
-// 	char	*path;
-// 	int		pid;
-// 	int		pipe_fd[2];
-	
-// 	if (pipe(pipe_fd) == -1)
-// 		exit(0);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		ft_dup(pipe_fd, command, current);
-// 		if (is_builtins(current->value))
-// 		{
-// 			exe_builtins(current->value, &env);
-// 			exit(0);
-// 		}
-// 		path = find_path(env, current->value);
-// 		execve(path, current->value, env_to_tab(env));
-// 	}
-// 	else if (current->next)
-// 		exec_cmd(env, command, current->next);
-// 	//wait();
-// }
 void	exec_cmd(t_env *env, t_command *command, t_command *current)
 {
 	char	*path;
 	int		pid;
-	int		pipe_fd[2];
-	char	*str = malloc(1000);
-	int i;
-	i = 0;
-	// t_command *test;
 	
-	// test = current;
 	while (current)
 	{
-		if (pipe(pipe_fd) == -1)
+		if (current->next)
+		{
+			if (pipe(current->next->pipe_fd) == -1)
 			exit(0);
+		}
 		pid = fork();
 		if (pid == 0)
 		{
-			ft_dup(pipe_fd, command, current);
+			ft_dup(command, current);
 			if (is_builtins(current->value))
 			{
 				exe_builtins(current->value, &env);
@@ -114,14 +95,9 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 			execve(path, current->value, env_to_tab(env));
 			exit(0);
 		}
-		// else
-		// {
-		// 	read(pipe_fd[0], str, 1000);
-		// 	printf("recu : %s\n", str);
-		// }
-		current = current->next;
-		i ++;
-		//printf("i = %d", i);
+		else
+			current = current->next;
+		//wait(0);
 	}
 	wait(0);	
 	// while (i > 0)
@@ -131,30 +107,22 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 	// }
 }
 
-void	ft_dup(int pipe_fd[2], t_command *command, t_command *current)
+void	ft_dup(t_command *command, t_command *current)
 {
-	int	file_fd;
-	char *str = malloc(10000);
-	
 	if (cmd_lst_pos(command, current) == 1 && cmd_list_size(command) > 1)
 	{
-		dup2(pipe_fd[1], 1);
-		close(pipe_fd[0]);
+		close(current->next->pipe_fd[0]);
+		dup2(current->next->pipe_fd[1], 1);
 	}
-	else if (cmd_lst_pos(command, current) == 2)
+	else if (cmd_lst_pos(command, current) == cmd_list_size(command))
 	{
-		 int ret;
-		// file_fd = open("test.txt", O_RDONLY);
-		 ret = read(pipe_fd[0], str, 500);
-		// str[ret] = 0;
-	 printf("recu ds dup %s gjhjfyjjyjyjyjyjjyyjjjyjjjjyjyjyyj", str);
-		// dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
-	 	dup2(pipe_fd[0], 0);
-	 	//dup2(file_fd, 0);
-	 	//dup2(pipe_fd[0], 0);
-	 	//dup2(file_fd, 0);
-		
+		close(current->pipe_fd[1]);
+	 	dup2(current->pipe_fd[0], 0);
+	}
+	else
+	{
+		dup2(current->pipe_fd[0], 0);
+		dup2(current->next->pipe_fd[1], 1);
 	}
 }
 char	**env_to_tab(t_env *env)
