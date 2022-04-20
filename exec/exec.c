@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/20 16:44:45 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/20 16:48:00 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	exec_cmd(t_env *env, t_command *command, t_command *current)
 	}
 	pipe_fd[i * 2] = 0;
 	i = 0;
-	wait(0);
 	while (current)
 	{
 		pid = fork();
