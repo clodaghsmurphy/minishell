@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/17 18:06:59 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:27:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ void			env_free(t_env *env);
 /************ENV*************************/
 t_env			*parse_env(char **env_t);
 
+/************PARSE_VARS*******************/
+void			is_in_env(t_mshell *mshell, char *str);
+void			parse_dollar(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
 /***********SPLIT*******************/
 void			split_command(char *str, t_mshell *mshell);
 void			make_word(t_split **word, t_mshell *mshell);
@@ -105,7 +109,8 @@ int				parse_string(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
 void			parse_delimiter(t_split **word, t_mshell *mshell, \
 			char *str, int *i);
-
+void			parse_dollar(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
 /***********SPLIT_UTILS*******************/
 t_split			*split_lstnew(char c);
 void			split_lstadd_back(t_split **alst, t_split *new);
