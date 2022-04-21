@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void	split_command(char *str, t_mshell *mshell)
+void split_command(char *str, t_mshell *mshell)
 {
-	int			i;
+	int i;
 
 	mshell->word = NULL;
 	mshell->phrase = NULL;
@@ -22,24 +22,24 @@ void	split_command(char *str, t_mshell *mshell)
 	while (str[i] != '\0')
 	{
 		if (parse_string(&mshell->word, mshell, str, &i) == 2)
-			continue ;
+			continue;
 		parse_delimiter(&mshell->word, mshell, str, &i);
 	}
 	assign_tokens(mshell);
 }
 
-void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
+void parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	int	type;
+	int type;
 
 	if (str[*i] == 44 || str[*i] == 34)
 	{
 		type = str[*i];
 		(*i)++;
-		if (str[*i] == '$' && type == 34)
+		if (str[*i] == '$' && type == 34 && str[*i + 1] != 34)
 		{
 			parse_dollar_dquotes(word, mshell, str, i);
-			return ;
+			return;
 		}
 		while (str[*i] != type && str[*i] != '\0')
 		{
@@ -49,7 +49,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		if (str[*i] == '\0')
 		{
 			printf("quote error\n");
-			return ;
+			return;
 		}
 		else
 		{
@@ -59,12 +59,12 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		if (str[*i] == 32)
 		{
 			while (str[*i] == 32)
-			(*i)++;
+				(*i)++;
 		}
 	}
 }
 
-int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
+int parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	while (str[*i] != 32 && str[*i] != '|' && str[*i] != '\0')
 	{
@@ -84,17 +84,17 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 	return (1);
 }
 
-void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
+void parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	t_split	*delimiter;
-	int		flag;
+	t_split *delimiter;
+	int flag;
 
 	flag = 0;
 	delimiter = NULL;
 	if (str[*i] == '\0')
 	{
 		make_word(word, mshell);
-		return ;
+		return;
 	}
 	if (str[*i] == 32)
 	{
@@ -106,7 +106,7 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 		if (str[(*i) + 1] == '|')
 		{
 			printf("syntax error\n");
-			return ;
+			return;
 		}
 		split_lstadd_back(&delimiter, split_lstnew(str[*i]));
 		flag = 1;
