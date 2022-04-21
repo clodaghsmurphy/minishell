@@ -6,60 +6,81 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/21 14:49:00 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:40:28 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
+void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	int j;
+	int	j;
 
 	j = *i;
+	if ((str[*i] == '$' && str[*i + 1] == '\0') || \
+	(str[*i] == '$' && str[*i + 1] == ' ') || \
+	(str[*i] == '$' && str[*i + 1] == '|'))
+	{
+		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
+		(*i)++;
+		return ;
+	}
 	while (str[*i] != '\0' && str[*i] != '|' && str[*i] != ' ')
 	{
 		(*i)++;
 	}
-	if (str[*i] == '$')
-	{
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
-		return;
-	}
-	is_in_env(mshell, ft_strndup(str, (*i - j)));
-	return;
+	is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	return ;
 }
 
-void parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
+void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	int j;
+	int		j;
+	char type;
 
+	type = str[*i - 1];
 	j = *i;
 	(*i)++;
-	while (str[*i] != 34 && str[*i] != '\0')
+	if (str[*i] == 34 || str[*i] == 39)
+	{
+		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
+		(*i)++;
+		return ;
+	}
+	while (str[*i] != type && str[*i] != '\0')
 	{
 		(*i)++;
 	}
-	is_in_env(mshell, ft_strndup(str, (*i - j)));
+	if (type == 34)
+		is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	else if (type == 39)
+	{
+		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strndup(str + j, (*i - j))));
+		(*i)++;
+	}
+	if (str[*i] == 34)
+		(*i)++;
 }
 
-void is_in_env(t_mshell *mshell, char *str)
+void	is_in_env(t_mshell *mshell, char *str)
 {
-	int i;
-	t_env *temp;
+	int		i;
+	t_env	*temp;
+	char	*var;
 
+	var = ft_strdup(str + 1);
 	temp = mshell->env;
 	i = 0;
 	while (temp != NULL)
 	{
-		if (ft_strncmp(str, temp->name, 100) == 0)
+		if (ft_strncmp(var, temp->name, 100) == 0)
 		{
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(temp->value));
 			return ;
 		}
 		temp = temp->next;
 	}
-	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
+	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
 	return ;
 }
 

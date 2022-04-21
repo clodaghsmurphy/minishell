@@ -6,13 +6,13 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/17 18:47:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:16:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int parse_command(char *str, t_mshell *mshell)
+int	parse_command(char *str, t_mshell *mshell)
 {
 	mshell->command = NULL;
 	if (!str)
@@ -26,13 +26,13 @@ int parse_command(char *str, t_mshell *mshell)
 	return (0);
 }
 
-t_command *create_command(t_mshell *mshell)
+t_command	*create_command(t_mshell *mshell)
 {
-	t_phrase *temp_phrase;
-	t_command *command;
-	t_command *temp_command;
-	int size;
-	int i;
+	t_phrase	*temp_phrase;
+	t_command	*command;
+	t_command	*temp_command;
+	int			size;
+	int			i;
 
 	command = NULL;
 	command_lstadd_back(&command, command_lstnew(NULL));

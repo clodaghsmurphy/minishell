@@ -36,6 +36,8 @@ GREEN = "\033[1;32m"
 
 YELLOW = "\033[1;33m"
 
+URED = "\033[4;31m"
+
 NO_COLOUR = "\033[0m"
 
 INCLUDE = -I ./includes/ \
@@ -46,6 +48,11 @@ READLINE = -lreadline
 nb:=1
 
 all: $(NAME)
+	
+
+MAKE = make --silent --jobs
+
+	
 
 .c.o :
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -g3 $< -o $(<:.c=.o)
@@ -56,14 +63,14 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo -n $(GREEN)
-	@echo "\n	DONE ✅\n"
-	@echo -n $(YELLOW)
-	@echo -n "\nCOMPILING LIBFT\n"
+	@echo "\n>>>>>>>>>>>>DONE<<<<<<<<<<< ✅\n"
+	@echo -n $(URED)
+	@echo -n "\n	COMPILING LIBFT\n"
 	@echo -n $(NO_COLOUR)
-	@make -C libft
+	@make --silent -C libft
 	@echo -n $(YELLOW)
 	@$(CC) $(OBJ) $(READLINE)  $(Libft) $(CFLAGS) -o $(NAME) $(INCLUDE)
-	@echo $(GREEN)	"MINISHELL READY 💪!"
+	@echo $(GREEN)	">>>>>>>>>>>MINISHELL READY 💪<<<<<<<<<<<<<<<<!"
 
 
 clean:
