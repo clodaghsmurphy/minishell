@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/20 16:38:07 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/21 19:51:48 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int				is_valid_opt(char *arg);
 int				get_opt(char **args);
 void			echo(char **args);
 
+
 /*************EXEC*********************/
 void			ft_exe(t_mshell *mini);
 void			exe_builtins(char **params, t_env **env);
@@ -182,6 +183,12 @@ int				cmd_lst_pos(t_command *lst, t_command *current);
 void			ft_dup(t_command *command, t_command *current, int *pipe_fd, int i);
 t_pipe			*set_lst_pipe(t_command *command);
 void			add_back_pipe(t_pipe **pipe);
+void			execute(t_env *env, t_command *command, t_command *current, int *pipe_fd, int i);
+int				*set_pipe(t_command *command);
+void			close_pipe_n_wait(int *pipe_fd);
+void			exit_if_builtin_last(t_command *command, t_command *current);
+
+
 
 
 #endif

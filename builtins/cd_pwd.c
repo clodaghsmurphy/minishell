@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 15:17:24 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:57:05 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	cd(char **params)
 
 	if (!params[1])
 		return ;
+	if (params[2])
+	{
+		ft_putstr_fd("cd : too much arguments\n", 2);
+		return;
+	}
 	error = ft_strjoin("cd: ", params[1]);
 	if (chdir(params[1]) != 0)
 		perror(error);

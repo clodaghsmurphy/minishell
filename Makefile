@@ -15,6 +15,7 @@ SRC = src/main.c \
 	builtins/export_utils.c \
 	builtins/unset.c \
 	exec/exec.c \
+	exec/exec_utils.c \
 	exec/pipe_lst.c\
 	exec/utils.c\
 	exec/cmd_list_utils.c\
