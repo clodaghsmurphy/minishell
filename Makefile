@@ -9,6 +9,7 @@ SRC = src/main.c \
 	parse/env.c \
 	parse/command_utils.c \
 	parse/assign_tokens.c \
+	parse/parse_vars.c \
 	builtins/cd_pwd.c \
 	builtins/echo.c \
 	builtins/exit.c \
