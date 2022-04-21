@@ -6,24 +6,25 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/19 18:27:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:54:45 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-#include "../libft/libft.h"
-#include "builtins.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <stdlib.h>
+# include <signal.h>
+# include "libft.h"
+# include "builtins.h"
 
-#define KEY_UP 38
+# define KEY_UP 38
 
 struct s_command;
 struct s_mshell;
@@ -78,42 +79,43 @@ typedef struct s_mshell
 } t_mshell;
 
 /**************MAIN*****************/
-int ft_read(char *str, t_mshell *mshell);
-void free_mshell(t_mshell *mshell, char *str);
+int			ft_read(char *str, t_mshell *mshell);
+void		free_mshell(t_mshell *mshell, char *str);
 
 /**************PARSE****************/
-int check_args(int ac, char **av);
-int parse_command(char *str, t_mshell *mshell);
-t_command *create_command(t_mshell *mshell);
+int 		check_args(int ac, char **av);
+int 		parse_command(char *str, t_mshell *mshell);
+t_command	*create_command(t_mshell *mshell);
 
 /*************ENV_LIST****************/
-void print_env(t_env *env);
-void del_one(t_env **lst, t_env *to_del);
-t_env *env_new(char *name, char *value);
-void env_add_back(t_env **alst, t_env *new_elem);
-void env_free(t_env *env);
+void 		print_env(t_env *env);
+void 		del_one(t_env **lst, t_env *to_del);
+t_env 		*env_new(char *name, char *value);
+void 		env_add_back(t_env **alst, t_env *new_elem);
+void 		env_free(t_env *env);
 
 /************ENV*************************/
-t_env *parse_env(char **env_t);
+t_env 		*parse_env(char **env_t);
 
 /************PARSE_VARS*******************/
-void is_in_env(t_mshell *mshell, char *str);
-void parse_dollar(t_split **word, t_mshell *mshell,
-				  char *str, int *i);
-char *ft_strndup(const char *s, int size);
-void parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i);
+void		is_in_env(t_mshell *mshell, char *str);
+void		parse_dollar(t_split **word, t_mshell *mshell,
+			char *str, int *i);
+char		*ft_strndup(const char *s, int size);
+void		parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i);
+char		*ft_strndup(const char *s, int size);
 
 /***********SPLIT*******************/
-void split_command(char *str, t_mshell *mshell);
-void make_word(t_split **word, t_mshell *mshell);
-void parse_quotes(t_split **word, t_mshell *mshell,
-				  char *str, int *i);
-int parse_string(t_split **word, t_mshell *mshell,
-				 char *str, int *i);
-void parse_delimiter(t_split **word, t_mshell *mshell,
-					 char *str, int *i);
-void parse_dollar(t_split **word, t_mshell *mshell,
-				  char *str, int *i);
+void		split_command(char *str, t_mshell *mshell);
+void		make_word(t_split **word, t_mshell *mshell);
+void		parse_quotes(t_split **word, t_mshell *mshell,
+			char *str, int *i);
+int			parse_string(t_split **word, t_mshell *mshell,
+			char *str, int *i);
+void		parse_delimiter(t_split **word, t_mshell *mshell,
+			char *str, int *i);
+void		parse_dollar(t_split **word, t_mshell *mshell,
+			char *str, int *i);
 /***********SPLIT_UTILS*******************/
 t_split *split_lstnew(char c);
 void split_lstadd_back(t_split **alst, t_split *new);

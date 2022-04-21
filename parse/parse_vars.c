@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/21 14:46:10 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:49:00 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,32 @@ void is_in_env(t_mshell *mshell, char *str)
 		if (ft_strncmp(str, temp->name, 100) == 0)
 		{
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(temp->value));
-			return;
+			return ;
 		}
 		temp = temp->next;
 	}
 	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
-<<<<<<< HEAD
-	return (0);
-=======
-	return;
+	return ;
 }
 
-char *ft_strndup(const char *s, int size)
+char	*ft_strndup(const char *s, int size)
 {
-	int s_len;
+	int		s_len;
+	char	*s_;
+	char	*s2;
+	int		i;
+
+	i = 0;
+	s_ = (char *)s;
+	s_len = ft_strlen(s_);
+	s2 = malloc(sizeof(char) * s_len + 1);
+	if (!s2)
+		return (NULL);
+	while (s[i] && i < size)
+	{
+		s2[i] = s[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
