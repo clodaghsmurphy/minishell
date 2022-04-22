@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/13 15:09:50 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:20:12 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	split_command(char *str, t_mshell *mshell)
 {
-	int			i;
+	int	i;
 
 	mshell->word = NULL;
 	mshell->phrase = NULL;
@@ -32,10 +32,15 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int	type;
 
-	if (str[*i] == 44 || str[*i] == 34)
+	if (str[*i] == 34 || str[*i] == 39)
 	{
 		type = str[*i];
 		(*i)++;
+		if (str[*i] == '$')
+		{			
+			parse_dollar_dquotes(word, mshell, str, i);
+			return ;
+		}
 		while (str[*i] != type && str[*i] != '\0')
 		{
 			split_lstadd_back(word, split_lstnew(str[*i]));
@@ -54,7 +59,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		if (str[*i] == 32)
 		{
 			while (str[*i] == 32)
-			(*i)++;
+				(*i)++;
 		}
 	}
 }
@@ -63,9 +68,14 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	while (str[*i] != 32 && str[*i] != '|' && str[*i] != '\0')
 	{
-		if (str[*i] == 44 || str[*i] == 34)
+		if (str[*i] == 34 || str[*i] == 39)
 		{
 			parse_quotes(word, mshell, str, i);
+			return (2);
+		}
+		if (str[*i] == '$')
+		{
+			parse_dollar(word, mshell, str, i);
 			return (2);
 		}
 		split_lstadd_back(word, split_lstnew(str[*i]));
