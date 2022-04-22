@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/18 17:03:31 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:32:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	print_tab(char **tab)
 		return ;
 	while (tab[i] != NULL)
 	{
-		printf("tab[%d] is %s\n", i, tab[i]);
+		printf("tab[%d] is [%s]\n", i, tab[i]);
 		i++;
 	}
 }

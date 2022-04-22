@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/21 21:16:47 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:57:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	parse_command(char *str, t_mshell *mshell)
 		return (0);
 	split_command(str, mshell);
 	mshell->command = create_command(mshell);
+	print_command(mshell->command);
 	ft_exe(mshell);
 	free_command(&mshell->command);
 	return (0);
@@ -55,7 +56,7 @@ t_command	*create_command(t_mshell *mshell)
 			temp_command->value[i] = 0;
 			temp_phrase = temp_phrase->next;
 			if (temp_phrase == NULL)
-				break;
+				break ;
 			command_lstadd_back(&command, command_lstnew(NULL));
 			temp_command = temp_command->next;
 		}
@@ -63,10 +64,9 @@ t_command	*create_command(t_mshell *mshell)
 		{
 			temp_command->value[i] = 0;
 			temp_command->next = NULL;
-			break;
+			break ;
 		}
 	}
-	//print_command(command);
 	return (command);
 }
 

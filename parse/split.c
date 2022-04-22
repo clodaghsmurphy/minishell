@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/21 22:18:31 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:20:12 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		type = str[*i];
 		(*i)++;
 		if (str[*i] == '$')
-		{
+		{			
 			parse_dollar_dquotes(word, mshell, str, i);
 			return ;
 		}

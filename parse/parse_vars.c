@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/21 22:40:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:41:24 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,21 @@
 void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int	j;
+	int	type;
 
 	j = *i;
+	if (str[*i + 1] == 34 || str[*i + 1] == 39)
+	{
+		(*i)++;
+		type = (*i);
+		if (str[*i + 1] == type)
+		{
+			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
+			return ;
+		}
+		parse_quotes(word, mshell, str, i);
+		return ;
+	}
 	if ((str[*i] == '$' && str[*i + 1] == '\0') || \
 	(str[*i] == '$' && str[*i + 1] == ' ') || \
 	(str[*i] == '$' && str[*i + 1] == '|'))
@@ -36,7 +49,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int		j;
-	char type;
+	char	type;
 
 	type = str[*i - 1];
 	j = *i;
