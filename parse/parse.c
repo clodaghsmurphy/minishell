@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 13:57:44 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:35:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	parse_command(char *str, t_mshell *mshell)
 		return (0);
 	split_command(str, mshell);
 	mshell->command = create_command(mshell);
-	print_command(mshell->command);
 	ft_exe(mshell);
+	free_phrase(&mshell->phrase);
 	free_command(&mshell->command);
 	return (0);
 }
@@ -46,7 +46,7 @@ t_command	*create_command(t_mshell *mshell)
 		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
 		while (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) != 0)
 		{
-			temp_command->value[i] = (char *)malloc(sizeof(char) * ft_strlen(temp_phrase->str) + 1);
+			//temp_command->value[i] = (char *)malloc(sizeof(char) * ft_strlen(temp_phrase->str) + 1);
 			temp_command->value[i] = temp_phrase->str;
 			i++;
 			temp_phrase = temp_phrase->next;

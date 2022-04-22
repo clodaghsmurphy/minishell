@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 14:41:24 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:29:33 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,15 @@ void	is_in_env(t_mshell *mshell, char *str)
 		if (ft_strncmp(var, temp->name, 100) == 0)
 		{
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(temp->value));
+			free(str);
+			free(var);
 			return ;
 		}
 		temp = temp->next;
 	}
 	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
+	free(str);
+	free(var);
 	return ;
 }
 

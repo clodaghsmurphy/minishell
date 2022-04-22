@@ -6,13 +6,13 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/21 14:52:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:33:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_exe(t_mshell *mini)
+void	ft_exe(t_mshell *mini)
 {
 	if (is_builtins(mini->command->value))
 		exe_builtins(mini->command->value, &mini->env);
@@ -20,7 +20,7 @@ void ft_exe(t_mshell *mini)
 		exec_cmd_1(mini->env, mini->command->value);
 }
 
-void exe_builtins(char **params, t_env **env)
+void	exe_builtins(char **params, t_env **env)
 {
 	if (!ft_strncmp(params[0], "pwd", 5))
 		pwd();
@@ -40,7 +40,7 @@ void exe_builtins(char **params, t_env **env)
 	}
 }
 
-int is_builtins(char **params)
+int	is_builtins(char **params)
 {
 	if (!ft_strncmp(params[0], "pwd", 5))
 		return (1);
@@ -59,10 +59,10 @@ int is_builtins(char **params)
 	return (0);
 }
 
-void exec_cmd_1(t_env *env, char **cmd_params)
+void	exec_cmd_1(t_env *env, char **cmd_params)
 {
-	char *path;
-	int pid;
+	char	*path;
+	int		pid;
 
 	pid = fork();
 	if (pid == 0)
@@ -73,11 +73,11 @@ void exec_cmd_1(t_env *env, char **cmd_params)
 	wait(NULL);
 }
 
-char **env_to_tab(t_env *env)
+char	**env_to_tab(t_env *env)
 {
-	t_env *current;
-	char **env_tab;
-	int i;
+	t_env	*current;
+	char	**env_tab;
+	int		i;
 
 	current = env;
 	env_tab = malloc(sizeof(char *) * (lst_env_size(env) + 1));
@@ -91,10 +91,10 @@ char **env_to_tab(t_env *env)
 	return (env_tab);
 }
 
-int lst_env_size(t_env *env)
+int	lst_env_size(t_env *env)
 {
-	int i;
-	t_env *current;
+	int		i;
+	t_env	*current;
 
 	current = env;
 	i = 0;
