@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/22 17:47:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/26 18:28:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void		free_mshell(t_mshell *mshell, char *str);
 int			check_args(int ac, char **av);
 int			parse_command(char *str, t_mshell *mshell);
 t_command	*create_command(t_mshell *mshell);
+int			is_delim(char *str, int *i);
+int	is_redir(char *str, int *i);
 
 /*************ENV_LIST****************/
 void		print_env(t_env *env);
