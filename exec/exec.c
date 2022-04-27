@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/27 16:01:23 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/27 16:26:45 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,14 @@ void	close_pipe_n_wait(int *pipe_fd)
 void	execute(t_env *env, t_command *command, t_command *current, int *pipe_fd, int i)
 {
 	char	*path;
-	int		pid;
-
-	pid = fork();
-	if (pid == 0)
+	ft_dup(command, current, pipe_fd, i);
+	if (is_builtins(current->value))
+	{
+		exe_builtins(current->value, &env);
+		exit(0);
+	}
+	path = find_path(env, current->value);
+	if (path == NULL)
 	{
 		free(pipe_fd);
 		ft_putstr_fd("Command not found\n", 2);
@@ -140,7 +144,10 @@ int	make_redir_out(t_command *command)
 	fd = 0;
 	while (command->out)
 	{
-		fd = open(command->out->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (command->out->append == 1)
+			fd = open(command->out->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		else if (command->out->append == 0)
+			fd = open(command->out->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd == 0)
 			printf("erreur de creation de file out mais j'exite pas encore");
 		command->out = command->out->next;
