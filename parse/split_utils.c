@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:36:25 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 14:18:08 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:08:46 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	make_word(t_split **word, t_mshell *mshell)
 	char	*str;
 
 	i = 0;
-	if (!word)
+	if (!(*word))
 		return ;
 	temp = *word;
 	size = split_lstsize(*word) + 1;

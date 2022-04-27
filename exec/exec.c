@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/27 15:56:07 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/27 16:01:23 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,10 @@ void	close_pipe_n_wait(int *pipe_fd)
 void	execute(t_env *env, t_command *command, t_command *current, int *pipe_fd, int i)
 {
 	char	*path;
-	ft_dup(command, current, pipe_fd, i);
-	if (is_builtins(current->value))
-	{
-		exe_builtins(current->value, &env);
-		exit(0);
-	}
-	path = find_path(env, current->value);
-	if (path == NULL)
+	int		pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
 		free(pipe_fd);
 		ft_putstr_fd("Command not found\n", 2);

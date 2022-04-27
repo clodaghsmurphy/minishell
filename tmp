@@ -1,0 +1,10 @@
+builtins
+exec
+includes
+libft
+Makefile
+minishell
+parse
+src
+tmp
+valgrind_readline_leaks_ignore.txt
