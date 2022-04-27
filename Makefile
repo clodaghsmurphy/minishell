@@ -19,6 +19,7 @@ SRC = src/main.c \
 	exec/pipe_lst.c\
 	exec/utils.c\
 	exec/cmd_list_utils.c\
+	exec/redir.c\
 
 NO_OF_FILES := $(words $(SRC)) 
 

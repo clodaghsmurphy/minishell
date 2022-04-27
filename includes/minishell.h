@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/21 19:51:48 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:50:27 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,24 @@
 struct	s_command;
 struct	s_mshell;
 
+typedef struct	s_redir_in
+{
+	char				*name;
+	int					type;
+	struct s_redir_in	*next;
+}	t_redir_in;
+
+typedef struct	s_redir_out
+{
+	char				*name;
+	int					append;
+	struct s_redir_out	*next;
+}	t_redir_out;
+
 typedef struct s_command
 {
 	char				**value;
-	int					pipe_fd[2];
+	t_redir_out			*out;
 	struct s_command	*next;
 }	t_command;
 
@@ -187,6 +201,14 @@ void			execute(t_env *env, t_command *command, t_command *current, int *pipe_fd,
 int				*set_pipe(t_command *command);
 void			close_pipe_n_wait(int *pipe_fd);
 void			exit_if_builtin_last(t_command *command, t_command *current);
+
+
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+char			**command_clear_one(char **command);
+char			**command_clear_all(char **command);
+t_redir_out		*parse_redir_out(char **command);
+int				make_redir_out(t_command *command);
+
 
 
 
