@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/26 18:31:43 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/28 15:00:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	split_command(char *str, t_mshell *mshell)
 	i = 0;
 	while (str[i] != '\0')
 	{
+		parse_delimiter(&mshell->word, mshell, str, &i);
 		if (parse_string(&mshell->word, mshell, str, &i) == 2)
 			continue ;
 		parse_delimiter(&mshell->word, mshell, str, &i);
@@ -68,7 +69,6 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	while (is_delim(str, i) == 1)
 	{
-		printf("is delim %c\n", str[*i]);
 		if (str[*i] == 34 || str[*i] == 39)
 		{
 			parse_quotes(word, mshell, str, i);
@@ -169,7 +169,7 @@ int	is_redir(char *str, int *i)
 		return (2);
 	if (str[*i] == '>')
 		return (1);
-	if (str[*i] == '>')
+	if (str[*i] == '<')
 		return (1);
 	
 	return (0);
