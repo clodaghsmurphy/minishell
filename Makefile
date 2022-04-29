@@ -17,10 +17,12 @@ SRC = src/main.c \
 	builtins/unset.c \
 	exec/exec.c \
 	exec/exec_utils.c \
+	exec/exec_utils2.c \
 	exec/pipe_lst.c\
 	exec/utils.c\
 	exec/cmd_list_utils.c\
-	exec/redir.c\
+	exec/redir_in.c\
+	exec/redir_out.c\
 
 NO_OF_FILES := $(words $(SRC)) 
 

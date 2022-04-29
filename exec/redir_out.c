@@ -53,7 +53,7 @@ void	add_back_redir_out(t_redir_out **lst, char *file_name, int	bol)
 	current->next = new;
 }
 
-char	**command_clear_all(char **command)
+char	**command_clear_all_out(char **command)
 {
 	char	**new;
 	int		i;
@@ -63,7 +63,7 @@ char	**command_clear_all(char **command)
 	i = 0;
 	while (command[i])
 		i ++;
-	new = malloc(sizeof(char *) * i - 1);
+	new = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	j = 0;
 	while (command[i])
@@ -95,7 +95,7 @@ char	**command_clear_one(char **command)
 	i = 0;
 	while (command[i])
 		i ++;
-	new = malloc(sizeof(char *) * i - 1);
+	new = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	j = 0;
 	while (command[i])
@@ -116,7 +116,6 @@ char	**command_clear_one(char **command)
 		}
 	}
 	new[j] = 0;
-	//free_tab(command);
 	return (new);
 }
 // void	free_tab(char **tab)
