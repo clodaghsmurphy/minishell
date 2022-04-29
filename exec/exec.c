@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/29 13:56:07 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/29 14:30:31 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_exe(t_mshell *mini)
 		current->value = command_clear_all_in(current->value);
 		current = current->next;
 	}
-	//exec_cmd(mini);
+	exec_cmd(mini);
 }
 
 void	exec_cmd(t_mshell *mini)
