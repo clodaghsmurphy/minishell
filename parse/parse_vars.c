@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 17:29:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/02 18:14:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	int	j;
-	int	type;
+	int		j;
+	int		type;
+	char	*res;
+	char	*var;
 
+	res = NULL;
 	j = *i;
 	if (str[*i + 1] == 34 || str[*i + 1] == 39)
 	{
@@ -41,8 +44,24 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	while (str[*i] != '\0' && str[*i] != '|' && str[*i] != ' ')
 	{
 		(*i)++;
+		if (str[*i] == '$')
+		{
+			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+			if (var != NULL)
+				res = ft_strjoin(res, var);
+			else
+				res = ft_strjoin(res, ft_strdup(""));
+			if (str[*i] == '$')
+			{
+				j = (*i) + 1;
+				continue ;
+			}
+			else
+				break ;
+		}	
 	}
-	is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	res = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
 	return ;
 }
 
@@ -75,7 +94,7 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		(*i)++;
 }
 
-void	is_in_env(t_mshell *mshell, char *str)
+char	*is_in_env(t_mshell *mshell, char *str)
 {
 	int		i;
 	t_env	*temp;
@@ -88,17 +107,15 @@ void	is_in_env(t_mshell *mshell, char *str)
 	{
 		if (ft_strncmp(var, temp->name, 100) == 0)
 		{
-			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(temp->value));
 			free(str);
 			free(var);
-			return ;
+			return (temp->value);
 		}
 		temp = temp->next;
 	}
-	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
 	free(str);
 	free(var);
-	return ;
+	return (NULL);
 }
 
 char	*ft_strndup(const char *s, int size)
@@ -118,6 +135,8 @@ char	*ft_strndup(const char *s, int size)
 	{
 		s2[i] = s[i];
 		i++;
+		if (s[i] == '$')
+			break ;
 	}
 	s2[i] = '\0';
 	return (s2);

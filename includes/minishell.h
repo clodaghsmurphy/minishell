@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/28 17:49:14 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:28:59 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			check_args(int ac, char **av);
 int			parse_command(char *str, t_mshell *mshell);
 t_command	*create_command(t_mshell *mshell);
 int			is_delim(char *str, int *i);
-int	is_redir(char *str, int *i);
+int			is_redir(char *str, int *i);
 
 /*************ENV_LIST****************/
 void		print_env(t_env *env);
@@ -121,10 +121,10 @@ void		env_add_back(t_env **alst, t_env *new_elem);
 void		env_free(t_env *env);
 
 /************ENV*************************/
-t_env 		*parse_env(char **env_t);
+t_env		*parse_env(char **env_t);
 
 /************PARSE_VARS*******************/
-void		is_in_env(t_mshell *mshell, char *str);
+char		*is_in_env(t_mshell *mshell, char *str);
 void		parse_dollar(t_split **word, t_mshell *mshell,
 			char *str, int *i);
 char		*ft_strndup(const char *s, int size);
@@ -165,7 +165,7 @@ void		print_command(t_command *command);
 int			command_size(t_command *command);
 void		free_command(t_command **command);
 /**************INIT*****************/
-t_mshell *init_mshell(char **env);
+t_mshell	*init_mshell(char **env);
 
 /**************ARM_SIGNAL************/
 void armsignals(void);
@@ -191,7 +191,6 @@ void pwd(void);
 int is_valid_opt(char *arg);
 int get_opt(char **args);
 void echo(char **args);
-
 
 /*************EXEC*********************/
 void			ft_exe(t_mshell *mini);

@@ -57,8 +57,6 @@ all: $(NAME)
 
 MAKE = make --silent --jobs
 
-	
-
 .c.o :
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -g3 $< -o $(<:.c=.o)
 	@echo -n $(YELLOW)
