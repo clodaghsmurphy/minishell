@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/28 14:59:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/04/29 14:33:55 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_command(char *str, t_mshell *mshell)
 		return (0);
 	split_command(str, mshell);
 	mshell->command = create_command(mshell);
-	print_command(mshell->command);
+	//print_command(mshell->command);
 	ft_exe(mshell);
 	free_phrase(&mshell->phrase);
 	free_command(&mshell->command);

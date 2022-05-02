@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/29 14:30:31 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/04/29 15:51:57 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	make_redir_in(t_command *command)
 		if (command->in->type == 0)
 			fd = open(command->in->name, O_RDONLY);
 		if (fd == 0)
-			printf("erreur d'ouverture de file in mais j'exite pas encore");
+			printf("erreur d'ouverture de file in mais j'exit pas encore");
 		command->in = command->in->next;
 	}
 	return (fd);
