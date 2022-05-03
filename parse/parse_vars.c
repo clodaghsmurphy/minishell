@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/03 16:05:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:35:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,55 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int		j;
 	char	type;
+	char	*res;
+	char	*var;
 
 	type = str[*i - 1];
 	j = *i;
 	(*i)++;
 	if (str[*i] == 34 || str[*i] == 39)
 	{
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
-		(*i)++;
+		if (str[*i] == type)
+			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
+		else
+		{
+			printf("quote error\n");
+			return ;
+		}
 		return ;
 	}
 	while (str[*i] != type && str[*i] != '\0')
 	{
+		if (str[*i] == '$' && type == 34)
+		{
+			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+			if (var != NULL)
+				res = ft_strjoin(res, var);
+			else
+				res = ft_strjoin(res, ft_strdup(""));
+			j = (*i);
+			(*i)++;
+			continue ;
+		}
 		(*i)++;
 	}
+	if (str[*i] == '\0')
+	{
+		printf("quote error\n");
+		return ;
+	}
 	if (type == 34)
-		is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	{
+		var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+		if (var != NULL)
+				res = ft_strjoin(res, var);
+		else
+			res = ft_strjoin(res, ft_strdup(""));
+		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
+	}
 	else if (type == 39)
 	{
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strndup(str + j, (*i - j))));
+		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strndup2(str + j, (*i - j))));
 		(*i)++;
 	}
 	if (str[*i] == 34)
@@ -136,6 +166,28 @@ char	*ft_strndup(const char *s, int size)
 		i++;
 		if (s[i] == '$')
 			break ;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
+
+char	*ft_strndup2(const char *s, int size)
+{
+	int		s_len;
+	char	*s_;
+	char	*s2;
+	int		i;
+
+	i = 0;
+	s_ = (char *)s;
+	s_len = ft_strlen(s_);
+	s2 = malloc(sizeof(char) * s_len + 1);
+	if (!s2)
+		return (NULL);
+	while (s[i] && i < size)
+	{
+		s2[i] = s[i];
+		i++;
 	}
 	s2[i] = '\0';
 	return (s2);
