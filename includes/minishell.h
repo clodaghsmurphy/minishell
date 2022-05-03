@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/28 17:49:14 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:25:34 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_env
 
 typedef struct s_mshell
 {
+	int			*pipe_fd;
 	t_env		*env;
 	char		**path;
 	t_command	*command;
@@ -207,10 +208,10 @@ char			*check_absolute_path(char *path);
 int				is_builtins(char **params);
 int				cmd_list_size(t_command *lst);
 int				cmd_lst_pos(t_command *lst, t_command *current);
-void			ft_dup(t_command *command, t_command *current, int *pipe_fd, int i);
+void			ft_dup(t_mshell *mini, t_command *current, int i);
 t_pipe			*set_lst_pipe(t_command *command);
 void			add_back_pipe(t_pipe **pipe);
-void			execute(t_mshell *mini, t_command *current, int *pipe_fd, int i);
+void			execute(t_mshell *mini, t_command *current, int i);
 int				*set_pipe(t_command *command);
 void			close_pipe_n_wait(int *pipe_fd);
 void			exit_if_builtin_last(t_command *command, t_command *current);
@@ -220,12 +221,19 @@ void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 char			**command_clear_one(char **command);
 char			**command_clear_all_out(char **command);
 t_redir_out		*parse_redir_out(char **command);
-int				make_redir_out(t_command *command);
+int				make_redir_out(t_command *command, t_mshell *mini);
 
 void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
 char			**command_clear_one_in(char **command);
 char			**command_clear_all_in(char **command);
 t_redir_in		*parse_redir_in(char **command);
-int				make_redir_in(t_command *command);
+int				make_redir_in(t_command *command, t_mshell *mini);
+
+void			free_redir_in(t_redir_in *lst);
+void			free_redir_out(t_redir_out *lst);
+void			error(char *str, t_mshell *mini);
+
+int				lataille(char **command);
+
 
 #endif

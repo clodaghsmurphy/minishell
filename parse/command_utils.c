@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 13:32:52 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:50:39 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	free_command(t_command **command)
 	current = *command;
 	while (current != NULL)
 	{
+		free_redir_in(current->in);
+		free_redir_out(current->out);
 		free_tab(current->value);
 		temp = current;
 		current = current->next;
