@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/03 17:25:34 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:25:02 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,8 @@ void			free_redir_out(t_redir_out *lst);
 void			error(char *str, t_mshell *mini);
 
 int				lataille(char **command);
+char			**ft_dup_tab(char **command);
+
 
 
 #endif

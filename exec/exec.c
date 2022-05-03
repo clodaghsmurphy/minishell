@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/03 16:58:34 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:25:28 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_exe(t_mshell *mini)
 	}
 	mini->pipe_fd = NULL;
 	error("random", mini);
-	
 //	exec_cmd(mini);
 }
 

@@ -10,27 +10,49 @@ void	free_tab(char **tab);
 t_redir_out	*parse_redir_out(char **command)
 {
 	t_redir_out	*lst;
+	char		**tab;
 	int			i;
 
 	i = 0;
 	lst = NULL;
-	while (command[i])
+	tab = ft_dup_tab(command);
+	while (tab[i])
 	{
-		if (!ft_strncmp(command[i], ">>", 3) && command[i + 1])
+		if (!ft_strncmp(tab[i], ">>", 3) && tab[i + 1])
 		{
-			add_back_redir_out(&lst, command[i + 1], 1);
-			command = command_clear_one(command);
+			add_back_redir_out(&lst, tab[i + 1], 1);
+			tab = command_clear_one(tab);
 			i = - 1;
 		}
-		else if (!ft_strncmp(command[i], ">", 2) && command[i + 1])
+		else if (!ft_strncmp(tab[i], ">", 2) && tab[i + 1])
 		{
-			add_back_redir_out(&lst, command[i + 1], 0);
-			command = command_clear_one(command);
+			add_back_redir_out(&lst, tab[i + 1], 0);
+			tab = command_clear_one(tab);
 			i = - 1;
 		} 
 		i++;
 	}
+	free_tab(tab);
 	return (lst);
+}
+
+char	**ft_dup_tab(char **command)
+{
+	int		i;
+	char	**dup;
+
+	i = 0;
+	while (command[i])
+		i++;
+	dup = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (command[i])
+	{
+		dup[i] = ft_strdup(command[i]);
+		i++;
+	}
+	dup[i] = 0;
+	return (dup);
 }
 
 char	**command_clear_all_out(char **command)
@@ -97,7 +119,7 @@ char	**command_clear_one(char **command)
 		}
 	}
 	new[j] = 0;
-	//free_tab(command);
+	free_tab(command);
 	return (new);
 }
 int		lataille(char **command)
