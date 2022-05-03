@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/02 18:14:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:05:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		(*i)++;
 		return ;
 	}
-	while (str[*i] != '\0' && str[*i] != '|' && str[*i] != ' ')
+	while (is_delim(str, i))
 	{
 		(*i)++;
 		if (str[*i] == '$')
@@ -51,16 +51,15 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 				res = ft_strjoin(res, var);
 			else
 				res = ft_strjoin(res, ft_strdup(""));
-			if (str[*i] == '$')
-			{
-				j = (*i) + 1;
-				continue ;
-			}
-			else
-				break ;
-		}	
+			j = (*i);
+			continue ;
+		}
 	}
-	res = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	if (var != NULL)
+		res = ft_strjoin(res, var);
+	else
+		res = ft_strjoin(res, ft_strdup(""));
 	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
 	return ;
 }

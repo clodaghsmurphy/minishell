@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/28 15:00:36 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:01:23 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
 			(*i)++;
 			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
-
 		}
 		else
 			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
