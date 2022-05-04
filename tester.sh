@@ -31,7 +31,7 @@ exec_test()
 	ES_1=$?
 	TEST2=$(echo $@ "; exit" | bash 2>&-)
 	ES_2=$?
-	TEST1=$(cat diff1.txt | sed s/"33m  Shell  ✗ "//)
+	TEST1=$(cat diff1.txt | head -n 2 | tail -n 1 | sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'| sed 's/  Shell.*/ /' | sed -e 's/ *$//g')
 	rm diff1.txt
 	if [ "$TEST1" = "$TEST2" ] && [ "$ES_1" = "$ES_2" ]; then
 		printf " $BOLDGREEN%s$RESET" "✓ "
@@ -57,6 +57,16 @@ exec_test()
 
 # ECHO TESTS
 exec_test 'echo test tout'
- exec_test 'echo test      tout'
- exec_test 'echo -n test tout'
- exec_test 'echo -n -n -n test tout'
+exec_test 'echo test      tout'
+exec_test 'echo -n test tout'
+exec_test 'echo -n -n -n test tout'
+exec_test 'echo -n -nnnnnn -n test tout'
+
+echo "\033[1m\033[37m \nDOLLAR TESTS\n"
+# DOLLAR TESTS
+exec_test 'echo $USER'
+exec_test 'echo $USER$HOME'
+exec_test 'echo "$USER$HOME"'
+exec_test 'echo "$USER"'
+exec_test 'echo '$USER\$HOME\'
+
