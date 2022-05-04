@@ -27,13 +27,14 @@ echo
 
 exec_test()
 {
-	echo $@ | ./minishell 2>&- 1>> diff1.txt
+	TEST1=$(echo $@; "; exit" | ./minishell 2>&-) 
 	ES_1=$?
-	TEST2=$(echo $@ "; exit" | bash 2>&-)
+	TEST2=$(echo $@; exit | bash 2>&-)
+	echo exit | bash
 	ES_2=$?
-	TEST1=$(cat diff1.txt | sed s/"33m  Shell  ✗ "//)
-	rm diff1.txt
-	if [ "$TEST1" = "$TEST2" ] && [ "$ES_1" = "$ES_2" ]; then
+	printf "TEST 1\n $TEST1 TEST2\n $TEST2\n"
+	echo $TEST1 $TEST2
+	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
 		printf " $BOLDGREEN%s$RESET" "✓ "
 	else
 		printf " $BOLDRED%s$RESET" "✗ "
@@ -57,6 +58,6 @@ exec_test()
 
 # ECHO TESTS
 exec_test 'echo test tout'
- exec_test 'echo test      tout'
- exec_test 'echo -n test tout'
- exec_test 'echo -n -n -n test tout'
+# exec_test 'echo test      tout'
+# exec_test 'echo -n test tout'
+# exec_test 'echo -n -n -n test tout'
