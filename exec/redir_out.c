@@ -1,10 +1,10 @@
 #include "../includes/minishell.h"
 
-void	add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
-char	**command_clear_one(char **command);
-char	**command_clear_all(char **command);
+void		add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+char		**command_clear_one(char **command);
+char		**command_clear_all(char **command);
 t_redir_out	*parse_redir_out(char **command);
-void	free_tab(char **tab);
+void		free_tab(char **tab);
 
 
 t_redir_out	*parse_redir_out(char **command)

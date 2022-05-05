@@ -6,18 +6,24 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/04/28 14:25:05 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/04 12:41:44 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exit_if_builtin_last(t_command *command, t_command *current)
+void	exit_if_builtin_last(t_mshell *mini, t_command *current)
 {
-	if (cmd_lst_pos(command, current) == cmd_list_size(command))
+	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 	{
 		if (is_builtins(current->value))
+		{
+			free(mini->pipe_fd);
+			free_command(&mini->command);
+			env_free(mini->env);
+			free(mini);
 			exit(0);
+		}
 	}
 }
 

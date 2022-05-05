@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/03 18:25:28 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:26:29 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
 
 void	ft_exe(t_mshell *mini)
 {
@@ -30,8 +29,12 @@ void	ft_exe(t_mshell *mini)
 		current = current->next;
 	}
 	mini->pipe_fd = NULL;
-	error("random", mini);
-//	exec_cmd(mini);
+	//error("random", mini);
+	exec_cmd(mini);
+	free(mini->pipe_fd);
+	free_command(&mini->command);
+	//env_free(mini->env);
+	//free(mini);
 }
 
 void	exec_cmd(t_mshell *mini)
@@ -48,7 +51,7 @@ void	exec_cmd(t_mshell *mini)
 		pid = fork();
 		if (pid == 0)
 		{
-			exit_if_builtin_last(mini->command, current);
+			exit_if_builtin_last(mini, current);
 		 	execute(mini, current, i);
 		}
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
@@ -60,7 +63,6 @@ void	exec_cmd(t_mshell *mini)
 		current = current->next;
 	}
 	close_pipe_n_wait(mini->pipe_fd);
-	free(mini->pipe_fd);
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
@@ -75,9 +77,8 @@ void	execute(t_mshell *mini, t_command *current, int i)
 	path = find_path(mini->env, current->value);
 	if (path == NULL)
 	{
-		free(mini->pipe_fd);
-		ft_putstr_fd("Command not found\n", 2);
-		exit(0);
+		ft_putstr_fd(current->value[0], 2);
+		error(" ", mini);
 	}
 	execve(path, current->value, env_to_tab(mini->env));
 	exit(0);

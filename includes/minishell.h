@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/03 18:25:02 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:48:46 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void			add_back_pipe(t_pipe **pipe);
 void			execute(t_mshell *mini, t_command *current, int i);
 int				*set_pipe(t_command *command);
 void			close_pipe_n_wait(int *pipe_fd);
-void			exit_if_builtin_last(t_command *command, t_command *current);
+void			exit_if_builtin_last(t_mshell *mini, t_command *current);
 
 
 void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
@@ -231,6 +231,7 @@ int				make_redir_in(t_command *command, t_mshell *mini);
 
 void			free_redir_in(t_redir_in *lst);
 void			free_redir_out(t_redir_out *lst);
+void			free_mini(t_mshell *mini);
 void			error(char *str, t_mshell *mini);
 
 int				lataille(char **command);

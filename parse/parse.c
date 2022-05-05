@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/29 14:33:55 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:14:27 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ int	parse_command(char *str, t_mshell *mshell)
 		return (0);
 	split_command(str, mshell);
 	mshell->command = create_command(mshell);
+	free_phrase(&mshell->phrase);
 	//print_command(mshell->command);
 	ft_exe(mshell);
-	free_phrase(&mshell->phrase);
-	free_command(&mshell->command);
 	return (0);
 }
 

@@ -26,3 +26,11 @@ void	free_redir_out(t_redir_out *lst)
 		free(temp);
 	}
 }
+
+void	free_mini(t_mshell *mini)
+{
+	free(mini->pipe_fd);
+	free_command(&mini->command);
+	//env_free(mini->env);
+	free(mini);
+}
