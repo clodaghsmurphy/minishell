@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:00:11 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:55:35 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:04:48 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(int code)
+void	ft_exit(int code, t_mshell *mini)
 {
+	free_mini(mini);
 	exit(code);
 }

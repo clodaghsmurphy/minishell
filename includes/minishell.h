@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/04 12:48:46 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/05 17:17:12 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,25 +178,27 @@ int is_variable(char *str);
 int is_builtin(char *str);
 
 /************BUILTINS*****************/
-void del_one(t_env **lst, t_env *to_del);
-char *get_value(char *line);
-char *get_name(char *line);
-void export_variable(t_env **env, char *new_v);
-void ft_export(t_env **env, char **params);
-int check_valid_variable(char *variable);
-void check_rm_double(t_env **env);
-void ft_unset(t_env **env, char **params);
-void unset_variable(t_env **env, char *variable_name);
-void cd(char **params);
-void pwd(void);
-int is_valid_opt(char *arg);
-int get_opt(char **args);
-void echo(char **args);
+void	del_one(t_env **lst, t_env *to_del);
+char	*get_value(char *line);
+char	*get_name(char *line);
+void	export_variable(t_env **env, char *new_v);
+void	ft_export(t_env **env, char **params);
+int		check_valid_variable(char *variable);
+void	check_rm_double(t_env **env);
+void	ft_unset(t_env **env, char **params);
+void	unset_variable(t_env **env, char *variable_name);
+void	cd(char **params);
+void	pwd(void);
+int		is_valid_opt(char *arg);
+int		get_opt(char **args);
+void	echo(char **args);
+void	ft_exit(int code, t_mshell *mini);
+
 
 
 /*************EXEC*********************/
 void			ft_exe(t_mshell *mini);
-void			exe_builtins(char **params, t_env **env);
+void			exe_builtins(char **params, t_env **env, t_mshell *mini);
 void			exec_cmd(t_mshell *mini);
 int				lst_env_size(t_env *env);
 char			**env_to_tab(t_env *env);
@@ -214,7 +216,7 @@ void			add_back_pipe(t_pipe **pipe);
 void			execute(t_mshell *mini, t_command *current, int i);
 int				*set_pipe(t_command *command);
 void			close_pipe_n_wait(int *pipe_fd);
-void			exit_if_builtin_last(t_mshell *mini, t_command *current);
+void			exit_if_builtin_only(t_mshell *mini, t_command *current);
 
 
 void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);

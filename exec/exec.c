@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/04 15:26:29 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/05 17:33:02 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_exe(t_mshell *mini)
 	exec_cmd(mini);
 	free(mini->pipe_fd);
 	free_command(&mini->command);
-	//env_free(mini->env);
 	//free(mini);
 }
 
@@ -51,12 +50,12 @@ void	exec_cmd(t_mshell *mini)
 		pid = fork();
 		if (pid == 0)
 		{
-			exit_if_builtin_last(mini, current);
+			exit_if_builtin_only(mini, current);
 		 	execute(mini, current, i);
 		}
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
-			if (is_builtins(current->value))
+			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
 				execute(mini, current, i);
 		}
 		i += 2;
@@ -71,8 +70,14 @@ void	execute(t_mshell *mini, t_command *current, int i)
 	ft_dup(mini, current, i);
 	if (is_builtins(current->value))
 	{
-		exe_builtins(current->value, &mini->env);
-		exit(0);
+		exe_builtins(current->value, &mini->env, mini);
+		if (cmd_list_size(mini->command) != 1)
+		{
+			free_mini(mini);
+			exit(0);
+		}
+		else
+			return ;
 	}
 	path = find_path(mini->env, current->value);
 	if (path == NULL)
@@ -94,11 +99,12 @@ void	ft_dup(t_mshell *mini, t_command *current, int i)
 	if (cmd_lst_pos(mini->command, current) == 1 && cmd_list_size(mini->command) > 1)
 		dup2(mini->pipe_fd[1], 1);
 	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command) &&\
-	cmd_list_size(mini->command) > 1)
+	cmd_list_size(mini->command) > 1 && !is_builtins(current->value))
 	  	dup2(mini->pipe_fd[i - 2], 0);
 	else if (cmd_list_size(mini->command) > 1)
 	{
-	 	dup2(mini->pipe_fd[i - 2], 0);
+		if (!is_builtins(current->value))
+	 		dup2(mini->pipe_fd[i - 2], 0);
 	 	dup2(mini->pipe_fd[i + 1], 1);
 	}
 	out_fd = make_redir_out(current, mini);

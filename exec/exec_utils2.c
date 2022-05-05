@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/04 12:41:44 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/05 17:25:54 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exit_if_builtin_last(t_mshell *mini, t_command *current)
+void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 {
-	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
+	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command)
+	&& cmd_list_size(mini->command) == 1)
 	{
 		if (is_builtins(current->value))
 		{
