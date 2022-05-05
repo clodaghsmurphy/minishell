@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:36:25 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 14:08:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:57:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_split(t_split **split)
 	}
 }
 
-void	make_word(t_split **word, t_mshell *mshell)
+char	*make_word(t_split **word, t_mshell *mshell)
 {
 	int		size;
 	t_split	*temp;
@@ -89,10 +89,10 @@ void	make_word(t_split **word, t_mshell *mshell)
 		temp = temp->next;
 	}
 	str[i] = '\0';
-	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(str));
 	if (*word)
 	{
 		ft_wordclear(word);
 		*word = NULL;
 	}
+	return (str);
 }

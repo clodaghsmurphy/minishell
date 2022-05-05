@@ -68,5 +68,26 @@ exec_test 'echo $USER'
 exec_test 'echo $USER$HOME'
 exec_test 'echo "$USER$HOME"'
 exec_test 'echo "$USER"'
-exec_test 'echo '$USER\$HOME\'
+exec_test 'echo '$\USER$\HOME''
 
+# ENV EXPANSIONS + ESCAPE
+#exec_test 'echo \"test'
+exec_test 'echo $TEST'
+exec_test 'echo "$TEST"'
+exec_test "echo '$TEST'"
+exec_test 'echo "$TEST$TEST$TEST"'
+exec_test 'echo "$TEST$TEST=lol$TEST"'
+exec_test 'echo "   $TEST lol $TEST"'
+exec_test 'echo $TEST$TEST$TEST'
+exec_test 'echo $TEST$TEST=lol$TEST""lol'
+exec_test 'echo    $TEST lol $TEST'
+exec_test 'echo test "" test "" test'
+exec_test 'echo "$=TEST"'
+exec_test 'echo "$"'
+exec_test 'echo "$?TEST"'
+exec_test 'echo $TEST $TEST'
+exec_test 'echo "$1TEST"'
+exec_test 'echo "$T1TEST"'
+exec_test "echo $'' test"
+exec_test 'echo $"" test'
+exec_text  "echo $''lol"

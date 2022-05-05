@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/03 18:35:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:55:09 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,16 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	char	*var;
 
 	res = NULL;
+	var = NULL;
+	type = 0;
 	j = *i;
-	if (str[*i + 1] == 34 || str[*i + 1] == 39)
-	{
-		(*i)++;
-		type = (*i);
-		if (str[*i + 1] == type)
-		{
-			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
-			return ;
-		}
-		parse_quotes(word, mshell, str, i);
-		return ;
-	}
+	/********define quote type*********/
+	if (str[*i - 1] == 34 || str[*i - 1] == 39)
+		type = str[*i - 1];
+	/*****$ followed by quotes ex $"USER"*******/
+	if (quote_after_dollar(word, mshell, str, i) == 1)
+		type = str[*i];
+	/*****$ with nothing or a delimiter after*******/
 	if ((str[*i] == '$' && str[*i + 1] == '\0') || \
 	(str[*i] == '$' && str[*i + 1] == ' ') || \
 	(str[*i] == '$' && str[*i + 1] == '|'))
@@ -41,16 +38,54 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		(*i)++;
 		return ;
 	}
-	while (is_delim(str, i))
+	/*****$ followed by a string*******/
+	while (is_delim_dollar(str, i) && str[*i] != type)				//\0, |, redirs, quotes and =
 	{
 		(*i)++;
+	/*****$ quotes within $ string*******/
+		/*****$ empty quotes in string*******/
+		if (str[*i] == 34 || str[*i] == 39 && type == 0)
+		{
+			type = str[*i];
+			(*i)++;
+			if (str[*i] == type)
+			{
+				(*i)++;
+				type = 0;
+			}
+			/*****$ quotes within $ string with possible variables inside*******/
+			while (str[*i] != type && str[*i] != '\0')
+			{
+				if (str[*i] == '$')
+				{
+					var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+					if (var != NULL)
+						res = ft_strjoin(res, var);
+					j = (*i);
+					continue ;
+				}
+				(*i)++;
+			}				
+		}	
+		if (str[*i] == '=')
+		{
+			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+			if (var != NULL)
+				res = ft_strjoin(res, var);
+			j = (*i);
+			while (is_delim_dollar(str, i) && str[*i] != type && str[*i] != '$')
+				(*i)++;
+			res = ft_strjoin(res, ft_strndup(str + j, (*i - j)));
+			j = (*i);
+			if (str[*i] == '$')
+				continue ;
+		}
+		/*******condition to see if several $ vars present in string *******/
 		if (str[*i] == '$')
 		{
 			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 			if (var != NULL)
 				res = ft_strjoin(res, var);
-			else
-				res = ft_strjoin(res, ft_strdup(""));
 			j = (*i);
 			continue ;
 		}
@@ -59,7 +94,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	if (var != NULL)
 		res = ft_strjoin(res, var);
 	else
-		res = ft_strjoin(res, ft_strdup(""));
+		return ;
 	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
 	return ;
 }
@@ -78,14 +113,9 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 	{
 		if (str[*i] == type)
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
-		else
-		{
-			printf("quote error\n");
-			return ;
-		}
 		return ;
 	}
-	while (str[*i] != type && str[*i] != '\0')
+	while (str[*i] != type && str[*i] != '\0' && str[*i] != '=')
 	{
 		if (str[*i] == '$' && type == 34)
 		{
@@ -121,6 +151,7 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 	}
 	if (str[*i] == 34)
 		(*i)++;
+	return ;
 }
 
 char	*is_in_env(t_mshell *mshell, char *str)
@@ -191,4 +222,23 @@ char	*ft_strndup2(const char *s, int size)
 	}
 	s2[i] = '\0';
 	return (s2);
+}
+
+int	is_delim_dollar(char *str, int *i)
+{
+	if (str[*i] == 32)
+		return (0);
+	if (str[*i] == '|')
+		return (0);
+	if (str[*i] == '\0')
+		return (0);
+	if (str[*i] == '>')
+		return (0);
+	if (str[*i] == '>')
+		return (0);
+	if (ft_strncmp(str + *i, ">>", 2) == 0)
+		return (0);
+	if (ft_strncmp(str + *i, "<<", 2) == 0)
+		return (0);
+	return (1);
 }

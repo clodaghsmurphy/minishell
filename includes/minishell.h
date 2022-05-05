@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/03 18:35:01 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:57:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_pipe
 typedef struct s_phrase
 {
 	char			*str;
-	int				token;
 	struct s_phrase	*next;
 }	t_phrase;
 
@@ -97,6 +96,7 @@ typedef struct s_mshell
 {
 	t_env		*env;
 	char		**path;
+	char		*res;
 	t_command	*command;
 	t_phrase	*phrase;
 	t_split		*word;
@@ -125,16 +125,16 @@ t_env		*parse_env(char **env_t);
 
 /************PARSE_VARS*******************/
 char		*is_in_env(t_mshell *mshell, char *str);
-void		parse_dollar(t_split **word, t_mshell *mshell,
-			char *str, int *i);
+void		parse_dollar(t_split **word, t_mshell *mshell, \
+		char *str, int *i);
 char		*ft_strndup(const char *s, int size);
 void		parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i);
 char		*ft_strndup(const char *s, int size);
 char		*ft_strndup2(const char *s, int size);
-
+int			is_delim_dollar(char *str, int *i);
 /***********SPLIT*******************/
 void		split_command(char *str, t_mshell *mshell);
-void		make_word(t_split **word, t_mshell *mshell);
+char		*make_word(t_split **word, t_mshell *mshell);
 void		parse_quotes(t_split **word, t_mshell *mshell,
 				char *str, int *i);
 int			parse_string(t_split **word, t_mshell *mshell,
