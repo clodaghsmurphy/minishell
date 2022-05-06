@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/06 17:01:03 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 21:47:41 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	var = NULL;
 	type = 0;
 	j = *i;
-	if (word)
+	if (*word)
 		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	/********define quote type*********/
 	if (str[*i - 1] == 34 || str[*i - 1] == 39)
@@ -36,14 +36,14 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	}
 	/*****$ with nothing or a delimiter after*******/
-	if ((str[*i] == '$' && is_delim_dollar(str, i + 1) == 0))
+	if ((str[*i] == '$' && is_delim_dollar(str, (*i) + 1) == 0))
 	{
 		mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
 		(*i)++;
 		return ;
 	}
 	/*****$ followed by a string*******/
-	while (is_delim_dollar(str, i) && str[*i] != type)				//\0, |, redirs, quotes and =
+	while (is_delim_dollar(str, *i) && str[*i] != type)				//\0, |, redirs, quotes and =
 	{
 		(*i)++;
 	/*****$ quotes within $ string*******/
@@ -77,7 +77,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 			if (var != NULL)
 				res = ft_strjoin(res, var);
 			j = (*i);
-			while (is_delim_dollar(str, i) && str[*i] != type && str[*i] != '$')
+			while (is_delim_dollar(str, *i) && str[*i] != type && str[*i] != '$')
 				(*i)++;
 			res = ft_strjoin(res, ft_strndup(str + j, (*i - j)));
 			j = (*i);
@@ -96,10 +96,9 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	}
 	var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (var != NULL)
-		res = ft_strjoin(res, var);
+		mshell->res = ft_strjoin(mshell->res, var);
 	else
 		return ;
-	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
 	return ;
 }
 
@@ -228,21 +227,21 @@ char	*ft_strndup2(const char *s, int size)
 	return (s2);
 }
 
-int	is_delim_dollar(char *str, int *i)
+int	is_delim_dollar(char *str, int i)
 {
-	if (str[*i] == 32)
+	if (str[i] == 32)
 		return (0);
-	if (str[*i] == '|')
+	if (str[i] == '|')
 		return (0);
-	if (str[*i] == '\0')
+	if (str[i] == '\0')
 		return (0);
-	if (str[*i] == '>')
+	if (str[i] == '>')
 		return (0);
-	if (str[*i] == '>')
+	if (str[i] == '>')
 		return (0);
-	if (ft_strncmp(str + *i, ">>", 2) == 0)
+	if (ft_strncmp(str + i, ">>", 2) == 0)
 		return (0);
-	if (ft_strncmp(str + *i, "<<", 2) == 0)
+	if (ft_strncmp(str + i, "<<", 2) == 0)
 		return (0);
 	return (1);
 }

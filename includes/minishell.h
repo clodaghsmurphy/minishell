@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/05 17:57:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 21:36:17 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char		*ft_strndup(const char *s, int size);
 void		parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i);
 char		*ft_strndup(const char *s, int size);
 char		*ft_strndup2(const char *s, int size);
-int			is_delim_dollar(char *str, int *i);
+int			is_delim_dollar(char *str, int i);
 /***********SPLIT*******************/
 void		split_command(char *str, t_mshell *mshell);
 char		*make_word(t_split **word, t_mshell *mshell);

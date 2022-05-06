@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/06 18:21:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 21:58:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int	type;
 
-	if (word)
+	if (*word)
 		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	if (str[*i] == 34 || str[*i] == 39)
 	{
@@ -61,7 +61,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 			//free_phrase(&mshell->phrase);
 			return ;
 		}
-		make_word(word, mshell);
+		mshell->res = make_word(word, mshell);
 		(*i)++;
 		if (str[*i] == 32)
 		{
@@ -88,7 +88,7 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
 	}
-	if (word)
+	if (*word)
 		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup(mshell->res)));
 	free(mshell->res);
