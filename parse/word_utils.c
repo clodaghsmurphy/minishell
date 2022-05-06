@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 17:28:38 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:20:59 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	print_phrase(t_phrase **phrase)
 	temp = *phrase;
 	while (temp != NULL)
 	{
-		printf("COMMAND : [%s] || TOKEN : %d\n", temp->str, temp->token);
 		temp = temp->next;
 	}
 }

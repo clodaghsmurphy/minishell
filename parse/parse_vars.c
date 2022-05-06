@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/05 16:55:09 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:01:03 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	var = NULL;
 	type = 0;
 	j = *i;
+	if (word)
+		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	/********define quote type*********/
 	if (str[*i - 1] == 34 || str[*i - 1] == 39)
 		type = str[*i - 1];
-	/*****$ followed by quotes ex $"USER"*******/
-	if (quote_after_dollar(word, mshell, str, i) == 1)
-		type = str[*i];
-	/*****$ with nothing or a delimiter after*******/
-	if ((str[*i] == '$' && str[*i + 1] == '\0') || \
-	(str[*i] == '$' && str[*i + 1] == ' ') || \
-	(str[*i] == '$' && str[*i + 1] == '|'))
+	/*****$ followed by quotes ex $"USER" the $ disappears and quotes will be parsed*******/
+	if (str[*i + 1] == 34 || str[*i + 1] == 39)
 	{
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
+		(*i)++;
+		parse_quotes(word, mshell, str, i);
+		return ;
+	}
+	/*****$ with nothing or a delimiter after*******/
+	if ((str[*i] == '$' && is_delim_dollar(str, i + 1) == 0))
+	{
+		mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
 		(*i)++;
 		return ;
 	}

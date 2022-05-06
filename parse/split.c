@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/05 17:56:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:21:41 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int	type;
 
-	res = ft_strjoin(res, )
+	if (word)
+		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	if (str[*i] == 34 || str[*i] == 39)
 	{
 		type = str[*i];
@@ -87,6 +88,11 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
 	}
+	if (word)
+		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
+	phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup(mshell->res)));
+	free(mshell->res);
+	mshell->res = NULL;
 	return (1);
 }
 
@@ -175,6 +181,5 @@ int	is_redir(char *str, int *i)
 		return (1);
 	if (str[*i] == '<')
 		return (1);
-	
 	return (0);
 }

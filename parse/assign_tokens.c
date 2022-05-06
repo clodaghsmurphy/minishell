@@ -6,12 +6,12 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:13:20 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/11 14:26:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:22:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/* 
 void	assign_tokens(t_mshell *mshell)
 {
 	t_phrase	*temp;
@@ -37,7 +37,7 @@ void	assign_tokens(t_mshell *mshell)
 			temp->token = string;
 		temp = temp->next;
 	}
-}
+} */
 
 int	is_builtin(char *str)
 {
