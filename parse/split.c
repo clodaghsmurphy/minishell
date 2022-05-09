@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/07 14:17:51 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:18:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		(*i)++;
 		if (str[*i] == type)
 		{
+			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
 			(*i)++;
 			return ;
 		}		
 		while (str[*i] != type && str[*i] != '\0')
 		{
 			if (str[*i] == '$' && type == 34)
-			{		
-				make_word(word, mshell);
-				parse_dollar(word, mshell, str, i);
+			{	
+				if (*word)
+					mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
+				parse_dollar_dquotes(type, mshell, str, i);
 				continue ;
 			}
 			split_lstadd_back(word, split_lstnew(str[*i]));
@@ -61,7 +63,8 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 			//free_phrase(&mshell->phrase);
 			return ;
 		}
-		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
+		if (*word)
+			mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 		(*i)++;
 		if (str[*i] == 32)
 		{

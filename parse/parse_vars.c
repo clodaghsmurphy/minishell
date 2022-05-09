@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/07 14:26:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:19:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 				{
 					var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 					if (var != NULL)
-						res = ft_strjoin(res, var);
+						mshell->res = ft_strjoin(mshell->res, var);
 					j = (*i);
 					continue ;
 				}
@@ -79,7 +79,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 			j = (*i);
 			while (is_delim_dollar(str, *i) && str[*i] != type && str[*i] != '$')
 				(*i)++;
-			res = ft_strjoin(res, ft_strndup(str + j, (*i - j)));
+			mshell->res = ft_strjoin(mshell->res, ft_strndup(str + j, (*i - j)));
 			j = (*i);
 			if (str[*i] == '$')
 				continue ;
@@ -89,7 +89,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		{
 			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 			if (var != NULL)
-				res = ft_strjoin(res, var);
+				mshell->res = ft_strjoin(mshell->res, var);
 			j = (*i);
 			continue ;
 		}
@@ -102,10 +102,9 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	return ;
 }
 
-void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
+void	parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i)
 {
 	int		j;
-	char	type;
 	char	*res;
 	char	*var;
 
@@ -115,7 +114,7 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 	if (str[*i] == 34 || str[*i] == 39)
 	{
 		if (str[*i] == type)
-			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("$")));
+			mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
 		return ;
 	}
 	while (str[*i] != type && str[*i] != '\0' && str[*i] != '=')
@@ -124,9 +123,9 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		{
 			var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 			if (var != NULL)
-				res = ft_strjoin(res, var);
+				mshell->res = ft_strjoin(mshell->res, var);
 			else
-				res = ft_strjoin(res, ft_strdup(""));
+				mshell->res = ft_strjoin(mshell->res, ft_strdup(""));
 			j = (*i);
 			(*i)++;
 			continue ;
@@ -138,22 +137,20 @@ void	parse_dollar_dquotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		printf("quote error\n");
 		return ;
 	}
+	
 	if (type == 34)
 	{
 		var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 		if (var != NULL)
-				res = ft_strjoin(res, var);
+				mshell->res = ft_strjoin(mshell->res, var);
 		else
-			res = ft_strjoin(res, ft_strdup(""));
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(res));
+			mshell->res = ft_strjoin(mshell->res, ft_strdup(""));
 	}
 	else if (type == 39)
 	{
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strndup2(str + j, (*i - j))));
+		mshell->res = ft_strjoin(mshell->res, var);
 		(*i)++;
 	}
-	if (str[*i] == 34)
-		(*i)++;
 	return ;
 }
 

@@ -77,7 +77,7 @@ exec_test 'echo "$TEST"'
 exec_test "echo '$TEST'"
 exec_test 'echo "$TEST$TEST$TEST"'
 exec_test 'echo "$TEST$TEST=lol$TEST"'
-exec_test 'echo "   $TEST lol $TEST"'
+#exec_test 'echo "   $TEST lol $TEST"'
 exec_test 'echo $TEST$TEST$TEST'
 exec_test 'echo $TEST$TEST=lol$TEST""lol'
 exec_test 'echo    $TEST lol $TEST'
