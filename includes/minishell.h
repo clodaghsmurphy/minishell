@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/05 17:17:12 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:52:07 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include "../GNL/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
@@ -25,6 +26,9 @@
 # include "builtins.h"
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 # define KEY_UP 38
 
@@ -35,6 +39,7 @@ typedef struct	s_redir_in
 {
 	char				*name;
 	int					type;
+	char				*stop;
 	struct s_redir_in	*next;
 }	t_redir_in;
 
@@ -238,6 +243,12 @@ void			error(char *str, t_mshell *mini);
 
 int				lataille(char **command);
 char			**ft_dup_tab(char **command);
+
+void			replace_heredoc(t_redir_in *to_change, char *hd_name);
+char			*get_hd_name(void);
+void			find_replace_hd(t_redir_in *lst);
+void	heredoc(t_mshell *mini, char *name, char *stop);
+void	launch_hd(t_mshell *mini);
 
 
 

@@ -9,6 +9,7 @@ void	free_redir_in(t_redir_in *lst)
 	{
 		temp = lst;
 		free(lst->name);
+		free(lst->stop);
 		lst = lst->next;
 		free(temp);
 	}

@@ -37,6 +37,7 @@ void	add_back_redir_in(t_redir_in **lst, char *file_name, int bol)
 	new = malloc(sizeof(t_redir_in));
 	new->name = ft_strdup(file_name);
 	new->type = bol;
+	new->stop = NULL;
 	new->next = NULL;
 	if (*lst == NULL)
 	{

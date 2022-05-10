@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/05 17:33:02 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:55:09 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,32 @@ void	ft_exe(t_mshell *mini)
 		current->in = parse_redir_in(current->value);
 		current->value = command_clear_all_out(current->value);
 		current->value = command_clear_all_in(current->value);
+		find_replace_hd(current->in);
 		current = current->next;
 	}
+	
+	// current = mini->command;
+	// while (current)
+	// {
+	// 	while (current->in)
+	// 	{
+	// 		printf("name = %s\ntype = %i\nstop word = %s\n\n", current->in->name, current->in->type, current->in->stop);
+	// 		current->in = current->in->next;
+	// 	}
+	// 	current = current->next;
+	// }
+	
+
+
+
+	
 	mini->pipe_fd = NULL;
 	//error("random", mini);
-	exec_cmd(mini);
+	//exec_cmd(mini);
+	launch_hd(mini);
 	free(mini->pipe_fd);
 	free_command(&mini->command);
-	//free(mini);
+	//free_mini(mini);
 }
 
 void	exec_cmd(t_mshell *mini)
