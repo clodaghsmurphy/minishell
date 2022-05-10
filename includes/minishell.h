@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/09 14:51:37 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:25:33 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
-# include "builtins.h"
+# include "minishell.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 
@@ -31,14 +31,14 @@
 struct	s_command;
 struct	s_mshell;
 
-typedef struct	s_redir_in
+typedef struct s_redir_in
 {
 	char				*name;
 	int					type;
 	struct s_redir_in	*next;
 }	t_redir_in;
 
-typedef struct	s_redir_out
+typedef struct s_redir_out
 {
 	char				*name;
 	int					append;
@@ -97,6 +97,10 @@ typedef struct s_mshell
 	t_env		*env;
 	char		**path;
 	char		*res;
+	char		*var;
+	int			*j;
+	int			q_error;
+	int			s_error;
 	t_command	*command;
 	t_phrase	*phrase;
 	t_split		*word;
@@ -123,6 +127,18 @@ void		env_free(t_env *env);
 /************ENV*************************/
 t_env		*parse_env(char **env_t);
 
+/************PARSE_VARS BIS*******************/
+int			define_quote_type(char	*str, int *i);
+int			dollar_only(t_split **word, t_mshell *mshell, char *str, int *i);
+int			define_quote_type(char	*str, int *i);
+int			parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i);
+int			dollar_only(t_split **word, t_mshell *mshell, char *str, int *i);
+int			quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i);
+int			eq_in_dollar(int *typej, t_mshell *mshell, char *str, int *i);
+int			another_dollar(int *j, t_mshell *mshell, char *str, int *i);
+int			quote_after_dollar(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
+
 /************PARSE_VARS*******************/
 char		*is_in_env(t_mshell *mshell, char *str);
 void		parse_dollar(t_split **word, t_mshell *mshell, \
@@ -132,6 +148,7 @@ void		parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i);
 char		*ft_strndup(const char *s, int size);
 char		*ft_strndup2(const char *s, int size);
 int			is_delim_dollar(char *str, int i);
+
 /***********SPLIT*******************/
 void		split_command(char *str, t_mshell *mshell);
 char		*make_word(t_split **word, t_mshell *mshell);
@@ -169,63 +186,61 @@ void		free_command(t_command **command);
 t_mshell	*init_mshell(char **env);
 
 /**************ARM_SIGNAL************/
-void armsignals(void);
-void sig_handler(int signum);
+void		armsignals(void);
+void		sig_handler(int signum);
 
 /************ASSIGN_TOKENS***********/
-void assign_tokens(t_mshell *mshell);
-int is_variable(char *str);
-int is_builtin(char *str);
+void		assign_tokens(t_mshell *mshell);
+int			is_variable(char *str);
+int			is_builtin(char *str);
 
 /************BUILTINS*****************/
-void del_one(t_env **lst, t_env *to_del);
-char *get_value(char *line);
-char *get_name(char *line);
-void export_variable(t_env **env, char *new_v);
-void ft_export(t_env **env, char **params);
-int check_valid_variable(char *variable);
-void check_rm_double(t_env **env);
-void ft_unset(t_env **env, char **params);
-void unset_variable(t_env **env, char *variable_name);
-void cd(char **params);
-void pwd(void);
-int is_valid_opt(char *arg);
-int get_opt(char **args);
-void echo(char **args);
+void		del_one(t_env **lst, t_env *to_del);
+char		*get_value(char *line);
+char		*get_name(char *line);
+void		export_variable(t_env **env, char *new_v);
+void		ft_export(t_env **env, char **params);
+int			check_valid_variable(char *variable);
+void		check_rm_double(t_env **env);
+void		ft_unset(t_env **env, char **params);
+void		unset_variable(t_env **env, char *variable_name);
+void		cd(char **params);
+void		pwd(void);
+int			is_valid_opt(char *arg);
+int			get_opt(char **args);
+void		echo(char **args);
 
 /*************EXEC*********************/
-void			ft_exe(t_mshell *mini);
-void			exe_builtins(char **params, t_env **env);
-void			exec_cmd(t_mshell *mini);
-int				lst_env_size(t_env *env);
-char			**env_to_tab(t_env *env);
-char			**create_paths(t_env *env);
-void			free_tab(char **tab);
-char			*ft_strjoin_f(char *s1, char const *s2);
-char			*find_path(t_env *env, char **cmd_params);
-char			*check_absolute_path(char *path);
-int				is_builtins(char **params);
-int				cmd_list_size(t_command *lst);
-int				cmd_lst_pos(t_command *lst, t_command *current);
-void			ft_dup(t_command *command, t_command *current, int *pipe_fd, int i);
-t_pipe			*set_lst_pipe(t_command *command);
-void			add_back_pipe(t_pipe **pipe);
-void			execute(t_mshell *mini, t_command *current, int *pipe_fd, int i);
-int				*set_pipe(t_command *command);
-void			close_pipe_n_wait(int *pipe_fd);
-void			exit_if_builtin_last(t_command *command, t_command *current);
+void		ft_exe(t_mshell *mini);
+void		exe_builtins(char **params, t_env **env);
+void		exec_cmd(t_mshell *mini);
+int			lst_env_size(t_env *env);
+char		**env_to_tab(t_env *env);
+char		**create_paths(t_env *env);
+void		free_tab(char **tab);
+char		*ft_strjoin_f(char *s1, char const *s2);
+char		*find_path(t_env *env, char **cmd_params);
+char		*check_absolute_path(char *path);
+int			is_builtins(char **params);
+int			cmd_list_size(t_command *lst);
+int			cmd_lst_pos(t_command *lst, t_command *current);
+void		ft_dup(t_command *command, t_command *current, int *pipe_fd, int i);
+t_pipe		*set_lst_pipe(t_command *command);
+void		add_back_pipe(t_pipe **pipe);
+void		execute(t_mshell *mini, t_command *current, int *pipe_fd, int i);
+int			*set_pipe(t_command *command);
+void		close_pipe_n_wait(int *pipe_fd);
+void		exit_if_builtin_last(t_command *command, t_command *current);
+void		add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
+char		**command_clear_one(char **command);
+char		**command_clear_all_out(char **command);
+t_redir_out	*parse_redir_out(char **command);
+int			make_redir_out(t_command *command);
 
-
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
-char			**command_clear_one(char **command);
-char			**command_clear_all_out(char **command);
-t_redir_out		*parse_redir_out(char **command);
-int				make_redir_out(t_command *command);
-
-void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
-char			**command_clear_one_in(char **command);
-char			**command_clear_all_in(char **command);
-t_redir_in		*parse_redir_in(char **command);
-int				make_redir_in(t_command *command);
+void		add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
+char		**command_clear_one_in(char **command);
+char		**command_clear_all_in(char **command);
+t_redir_in	*parse_redir_in(char **command);
+int			make_redir_in(t_command *command);
 
 #endif
