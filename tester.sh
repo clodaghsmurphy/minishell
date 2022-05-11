@@ -92,3 +92,4 @@ exec_test "echo $'' test"
 exec_test 'echo $"" test'
 exec_text  "echo $''lol"
 exec_test 'echo "HELLO""THERE$USER"'
+exec_test 'echo $USE=ho'

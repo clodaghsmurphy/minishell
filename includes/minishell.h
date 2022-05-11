@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/10 13:25:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:12:54 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int			eq_in_dollar(int *typej, t_mshell *mshell, char *str, int *i);
 int			another_dollar(int *j, t_mshell *mshell, char *str, int *i);
 int			quote_after_dollar(t_split **word, t_mshell *mshell, \
 			char *str, int *i);
-
+int			not_quotes(int type, char *str, int *i);
 /************PARSE_VARS*******************/
 char		*is_in_env(t_mshell *mshell, char *str);
 void		parse_dollar(t_split **word, t_mshell *mshell, \

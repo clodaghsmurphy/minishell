@@ -16,6 +16,7 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int		j;
 	int		type;
+	int		res;
 
 	j = *i;
 	if (*word)
@@ -24,8 +25,22 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	if (dollar_only(word, mshell, str, i) == 1)
 		return ;
-	if (parse_dollar_string(&j, mshell, str, i) == -1)
+	res = parse_dollar_string(&j, mshell, str, i);
+	if (res == 1)
 		return ;
+	else if (res == 2)
+	{
+		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+		if (mshell->var != NULL)
+			mshell->res = ft_strjoin(mshell->res, mshell->var);
+		else
+		{
+			free(mshell->var);
+			mshell->var = NULL;
+			parse_quotes(word, mshell, str, i);
+			return ;
+		}
+	}
 	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (mshell->var != NULL)
 		mshell->res = ft_strjoin(mshell->res, mshell->var);

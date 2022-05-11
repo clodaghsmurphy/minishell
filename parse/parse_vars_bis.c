@@ -50,18 +50,50 @@ int	dollar_only(t_split **word, t_mshell *mshell, char *str, int *i)
 int	parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i)
 {
 	int	type;
+	int	q_delim;
 
 	type = define_quote_type(str, i);
 	mshell->j = j;
-	while (is_delim_dollar(str, *i) && str[*i] != type)
+	while (is_delim_dollar(str, *i))
 	{
 		(*i)++;
+		if (not_quotes(type, str, i) == 1)
+			break ;
 		if (quotes_in_dstring(&type, mshell, str, i) == -1)
 			return (-1);
 		if (eq_in_dollar(&type, mshell, str, i) == 1)
 			continue ;
 		if (another_dollar(j, mshell, str, i) == 1)
 			continue ;
+	}
+	if (str[*i] == 34 || str[*i] == 39)
+		return (2);
+	return (0);
+}
+
+int	not_quotes(int type, char *str, int *i)
+{
+	int	q_delim;
+
+	if (type == 34)
+		q_delim = 39;
+	else if (type == 39)
+		q_delim = 34;
+	else
+		q_delim = -1;
+	if (str[*i] == type)
+		return (1);
+	if (q_delim != -1)
+	{
+		if (str[*i] == q_delim)
+			return (1);
+	}
+	else if (q_delim == -1)
+	{
+		if (str[*i] == 34)
+			return (1);
+		if (str[*i] == 39)
+			return (1);
 	}
 	return (0);
 }
