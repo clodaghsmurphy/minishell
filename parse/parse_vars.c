@@ -25,6 +25,26 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	if (dollar_only(word, mshell, str, i) == 1)
 		return ;
+	if (str[*i + 1] == '=')
+	{
+		(*i)++;
+		(*i)++;
+		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+		return ;
+	}
+	if (str[*i + 1] >= '0' && str[*i + 1] <= '9')
+	{
+		(*i)++;
+		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+		if (mshell->var != NULL)
+			mshell->res = ft_strjoin(mshell->res, mshell->var);
+		else
+		{
+			free(mshell->var);
+			mshell->var = NULL;
+			return ;
+		}
+	}
 	res = parse_dollar_string(&j, mshell, str, i);
 	if (res == 1)
 		return ;
@@ -68,11 +88,32 @@ void	parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i)
 			mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
 		return ;
 	}
+	if (str[*i] == '=')
+	{
+		(*i)++;
+		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+		return ;
+	}
+	if (str[*i] >= '0' && str[*i] <= '9')
+	{
+		(*i)++;
+		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+		if (mshell->var != NULL)
+			mshell->res = ft_strjoin(mshell->res, mshell->var);
+		else
+		{
+			free(mshell->var);
+			mshell->var = NULL;
+			return ;
+		}
+	}
 	while (str[*i] != type && str[*i] != '\0' && str[*i] != '=')
 	{
-		if (str[*i] == '$' && type == 34)
+		if (str[*i - 1] == '$' && type == 34)
 		{
-			mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+			while (str[*i] != type && str[*i] != '\0' && str[*i] != '=')
+				(*i)++;
+			mshell->var = is_in_env(mshell, ft_strndup(str + mshell->j, (*i - mshell->j)));
 			if (mshell->var != NULL)
 				mshell->res = ft_strjoin(mshell->res, mshell->var);
 			else
