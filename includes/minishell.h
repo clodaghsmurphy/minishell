@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/11 11:12:54 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:26:35 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@
 
 # define KEY_UP 38
 
-struct	s_command;
-struct	s_mshell;
+struct		s_command;
+struct		s_mshell;
+extern int	g_estatus;
 
 typedef struct s_redir_in
 {
@@ -98,7 +99,7 @@ typedef struct s_mshell
 	char		**path;
 	char		*res;
 	char		*var;
-	int			*j;
+	int			j;
 	int			q_error;
 	int			s_error;
 	t_command	*command;
@@ -116,6 +117,10 @@ int			parse_command(char *str, t_mshell *mshell);
 t_command	*create_command(t_mshell *mshell);
 int			is_delim(char *str, int *i);
 int			is_redir(char *str, int *i);
+/**************PARSE_QUOTE****************/
+int			empty_quote(int type, t_mshell *mshell, char *str, int *i);
+int			quote_error(t_split **word, t_mshell *mshell, char *str, int *i);
+int			parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i);
 
 /*************ENV_LIST****************/
 void		print_env(t_env *env);
@@ -126,7 +131,8 @@ void		env_free(t_env *env);
 
 /************ENV*************************/
 t_env		*parse_env(char **env_t);
-
+void		parse_quotes(t_split **word, t_mshell *mshell,
+				char *str, int *i);
 /************PARSE_VARS BIS*******************/
 int			define_quote_type(char	*str, int *i);
 int			dollar_only(t_split **word, t_mshell *mshell, char *str, int *i);
@@ -148,18 +154,28 @@ void		parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i);
 char		*ft_strndup(const char *s, int size);
 char		*ft_strndup2(const char *s, int size);
 int			is_delim_dollar(char *str, int i);
+/************PARSE_DQUOTES*******************/
+int			dquotes_only(int type, t_mshell *mshell, char *str, int *i);
+int			eq_start_dquote(t_mshell *mshell, char *str, int *i);
+int			digit_in_dquote(t_mshell *mshell, char *str, int *i);
+int			parse_dquote_string(int type, t_mshell *mshell, char *str, int *i);
 
-/***********SPLIT*******************/
+/************PARSE_DQUOTES_BIS*******************/
+int			eq_in_dquote(t_mshell *mshell, char *str, int *i);
+int			check_dquote_error(t_mshell *mshell, char *str, int *i);
+int			check_dquote_in_env(int type, t_mshell *mshell, char *str, int *i);
+
+/***********PARSE_STRING*******************/
 void		split_command(char *str, t_mshell *mshell);
 char		*make_word(t_split **word, t_mshell *mshell);
-void		parse_quotes(t_split **word, t_mshell *mshell,
-				char *str, int *i);
 int			parse_string(t_split **word, t_mshell *mshell,
 				char *str, int *i);
 void		parse_delimiter(t_split **word, t_mshell *mshell,
 				char *str, int *i);
 void		parse_dollar(t_split **word, t_mshell *mshell,
 				char *str, int *i);
+/***********PARSE_DELIM_UTILS*******************/
+
 /***********SPLIT_UTILS*******************/
 t_split		*split_lstnew(char c);
 void		split_lstadd_back(t_split **alst, t_split *new);

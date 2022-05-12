@@ -6,74 +6,11 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/11 12:09:44 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:21:14 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	split_command(char *str, t_mshell *mshell)
-{
-	int	i;
-
-	mshell->word = NULL;
-	mshell->phrase = NULL;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		parse_delimiter(&mshell->word, mshell, str, &i);
-		if (parse_string(&mshell->word, mshell, str, &i) == 2)
-			continue ;
-		parse_delimiter(&mshell->word, mshell, str, &i);
-	}
-}
-
-void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
-{
-	int	type;
-
-	if (*word)
-		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
-	if (str[*i] == 34 || str[*i] == 39)
-	{
-		type = str[*i];
-		(*i)++;
-		if (str[*i] == type)
-		{
-			if (str[*i + 1] == 32)
-				phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
-			(*i)++;
-			return ;
-		}		
-		while (str[*i] != type && str[*i] != '\0')
-		{
-			if (str[*i] == '$' && type == 34)
-			{	
-				if (*word)
-					mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
-				parse_dollar_dquotes(type, mshell, str, i);
-				continue ;
-			}
-			split_lstadd_back(word, split_lstnew(str[*i]));
-			(*i)++;
-		}
-		if (str[*i] == '\0')
-		{
-			printf("quote error\n");
-			ft_wordclear(word);
-			//free_phrase(&mshell->phrase);
-			return ;
-		}
-		if (*word)
-			mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
-		(*i)++;
-		if (str[*i] == 32)
-		{
-			while (str[*i] == 32)
-				(*i)++;
-		}
-	}
-}
 
 int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 {
@@ -95,7 +32,8 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 	if (*word)
 		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
 	if (mshell->res)
-		phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup(mshell->res)));
+		phrase_lstadd_back(&mshell->phrase, \
+		phrase_lstnew(ft_strdup(mshell->res)));
 	free(mshell->res);
 	mshell->res = NULL;
 	return (1);

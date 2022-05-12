@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_mshell->vars_bis.c                                   :+:      :+:    :+:   */
+/*   parse_vars_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/10 12:05:55 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:51:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i)
 	int	q_delim;
 
 	type = define_quote_type(str, i);
-	mshell->j = j;
+	mshell->j = *j;
 	while (is_delim_dollar(str, *i))
 	{
 		(*i)++;
@@ -100,7 +100,7 @@ int	not_quotes(int type, char *str, int *i)
 
 int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)
 {
-	int	*j;
+	int	j;
 
 	j = mshell->j;
 	if (str[*i] == 34 || str[*i] == 39 && type == 0)
@@ -123,12 +123,13 @@ int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)
 			if (str[*i] == '$')
 			{
 				mshell->var = is_in_env(mshell, \
-				ft_strndup(str + *j, (*i - *j)));
+				ft_strndup(str + j, (*i - j)));
 				if (mshell->var != NULL)
 				{
 					mshell->res = ft_strjoin(mshell->res, mshell->var);
 				}
-				*j = *i;
+				j = *i;
+				mshell->j = j;
 				free(mshell->var);
 				mshell->var = NULL;
 				continue ;
@@ -141,19 +142,20 @@ int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)
 
 int	eq_in_dollar(int *type, t_mshell *mshell, char *str, int *i)
 {
-	int	*j;
+	int	j;
 
 	j = mshell->j;
 	if (str[*i] == '=')
 	{
-		mshell->var = is_in_env(mshell, ft_strndup(str + *j, (*i - *j)));
+		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 		if (mshell->var != NULL)
 			mshell->res = ft_strjoin(mshell->res, mshell->var);
-		*j = (*i);
+		j = (*i);
 		while (is_delim_dollar(str, *i) && str[*i] != *type && str[*i] != '$')
 			(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strndup(str + *j, (*i - *j)));
-		*j = (*i);
+		mshell->res = ft_strjoin(mshell->res, ft_strndup(str + j, (*i - j)));
+		j = (*i);
+		mshell->j = j;
 		free(mshell->var);
 		mshell->var = NULL;
 		if (str[*i] == '$')

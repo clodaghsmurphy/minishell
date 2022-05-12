@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/10 13:46:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:21:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ int	parse_command(char *str, t_mshell *mshell)
 	return (0);
 }
 
+void	split_command(char *str, t_mshell *mshell)
+{
+	int	i;
+
+	mshell->word = NULL;
+	mshell->phrase = NULL;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		parse_delimiter(&mshell->word, mshell, str, &i);
+		if (parse_string(&mshell->word, mshell, str, &i) == 2)
+			continue ;
+		parse_delimiter(&mshell->word, mshell, str, &i);
+	}
+}
+
 t_command	*create_command(t_mshell *mshell)
 {
 	t_phrase	*temp_phrase;
@@ -47,7 +63,8 @@ t_command	*create_command(t_mshell *mshell)
 		i = 0;
 		size = phrase_lstsize(temp_phrase);
 		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
-		while (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) != 0)
+		while (temp_phrase != NULL && \
+		ft_strncmp(temp_phrase->str, "|", 10) != 0)
 		{
 			temp_command->value[i] = temp_phrase->str;
 			i++;

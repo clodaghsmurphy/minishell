@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/06 18:20:59 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:01:30 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,6 @@ void	ft_wordclear(t_split **lst)
 		free(temp);
 	}
 	*lst = NULL;
-}
-
-void	print_phrase(t_phrase **phrase)
-{
-	t_phrase	*temp;
-
-	temp = *phrase;
-	while (temp != NULL)
-	{
-		temp = temp->next;
-	}
 }
 
 void	free_phrase(t_phrase **phrase)

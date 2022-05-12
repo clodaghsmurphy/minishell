@@ -62,7 +62,7 @@ exec_test 'echo -n test tout'
 exec_test 'echo -n -n -n test tout'
 exec_test 'echo -n -nnnnnn -n test tout'
 
-echo "\033[1m\033[37m \nDOLLAR TESTS\n"
+echo "$BOLDWHITE \nDOLLAR TESTS\n"
 # DOLLAR TESTS
 exec_test 'echo $USER'
 exec_test 'echo $USER$HOME'
@@ -77,7 +77,6 @@ exec_test 'echo "$TEST"'
 exec_test "echo '$TEST'"
 exec_test 'echo "$TEST$TEST$TEST"'
 exec_test 'echo "$TEST$TEST=lol$TEST"'
-#exec_test 'echo "   $TEST lol $TEST"'
 exec_test 'echo $TEST$TEST$TEST'
 exec_test 'echo $TEST$TEST=lol$TEST""lol'
 exec_test 'echo    $TEST lol $TEST'
@@ -85,12 +84,15 @@ exec_test 'echo test "" test "" test'
 exec_test 'echo "$=TEST"'
 exec_test 'echo $=TEST$=TEST'
 exec_test 'echo "$"'
-exec_test 'echo "$?TEST"'
+#exec_test 'echo "$?TEST"'
 exec_test 'echo $TEST $TEST'
 exec_test 'echo "$1TEST"'
 exec_test 'echo "$T1TEST"'
 exec_test "echo $'' test"
 exec_test 'echo $"" test'
-exec_text  "echo $''lol"
+exec_test  "echo $''lol"
 exec_test 'echo "HELLO""THERE$USER"'
 exec_test 'echo $USE=ho'
+exec_test 'echo $USER"$USER"'
+exec_test 'echo "   $TEST| lol$TEST"'
+exec_test 'echo "   $TEST<< lol$TEST"'
