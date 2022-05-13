@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/12 16:21:16 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:37:03 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ t_command	*create_command(t_mshell *mshell)
 	command_lstadd_back(&command, command_lstnew(NULL));
 	temp_command = command;
 	temp_phrase = mshell->phrase;
+	parse_command_list(mshell, temp_phrase, temp_command, command);
+	return (command);
+}
+
+int	parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
+t_command *temp_command, t_command *command)
+{
+	int	i;
+	int	size;
+
 	while (temp_phrase != NULL)
 	{
 		i = 0;
@@ -65,19 +75,11 @@ t_command	*create_command(t_mshell *mshell)
 		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
 		while (temp_phrase != NULL && \
 		ft_strncmp(temp_phrase->str, "|", 10) != 0)
-		{
-			temp_command->value[i] = temp_phrase->str;
-			i++;
-			temp_phrase = temp_phrase->next;
-		}
+			next_phrase(&i, &temp_phrase, &temp_command);
 		if (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) == 0)
 		{
-			temp_command->value[i] = 0;
-			temp_phrase = temp_phrase->next;
-			if (temp_phrase == NULL)
+			if (next_command(&i, temp_phrase, temp_command, command) == 1)
 				break ;
-			command_lstadd_back(&command, command_lstnew(NULL));
-			temp_command = temp_command->next;
 		}
 		else
 		{
@@ -86,15 +88,5 @@ t_command	*create_command(t_mshell *mshell)
 			break ;
 		}
 	}
-	return (command);
-}
-
-int	check_args(int ac, char **av)
-{
-	if (ac != 1)
-	{
-		printf("%s %s directory not found\n", av[0], av[1]);
-		exit(0);
-	}
-	return (1);
+	return (0);
 }

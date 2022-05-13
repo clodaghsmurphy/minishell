@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/12 16:20:24 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:08:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	empty_quote(int type, t_mshell *mshell, char *str, int *i)
 		if (str[*i + 1] == 32)
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup("")));
 			(*i)++;
-		return ;
-	}	
+		return (1);
+	}
+	return (0);
 }
 
 int	quote_error(t_split **word, t_mshell *mshell, char *str, int *i)
@@ -58,8 +59,9 @@ int	quote_error(t_split **word, t_mshell *mshell, char *str, int *i)
 	{
 		printf("quote error\n");
 		ft_wordclear(word);
-		return ;
+		return (1);
 	}
+	return (0);
 }
 
 int	parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i)

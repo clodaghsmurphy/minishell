@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   parse_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/12 16:21:14 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:51:56 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,40 +75,11 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 		while (str[*i] == 32)
 			(*i)++;
 	}
-	if (str[*i] == '|')
-	{
-		if (str[(*i) + 1] == '|')
-		{
-			printf("syntax error\n");
-			return ;
-		}
-		split_lstadd_back(&delimiter, split_lstnew(str[*i]));
-		flag = 1;
-		(*i)++;
-		if (str[*i] == 32)
-		{
-			while (str[*i] == 32)
-				(*i)++;
-		}
-	}
+	flag = is_pipe(&delimiter, mshell, str, i);
+	if (flag == -1)
+		return ;
 	else if (is_redir(str, i) == 1 || is_redir(str, i) == 2)
-	{
-		if (is_redir(str, i) == 2)
-		{
-			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
-			(*i)++;
-			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
-		}
-		else
-			split_lstadd_back(&delimiter, split_lstnew(str[*i]));
-		flag = 1;
-		(*i)++;
-		if (str[*i] == 32)
-		{
-			while (str[*i] == 32)
-				(*i)++;
-		}
-	}
+		flag = parse_redir(&delimiter, mshell, str, i);
 	make_word(word, mshell);
 	if (flag == 1)
 		make_word(&delimiter, mshell);

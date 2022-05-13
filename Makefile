@@ -2,20 +2,21 @@ SRC = src/main.c \
 	src/init.c \
 	src/arm_signals.c \
 	parse/parse.c \
-	parse/split.c \
+	parse/parse_utils.c \
 	parse/split_utils.c \
 	parse/word_utils.c \
 	parse/env_list.c \
 	parse/env.c \
 	parse/command_utils.c \
 	parse/assign_tokens.c \
-	parse/parse_vars.c \
 	parse/parse_dquotes.c \
 	parse/parse_dquotes_bis.c \
 	parse/parse_string.c \
 	parse/parse_quotes.c \
 	parse/parse_dollar.c \
+	parse/parse_dollar_bis.c \
 	parse/parse_dollar_utils.c \
+	parse/parse_dollar_utils2.c \
 	parse/parse_delim_utils.c \
 	builtins/cd_pwd.c \
 	builtins/echo.c \

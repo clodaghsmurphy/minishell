@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/12 15:57:07 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:42:00 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,28 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	free(mshell->var);
 	mshell->var = NULL;
 	return ;
+}
+
+int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)
+{
+	int	j;
+
+	j = mshell->j;
+	if (str[*i] == 34 || str[*i] == 39 && type == 0)
+	{
+		if (str[*i + 1] == '\0')
+		{
+			printf("quote error\n");
+			mshell->q_error = 1;
+			return (-1);
+		}
+		*type = str[*i];
+		(*i)++;
+		if (str[*i] == *type)
+		{
+			(*i)++;
+			*type = 0;
+		}
+	}
+	return (0);
 }
