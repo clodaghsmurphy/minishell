@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/13 11:42:00 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/16 17:25:18 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,13 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
 		return ;
 	}
-	if (str[*i + 1] >= '0' && str[*i + 1] <= '9')
-	{
-		(*i)++;
-		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
-		if (mshell->var != NULL)
-			mshell->res = ft_strjoin(mshell->res, mshell->var);
-		else
-		{
-			free(mshell->var);
-			mshell->var = NULL;
-			return ;
-		}
-	}
+	number_after_dollar(mshell, str, i);
 	res = parse_dollar_string(&j, mshell, str, i);
 	if (res == 1)
 		return ;
 	else if (res == 2)
 	{
+		j = mshell->j;
 		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 		if (mshell->var != NULL)
 		{
@@ -98,6 +87,29 @@ int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)
 			(*i)++;
 			*type = 0;
 		}
+	}
+	return (0);
+}
+
+int	number_after_dollar(t_mshell *mshell, char *str, int *i)
+{
+	int	j;
+
+	j = *i;
+	if (str[*i + 1] >= '0' && str[*i + 1] <= '9')
+	{
+		(*i)++;
+		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+		(*i)++;
+		if (mshell->var != NULL)
+			mshell->res = ft_strjoin(mshell->res, mshell->var);
+		else
+		{
+			free(mshell->var);
+			mshell->var = NULL;
+			return (1);
+		}
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/13 11:40:16 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:39:28 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int			is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i);
 /***********PARSE_DOLLAR*******************/
 void		parse_dollar(t_split **word, t_mshell *mshell,
 				char *str, int *i);
+int			number_after_dollar(t_mshell *mshell, char *str, int *i);
 /***********PARSE_DOLLAR_UILS*******************/
 char		*is_in_env(t_mshell *mshell, char *str);
 char		*ft_strndup(const char *s, int size);

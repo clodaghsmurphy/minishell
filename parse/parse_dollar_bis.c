@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/13 10:28:55 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:31:50 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i)
 			return (-1);
 		if (eq_in_dollar(&type, mshell, str, i) == 1)
 			continue ;
-		if (another_dollar(j, mshell, str, i) == 1)
-			continue ;
+		if (another_dollar(j, mshell, str, i) == 2)
+			return (1);
 	}
 	if (str[*i] == 34 || str[*i] == 39)
 		return (2);
