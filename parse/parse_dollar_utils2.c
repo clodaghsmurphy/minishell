@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:17:16 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/16 14:21:38 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:30:14 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	another_dollar(int *j, t_mshell *mshell, char *str, int *i)
 		mshell->var = is_in_env(mshell, ft_strndup(str + *j, (*i - *j)));
 		if (mshell->var != NULL)
 			mshell->res = ft_strjoin(mshell->res, mshell->var);
-		*j = (*i);
+		mshell->j = (*i);
 		free(mshell->var);
 		mshell->var = NULL;
 		if (str[*i + 1] == '=')
@@ -80,6 +80,18 @@ int	parse_quotes_in_destring(int *type, t_mshell *mshell, char *str, int *i)
 			continue ;
 		}
 		(*i)++;
+	}
+	return (0);
+}
+
+int	eq_in_pdollar(t_mshell *mshell, char *str, int *i)
+{
+	if (str[*i + 1] == '=')
+	{
+		(*i)++;
+		(*i)++;
+		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+		return (1);
 	}
 	return (0);
 }

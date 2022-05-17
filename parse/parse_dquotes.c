@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:37:04 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/16 17:54:39 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 13:36:53 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,8 @@ int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 {
 	int	j;
 
-	if (str[*i + 1] == '=' && str[*i] == '$')
-	{
-		(*i)++;
-		(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+	if (dquote_eq(mshell, str, i) == 1)
 		return (1);
-	}
 	if (str[*i] == '$' && str[*i + 1] == type)
 	{
 		*i += 2;
@@ -76,38 +71,7 @@ int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 		return (1);
 	mshell->j = *i;
 	j = mshell->j;
-	while (str[*i] != type && is_delim_dollar(str, *i) == 1)
-	{
-		if (str[*i - 1] == '$' && type == 34)
-		{
-			while (str[*i] != type && str[*i] != '$' && \
-			is_delim_dollar(str, *i) == 1)
-			{
-				if (ft_isdigit(str[*i]) && str[*i - 1] == '$')
-				{
-					(*i)++;
-					mshell->var = is_in_env(mshell, \
-					ft_strndup(str + j, (*i - j)));
-					if (mshell->var != NULL)
-						mshell->res = ft_strjoin(mshell->res, mshell->var);
-					else
-					{
-						free(mshell->var);
-						mshell->var = NULL;
-						return (1);
-					}
-				}
-				(*i)++;
-			}
-			mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
-			if (mshell->var != NULL)
-				mshell->res = ft_strjoin(mshell->res, mshell->var);
-			free(mshell->var);
-			mshell->var = NULL;
-			j = (*i);
-			continue ;
-		}
-		(*i)++;
-	}
+	if (parse_dquote_string2(type, mshell, str, i) == 1)
+		return (1);
 	return (0);
 }

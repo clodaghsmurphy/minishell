@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/04/22 13:32:52 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:42:28 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,4 @@ int	command_size(t_command*command)
 		i++;
 	}
 	return (i);
-}
-
-void	free_command(t_command **command)
-{
-	t_command	*temp;
-	t_command	*current;
-
-	if (command == NULL)
-		return ;
-	current = *command;
-	while (current != NULL)
-	{
-		free_tab(current->value);
-		temp = current;
-		current = current->next;
-		free(temp);
-	}
 }

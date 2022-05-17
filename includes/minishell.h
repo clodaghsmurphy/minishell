@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/16 14:39:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:40:28 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,21 +178,28 @@ int			is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i);
 void		parse_dollar(t_split **word, t_mshell *mshell,
 				char *str, int *i);
 int			number_after_dollar(t_mshell *mshell, char *str, int *i);
+int			if_another_dollar(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
+int			make_var(t_mshell *mshell, char *str, int *i);
+
 /***********PARSE_DOLLAR_UILS*******************/
 char		*is_in_env(t_mshell *mshell, char *str);
 char		*ft_strndup(const char *s, int size);
 void		parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i);
 char		*ft_strndup2(const char *s, int size);
 int			is_delim_dollar(char *str, int i);
+void		make_var2(t_mshell *mshell, char *str, int *i);
 /***********PARSE_DOLLAR_UILS2*******************/
 int			parse_quotes_in_destring(int *type, t_mshell \
 			*mshell, char *str, int *i);
 int			quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i);
 int			eq_in_dollar(int *typej, t_mshell *mshell, char *str, int *i);
 int			another_dollar(int *j, t_mshell *mshell, char *str, int *i);
-
-/************PARSE_DQUOTES*******************/
-
+int			eq_in_pdollar(t_mshell *mshell, char *str, int *i);
+/************PARSE_DQUOTES_UTILS*******************/
+int			dquote_is_digit(t_mshell *mshell, char *str, int *i);
+int			parse_dquote_string2(int type, t_mshell *mshell, char *str, int *i);
+int			dquote_eq(t_mshell *mshell, char *str, int *i);
 /***********SPLIT_UTILS*******************/
 t_split		*split_lstnew(char c);
 void		split_lstadd_back(t_split **alst, t_split *new);

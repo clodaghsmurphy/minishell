@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/12 15:58:29 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:24:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ char	*is_in_env(t_mshell *mshell, char *str)
 	t_env	*temp;
 	char	*var;
 
-	var = ft_strdup(str + 1);
+	if (str[0] == '$')
+		var = ft_strdup(str + 1);
+	else
+		var = ft_strdup(str);
 	temp = mshell->env;
 	i = 0;
 	while (temp != NULL)

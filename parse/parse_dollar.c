@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/16 17:25:18 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:22:11 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,27 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	if (dollar_only(word, mshell, str, i) == 1)
 		return ;
-	if (str[*i + 1] == '=')
-	{
-		(*i)++;
-		(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+	if (eq_in_pdollar(mshell, str, i) == 1)
 		return ;
-	}
 	number_after_dollar(mshell, str, i);
 	res = parse_dollar_string(&j, mshell, str, i);
 	if (res == 1)
 		return ;
 	else if (res == 2)
 	{
-		j = mshell->j;
-		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
-		if (mshell->var != NULL)
-		{
-			mshell->res = ft_strjoin(mshell->res, mshell->var);
+		if (if_another_dollar(word, mshell, str, i) == 1)
 			return ;
-		}
-		else
-		{
-			free(mshell->var);
-			mshell->var = NULL;
-			parse_quotes(word, mshell, str, i);
-			return ;
-		}
 	}
+	if (make_var(mshell, str, i) == 1)
+		return ;
+	return ;
+}
+
+int	make_var(t_mshell *mshell, char *str, int *i)
+{
+	int	j;
+
+	j = mshell->j;
 	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (mshell->var != NULL)
 		mshell->res = ft_strjoin(mshell->res, mshell->var);
@@ -60,11 +53,32 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	{
 		free(mshell->var);
 		mshell->var = NULL;
-		return ;
+		return (1);
 	}
 	free(mshell->var);
 	mshell->var = NULL;
-	return ;
+	return (0);
+}
+
+int	if_another_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
+{
+	int	j;
+
+	j = mshell->j;
+	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
+	if (mshell->var != NULL)
+	{
+		mshell->res = ft_strjoin(mshell->res, mshell->var);
+		return (1);
+	}
+	else
+	{
+		free(mshell->var);
+		mshell->var = NULL;
+		parse_quotes(word, mshell, str, i);
+		return (1);
+	}
+	return (0);
 }
 
 int	quotes_in_dstring(int *type, t_mshell *mshell, char *str, int *i)

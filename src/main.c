@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/10 14:02:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:43:12 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,25 @@ void	free_mshell(t_mshell *mshell, char *str)
 {
 	if (str)
 		free (str);
-	//free_command(&mshell->command);
 	env_free(mshell->env);
  	if (mshell)
 		free(mshell); 
+}
+
+void	free_command(t_command **command)
+{
+	t_command	*temp;
+	t_command	*current;
+
+	if (command == NULL)
+		return ;
+	current = *command;
+	while (current != NULL)
+	{
+		free_tab(current->value);
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
 }
 	

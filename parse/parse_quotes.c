@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/16 17:32:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/17 10:49:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
 	}
-/* 	if (quote_error(word, mshell, str, i) == 1)
-		return ; */
 	parse_if_word(word, mshell, str, i);
 }
 

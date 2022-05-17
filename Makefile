@@ -10,6 +10,7 @@ SRC = src/main.c \
 	parse/command_utils.c \
 	parse/assign_tokens.c \
 	parse/parse_dquotes.c \
+	parse/parse_dquotes_utils.c \
 	parse/parse_dquotes_bis.c \
 	parse/parse_string.c \
 	parse/parse_quotes.c \
