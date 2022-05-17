@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/29 14:30:31 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/02 14:52:21 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	exec_cmd(t_mshell *mini)
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
 			if (is_builtins(current->value))
-				exe_builtins(current->value, &mini->env);
+				//exe_builtins(current->value, &mini->env);
+				execute(mini, current, pipe_fd, i);
 		}
 		i += 2;
 		current = current->next;
@@ -141,7 +142,7 @@ int	make_redir_in(t_command *command)
 		// 	fd = open(command->out->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (command->in->type == 0)
 			fd = open(command->in->name, O_RDONLY);
-		if (fd == 0)
+		if (fd < 0)
 			printf("erreur d'ouverture de file in mais j'exite pas encore");
 		command->in = command->in->next;
 	}
