@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/17 10:49:16 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/18 11:45:56 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 		parse_dquote_string(type, mshell, str, i);
 	while (str[*i] != type && str[*i] != '\0')
 	{
-		if (str[*i] == '$' && type == 34)
-		{	
-			if (*word)
-				mshell->res = ft_strjoin(mshell->res, \
-				make_word(word, mshell));
-			parse_dollar_dquotes(type, mshell, str, i);
-			continue ;
+		if (type == 34)
+		{
+			if (dollar_in_quote_string(word, mshell, str, i) == 1)
+			{
+				parse_dollar_dquotes(type, mshell, str, i);
+				continue ;
+			}
 		}
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
@@ -65,13 +65,38 @@ int	quote_error(t_split **word, t_mshell *mshell, char *str, int *i)
 
 int	parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i)
 {
-	if (*word)
-		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
+	char	*new_word;
+
+	new_word = make_word(word, mshell);
+	if (new_word)
+	{
+		mshell->res = ft_strjoin(mshell->res, new_word);
+		free(new_word);
+	}
+	if (str[*i] == '\0')
+		return (0);
 	(*i)++;
 	if (str[*i] == 32)
 	{
 		while (str[*i] == 32)
 			(*i)++;
+	}
+	return (0);
+}
+
+int	dollar_in_quote_string(t_split **word, t_mshell *mshell, char *str, int *i)
+{
+	char	*new_word;
+
+	if (str[*i] == '$')
+	{	
+		new_word = make_word(word, mshell);
+		if (new_word)
+		{
+			mshell->res = ft_strjoin(mshell->res, new_word);
+			//free(new_word);
+		}
+		return (1);
 	}
 	return (0);
 }

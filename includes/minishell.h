@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/17 14:40:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:58:22 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			parse_command(char *str, t_mshell *mshell);
 t_command	*create_command(t_mshell *mshell);
 int			parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
 t_command *temp_command, t_command *command);
-int			is_delim(char *str, int *i);
+int			is_delim(t_mshell *mshell, char *str, int *i);
 int			is_redir(char *str, int *i);
 /**************PARSE****************/
 int			check_args(int ac, char **av);
@@ -129,6 +129,8 @@ t_command *temp_command, t_command *command);
 int			empty_quote(int type, t_mshell *mshell, char *str, int *i);
 int			quote_error(t_split **word, t_mshell *mshell, char *str, int *i);
 int			parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i);
+int			dollar_in_quote_string(t_split **word, t_mshell *mshell, \
+			char *str, int *i);
 
 /*************ENV_LIST****************/
 void		print_env(t_env *env);
@@ -224,7 +226,7 @@ int			command_size(t_command *command);
 void		free_command(t_command **command);
 /**************INIT*****************/
 t_mshell	*init_mshell(char **env);
-
+void		syntax_error(t_mshell *mshell);
 /**************ARM_SIGNAL************/
 void		armsignals(void);
 void		sig_handler(int signum);
