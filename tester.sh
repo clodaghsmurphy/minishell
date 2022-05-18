@@ -44,6 +44,8 @@ exec_test()
 		echo
 		printf $BOLDRED"Your output : \n%.20s\n$BOLDRED$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
 		printf $BOLDGREEN"Expected output : \n%.20s\n$BOLDGREEN$TEST2\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
+	else
+		printf $BOLDGREEN"\nYour output : \n%.20s\n$BOLDGREEN$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
 	fi
 	if [ "$ES_1" != "$ES_2" ]; then
 		echo
@@ -55,6 +57,37 @@ exec_test()
 	sleep 0.1
 }
 
+test_leaks()
+{
+	echo $@ | valgrind -q ./minishell 2>&- 1>> diff1.txt
+	ES_1=$?
+	TEST2=$(echo $@ "; exit" | bash 2>&-)
+	ES_2=$?
+	TEST1=$(cat diff1.txt)
+	rm diff1.txt
+	if [ "$TEST1" = "$TEST2" ] && [ "$ES_1" = "$ES_2" ]; then
+		printf " $BOLDGREEN%s$RESET" "✓ "
+	else
+		printf " $BOLDRED%s$RESET" "✗ "
+	fi
+	printf "$CYAN \"$@\" $RESET"
+	if [ "$TEST1" != "$TEST2" ]; then
+		echo
+		echo
+		printf $BOLDRED"Your output : \n%.20s\n$BOLDRED$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
+		printf $BOLDGREEN"Expected output : \n%.20s\n$BOLDGREEN$TEST2\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
+	fi
+	if [ "$ES_1" != "$ES_2" ]; then
+		echo
+		echo
+		printf $BOLDRED"Your exit status : $BOLDRED$ES_1$RESET\n"
+		printf $BOLDGREEN"Expected exit status : $BOLDGREEN$ES_2$RESET\n"
+	fi
+	echo
+	sleep 0.1
+}
+
+
 # ECHO TESTS
 exec_test 'echo test tout'
 exec_test 'echo test      tout'
@@ -62,7 +95,7 @@ exec_test 'echo -n test tout'
 exec_test 'echo -n -n -n test tout'
 exec_test 'echo -n -nnnnnn -n test tout'
 
-echo "$BOLDWHITE \nDOLLAR TESTS\n"
+printf $BOLDWHITE"\nDOLLAR TESTS\n"
 # DOLLAR TESTS
 exec_test 'echo $USER'
 exec_test 'echo $USER$HOME'
