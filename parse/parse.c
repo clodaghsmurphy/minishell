@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/18 11:50:03 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:28:39 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ t_command *temp_command, t_command *command)
 		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
 		while (temp_phrase != NULL && \
 		ft_strncmp(temp_phrase->str, "|", 10) != 0)
+		{
 			next_phrase(&i, &temp_phrase, &temp_command);
+		}
 		if (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) == 0)
 		{
 			if (next_command(&i, temp_phrase, temp_command, command) == 1)

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/19 15:28:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:18:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 		if (new_word)
 		{
 			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup(new_word)));
-			(*i)++;
 			free(new_word);
 		}
 		
