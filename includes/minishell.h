@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/10 13:52:07 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:03:21 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 struct	s_command;
 struct	s_mshell;
-
+extern int retour;
 typedef struct	s_redir_in
 {
 	char				*name;
@@ -197,7 +197,7 @@ void	pwd(void);
 int		is_valid_opt(char *arg);
 int		get_opt(char **args);
 void	echo(char **args);
-void	ft_exit(int code, t_mshell *mini);
+void	ft_exit(char **params, t_mshell *mini);
 
 
 
@@ -247,9 +247,8 @@ char			**ft_dup_tab(char **command);
 void			replace_heredoc(t_redir_in *to_change, char *hd_name);
 char			*get_hd_name(void);
 void			find_replace_hd(t_redir_in *lst);
-void	heredoc(t_mshell *mini, char *name, char *stop);
-void	launch_hd(t_mshell *mini);
-
-
+void			heredoc(t_mshell *mini, char *name, char *stop);
+void			launch_hd(t_mshell *mini);
+void			delete_hd(t_command *command);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:14:45 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/05 16:32:14 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:01:28 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exe_builtins(char **params, t_env **env, t_mshell *mini)
 	if (!ft_strncmp(params[0], "unset", 7))
 		ft_unset(env, params);
 	if (!ft_strncmp(params[0], "exit", 5))
-		ft_exit(0, mini);
+		ft_exit(params, mini);
 	if (!ft_strncmp(params[0], "env", 5))
 	{
 		print_env(*env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/10 13:46:53 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/11 10:48:04 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	replace_heredoc(t_redir_in *to_change, char *hd_name)
 {
-	to_change->stop = ft_strdup(to_change->name);
+	to_change->stop = ft_strjoin(to_change->name, "\n");
 	free(to_change->name);
 	to_change->name = ft_strdup(hd_name);
 	to_change->type = 0;
@@ -94,8 +94,11 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 	fd = open(name, O_WRONLY);
 	while (1)
 	{
+		ft_putstr_fd("> ", 1);
 		str = get_next_line(0);
-		if (!ft_strncmp(str, stop, ft_strlen(name) + 1))
+		if (!str)
+			break;
+		if (!ft_strncmp(str, stop, ft_strlen(stop) + 1))
 		{
 			free(str);
 			close(fd);
@@ -104,6 +107,6 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 		write(fd, str, ft_strlen(str));
 		free(str);
 	}
-	free(str);
+	printf("fin de heredoc = ctrl-d\n");
 	close(fd);
 }

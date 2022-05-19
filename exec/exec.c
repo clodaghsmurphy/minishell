@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/10 13:55:09 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:07:42 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
+int retour;
 
 void	ft_exe(t_mshell *mini)
 {
@@ -29,43 +31,49 @@ void	ft_exe(t_mshell *mini)
 		find_replace_hd(current->in);
 		current = current->next;
 	}
-	
-	// current = mini->command;
-	// while (current)
-	// {
-	// 	while (current->in)
-	// 	{
-	// 		printf("name = %s\ntype = %i\nstop word = %s\n\n", current->in->name, current->in->type, current->in->stop);
-	// 		current->in = current->in->next;
-	// 	}
-	// 	current = current->next;
-	// }
-	
-
-
-
-	
 	mini->pipe_fd = NULL;
 	//error("random", mini);
-	//exec_cmd(mini);
 	launch_hd(mini);
+	exec_cmd(mini);
+	delete_hd(mini->command);
 	free(mini->pipe_fd);
 	free_command(&mini->command);
+	printf("retour = %d", retour / 256);
 	//free_mini(mini);
+}
+void	delete_hd(t_command *command)
+{
+	while (command)
+	{
+		while (command->in)
+		{
+			if (command->in->stop)
+				unlink(command->in->name);
+			command->in = command->in->next;
+		}
+		command = command->next;
+	}
 }
 
 void	exec_cmd(t_mshell *mini)
 {
 	int			pid;
 	int			i;
+	int			j;
 	t_command	*current;
+	int			*pids;
 	
+	pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
+	pids[cmd_list_size(mini->command)] = 0;
 	mini->pipe_fd = set_pipe(mini->command);
 	 i = 0;
+	 j = 0;
 	current = mini->command;
 	while (current)
 	{
 		pid = fork();
+		if (pid > 0)
+			pids[i] = pid;
 		if (pid == 0)
 		{
 			exit_if_builtin_only(mini, current);
@@ -77,9 +85,10 @@ void	exec_cmd(t_mshell *mini)
 				execute(mini, current, i);
 		}
 		i += 2;
+		j ++;
 		current = current->next;
 	}
-	close_pipe_n_wait(mini->pipe_fd);
+	close_pipe_n_wait(mini->pipe_fd, pids);
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
@@ -162,8 +171,6 @@ int	make_redir_in(t_command *command, t_mshell *mini)
 	fd = 0;
 	while (command->in)
 	{
-		// if (command->out->in == 1)
-		// 	fd = open(command->out->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (command->in->type == 0)
 			fd = open(command->in->name, O_RDONLY);
 		if (fd < 0)
