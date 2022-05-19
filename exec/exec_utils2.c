@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/18 13:49:28 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:28:55 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,19 @@ void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 	}
 }
 
-void	close_pipe_n_wait(int *pipe_fd)
+void	close_pipe_n_wait(int *pipe_fd, int *pids)
 {
 	int	i;
 
 	i = 0;
 	while (pipe_fd[i])
 		close(pipe_fd[i++]);
-	while (waitpid(-1, &retour, 0) != -1)
+	i = 0;
+	while (pids[i])
+	{
+		waitpid(pids[i], &retour, 0);
 		i++;
+	}
 }
 
 int	*set_pipe(t_command *command)

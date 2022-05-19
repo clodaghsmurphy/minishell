@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/18 14:03:21 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:24:27 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ t_pipe			*set_lst_pipe(t_command *command);
 void			add_back_pipe(t_pipe **pipe);
 void			execute(t_mshell *mini, t_command *current, int i);
 int				*set_pipe(t_command *command);
-void			close_pipe_n_wait(int *pipe_fd);
+void			close_pipe_n_wait(int *pipe_fd, int *pids);
 void			exit_if_builtin_only(t_mshell *mini, t_command *current);
 
 

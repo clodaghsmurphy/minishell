@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/18 15:07:42 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:25:05 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ void	exec_cmd(t_mshell *mini)
 	pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
 	pids[cmd_list_size(mini->command)] = 0;
 	mini->pipe_fd = set_pipe(mini->command);
-	 i = 0;
-	 j = 0;
+	i = 0;
+	j = 0;
 	current = mini->command;
 	while (current)
 	{
 		pid = fork();
 		if (pid > 0)
-			pids[i] = pid;
+			pids[j] = pid;
 		if (pid == 0)
 		{
 			exit_if_builtin_only(mini, current);
