@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/18 16:01:04 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:28:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 		split_lstadd_back(word, split_lstnew(str[*i]));
 		(*i)++;
 	}
+	while (str[*i] == 32)
+		(*i)++;
 	new_word = make_word(word, mshell);
 	if (new_word)
 	{
@@ -72,6 +74,7 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	t_split	*delimiter;
 	int		flag;
+	char	*new_word;
 
 	flag = 0;
 	delimiter = NULL;
@@ -90,9 +93,18 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	else if (is_redir(str, i) == 1 || is_redir(str, i) == 2)
 		flag = parse_redir(&delimiter, mshell, str, i);
-	make_word(word, mshell);
+	new_word = make_word(word, mshell);
 	if (flag == 1)
-		make_word(&delimiter, mshell);
+	{
+		new_word = make_word(&delimiter, mshell);
+		if (new_word)
+		{
+			phrase_lstadd_back(&mshell->phrase, phrase_lstnew(ft_strdup(new_word)));
+			(*i)++;
+			free(new_word);
+		}
+		
+	}
 }
 
 int	is_redir(char *str, int *i)
