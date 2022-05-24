@@ -3,26 +3,29 @@
 t_redir_in	*parse_redir_in(char **command)
 {
 	t_redir_in	*lst;
+	char		**tab;
 	int			i;
 
 	i = 0;
 	lst = NULL;
-	while (command[i])
+	tab = ft_dup_tab(command);
+	while (tab[i])
 	{
-		if (!ft_strncmp(command[i], "<<", 3) && command[i + 1])
+		if (!ft_strncmp(tab[i], "<<", 3) && tab[i + 1])
 		{
-			add_back_redir_in(&lst, command[i + 1], 1);
-			command = command_clear_one_in(command);
+			add_back_redir_in(&lst, tab[i + 1], 1);
+			tab = command_clear_one_in(tab);
 			i = - 1;
 		}
-		else if (!ft_strncmp(command[i], "<", 2) && command[i + 1])
+		else if (!ft_strncmp(tab[i], "<", 2) && tab[i + 1])
 		{
-			add_back_redir_in(&lst, command[i + 1], 0);
-			command = command_clear_one_in(command);
+			add_back_redir_in(&lst, tab[i + 1], 0);
+			tab = command_clear_one_in(tab);
 			i = - 1;
 		} 
 		i++;
 	}
+	free_tab(tab);
 	return (lst);
 }
 
@@ -34,6 +37,7 @@ void	add_back_redir_in(t_redir_in **lst, char *file_name, int bol)
 	new = malloc(sizeof(t_redir_in));
 	new->name = ft_strdup(file_name);
 	new->type = bol;
+	new->stop = NULL;
 	new->next = NULL;
 	if (*lst == NULL)
 	{
@@ -109,5 +113,6 @@ char	**command_clear_one_in(char **command)
 		}
 	}
 	new[j] = 0;
+	free_tab(command);
 	return (new);
 }

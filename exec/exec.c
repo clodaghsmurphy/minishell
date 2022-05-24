@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/02 14:52:21 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:36:46 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void	error(char *str);
-
+int retour;
 
 void	ft_exe(t_mshell *mini)
 {
@@ -29,89 +28,120 @@ void	ft_exe(t_mshell *mini)
 		current->in = parse_redir_in(current->value);
 		current->value = command_clear_all_out(current->value);
 		current->value = command_clear_all_in(current->value);
+		find_replace_hd(current->in);
 		current = current->next;
 	}
+	mini->pipe_fd = NULL;
+	launch_hd(mini);
 	exec_cmd(mini);
+	delete_hd(mini->command);
+	free(mini->pipe_fd);
+	free_command(&mini->command);
+}
+void	delete_hd(t_command *command)
+{
+	while (command)
+	{
+		while (command->in)
+		{
+			if (command->in->stop)
+				unlink(command->in->name);
+			command->in = command->in->next;
+		}
+		command = command->next;
+	}
 }
 
 void	exec_cmd(t_mshell *mini)
 {
 	int			pid;
-	int			*pipe_fd;
 	int			i;
+	int			j;
 	t_command	*current;
+	int			*pids;
 	
-	pipe_fd = set_pipe(mini->command);
+	pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
+	pids[cmd_list_size(mini->command)] = 0;
+	mini->pipe_fd = set_pipe(mini->command);
 	i = 0;
+	j = 0;
 	current = mini->command;
 	while (current)
 	{
 		pid = fork();
+		if (pid > 0)
+			pids[j] = pid;
 		if (pid == 0)
 		{
-			exit_if_builtin_last(mini->command, current);
-		 	execute(mini, current, pipe_fd, i);
+			exit_if_builtin_only(mini, current);
+		 	execute(mini, current, i);
 		}
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
-			if (is_builtins(current->value))
-				//exe_builtins(current->value, &mini->env);
-				execute(mini, current, pipe_fd, i);
+			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
+				execute(mini, current, i);
 		}
 		i += 2;
+		j ++;
 		current = current->next;
 	}
-	close_pipe_n_wait(pipe_fd);
+	close_pipe_n_wait(mini->pipe_fd, pids);
 }
 
-void	execute(t_mshell *mini, t_command *current, int *pipe_fd, int i)
+void	execute(t_mshell *mini, t_command *current, int i)
 {
 	char	*path;
-	ft_dup(mini->command, current, pipe_fd, i);
+	ft_dup(mini, current, i);
 	if (is_builtins(current->value))
 	{
-		exe_builtins(current->value, &mini->env);
-		exit(0);
+		exe_builtins(current->value, &mini->env, mini);
+		if (cmd_list_size(mini->command) != 1)
+		{
+			free_mini(mini);
+			exit(0);
+		}
+		else
+			return ;
 	}
 	path = find_path(mini->env, current->value);
 	if (path == NULL)
 	{
-		free(pipe_fd);
-		ft_putstr_fd("Command not found\n", 2);
-		exit(0);
+		ft_putstr_fd(current->value[0], 2);
+		error(" ", mini);
 	}
 	execve(path, current->value, env_to_tab(mini->env));
 	exit(0);
 }
 
-void	ft_dup(t_command *command, t_command *current, int *pipe_fd, int i)
+void	ft_dup(t_mshell *mini, t_command *current, int i)
 {
 	int	j;
 	int	out_fd;
 	int	in_fd;
 
 	j = 0;
-	if (cmd_lst_pos(command, current) == 1 && cmd_list_size(command) > 1)
-		dup2(pipe_fd[1], 1);
-	else if (cmd_lst_pos(command, current) == cmd_list_size(command) &&\
-	cmd_list_size(command) > 1)
-	  	dup2(pipe_fd[i - 2], 0);
-	else if (cmd_list_size(command) > 1)
+	if (cmd_lst_pos(mini->command, current) == 1 && cmd_list_size(mini->command) > 1)
+		dup2(mini->pipe_fd[1], 1);
+	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command) &&\
+	cmd_list_size(mini->command) > 1 && !is_builtins(current->value))
+	  	dup2(mini->pipe_fd[i - 2], 0);
+	else if (cmd_list_size(mini->command) > 1)
 	{
-	 	dup2(pipe_fd[i - 2], 0);
-	 	dup2(pipe_fd[i + 1], 1);
+		if (!is_builtins(current->value))
+	 		dup2(mini->pipe_fd[i - 2], 0);
+	 	dup2(mini->pipe_fd[i + 1], 1);
 	}
-	out_fd = make_redir_out(current);
-	in_fd = make_redir_in(current);
+	out_fd = make_redir_out(current, mini);
+	in_fd = make_redir_in(current, mini);
 	if (out_fd)
 	 	dup2(out_fd, 1);
 	if (in_fd)
 	  	dup2(in_fd, 0);
-	while (pipe_fd[j])
-		close(pipe_fd[j++]);
+	while (mini->pipe_fd[j])
+		close(mini->pipe_fd[j++]);
 }
 
-int	make_redir_out(t_command *command)
+int	make_redir_out(t_command *command, t_mshell *mini)
 {
 	int	fd;
 
@@ -123,7 +153,7 @@ int	make_redir_out(t_command *command)
 		else if (command->out->append == 0)
 			fd = open(command->out->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
-			error(command->out->name);
+			error(command->out->name, mini);
 		if (command->out->next)
 			close(fd);
 		command->out = command->out->next;
@@ -131,26 +161,28 @@ int	make_redir_out(t_command *command)
 	return (fd);
 }
 
-int	make_redir_in(t_command *command)
+int	make_redir_in(t_command *command, t_mshell *mini)
 {
 	int	fd;
 
 	fd = 0;
 	while (command->in)
 	{
-		// if (command->out->in == 1)
-		// 	fd = open(command->out->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (command->in->type == 0)
 			fd = open(command->in->name, O_RDONLY);
 		if (fd < 0)
-			printf("erreur d'ouverture de file in mais j'exite pas encore");
+			error(command->in->name, mini);
 		command->in = command->in->next;
 	}
 	return (fd);
 }
 
-void	error(char *str)
+void	error(char *str, t_mshell *mini)
 {
 	perror(str);
+	free(mini->pipe_fd);
+	free_command(&mini->command);
+	env_free(mini->env);
+	free(mini);
 	exit(EXIT_FAILURE);
 }
