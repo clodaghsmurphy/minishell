@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/16 14:31:50 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:15:31 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ int	dollar_only(t_split **word, t_mshell *mshell, char *str, int *i)
 	{
 		mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
 		(*i)++;
+		return (1);
+	}
+	if (str[*i] == '$' && str[*i + 1] == '?')
+	{
+		mshell->res = ft_strjoin(mshell->res, ft_strdup(ft_itoa(g_estatus)));
+		*i += 2;
 		return (1);
 	}
 	return (0);

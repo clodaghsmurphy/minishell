@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/19 16:28:39 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:35:33 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
+	print_command(mshell->command);
 	if (mshell->q_error != 1 && mshell->s_error != 1)
 	{
 		mshell->command = create_command(mshell);
@@ -50,24 +51,24 @@ t_command	*create_command(t_mshell *mshell)
 {
 	t_phrase	*temp_phrase;
 	t_command	*command;
-	t_command	*temp_command;
 	int			size;
 	int			i;
 
 	command = NULL;
 	command_lstadd_back(&command, command_lstnew(NULL));
-	temp_command = command;
 	temp_phrase = mshell->phrase;
-	parse_command_list(mshell, temp_phrase, temp_command, command);
+	parse_command_list(mshell, temp_phrase, &command);
 	return (command);
 }
 
-int	parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
-t_command *temp_command, t_command *command)
+int	parse_command_list(t_mshell *mshell, \
+						t_phrase *temp_phrase, t_command **command)
 {
-	int	i;
-	int	size;
+	int			i;
+	int			size;
+	t_command	*temp_command;
 
+	temp_command = *command;
 	while (temp_phrase != NULL)
 	{
 		i = 0;
@@ -76,11 +77,11 @@ t_command *temp_command, t_command *command)
 		while (temp_phrase != NULL && \
 		ft_strncmp(temp_phrase->str, "|", 10) != 0)
 		{
-			next_phrase(&i, &temp_phrase, &temp_command);
+			next_phrase(&i, &temp_phrase, temp_command);
 		}
 		if (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) == 0)
 		{
-			if (next_command(&i, temp_phrase, temp_command, command) == 1)
+			if (next_command(&i, &temp_phrase, &temp_command, command) == 1)
 				break ;
 		}
 		else

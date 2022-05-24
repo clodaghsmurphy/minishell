@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/18 15:58:22 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:18:00 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,15 @@ void		free_mshell(t_mshell *mshell, char *str);
 int			parse_command(char *str, t_mshell *mshell);
 t_command	*create_command(t_mshell *mshell);
 int			parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
-t_command *temp_command, t_command *command);
+			t_command **command);
 int			is_delim(t_mshell *mshell, char *str, int *i);
 int			is_redir(char *str, int *i);
 /**************PARSE****************/
 int			check_args(int ac, char **av);
 int			next_phrase(int *i, t_phrase **temp_phrase, \
-t_command **temp_command);
-int			next_command(int *i, t_phrase *temp_phrase, \
-t_command *temp_command, t_command *command);
+t_command *temp_command);
+int			next_command(int *i, t_phrase **temp_phrase, \
+t_command **temp_command, t_command **command);
 /**************PARSE_QUOTE****************/
 int			empty_quote(int type, t_mshell *mshell, char *str, int *i);
 int			quote_error(t_split **word, t_mshell *mshell, char *str, int *i);
