@@ -6,13 +6,13 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:14:45 by shiloub           #+#    #+#             */
-/*   Updated: 2022/04/27 13:06:58 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/18 14:01:28 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exe_builtins(char **params, t_env **env)
+void	exe_builtins(char **params, t_env **env, t_mshell *mini)
 {
 	if (!ft_strncmp(params[0], "pwd", 5))
 		pwd();
@@ -25,7 +25,7 @@ void	exe_builtins(char **params, t_env **env)
 	if (!ft_strncmp(params[0], "unset", 7))
 		ft_unset(env, params);
 	if (!ft_strncmp(params[0], "exit", 5))
-		exit(0);
+		ft_exit(params, mini);
 	if (!ft_strncmp(params[0], "env", 5))
 	{
 		print_env(*env);

@@ -1,0 +1,15 @@
+salut
+[1;33m  Shell  ✗ [0m
+[1;33m  Shell  ✗ [0m
+[1;33m  Shell  ✗ [0mls
+builtins
+exec
+includes
+libft
+Makefile
+minishell
+parse
+src
+test
+valgrind_readline_leaks_ignore.txt
+[1;33m  Shell  ✗ [0m^C^C
