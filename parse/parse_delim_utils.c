@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:24:32 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/13 11:31:29 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:55:01 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 	{
 		if (str[(*i) + 1] == '|')
 		{
-			printf("syntax error\n");
+			syntax_error(mshell);
+			(*i) += 2;
 			return (-1);
 		}
 		split_lstadd_back(delimiter, split_lstnew(str[*i]));
@@ -34,7 +35,7 @@ int	is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 
 int	parse_redir(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 {
-	if (is_redir(str, i) == 2)
+	if (is_redir(str, i, mshell) == 2)
 	{
 		split_lstadd_back(delimiter, split_lstnew(str[*i]));
 		(*i)++;

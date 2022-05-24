@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/24 15:44:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:48:04 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_command	*create_command(t_mshell *mshell);
 int			parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
 			t_command **command);
 int			is_delim(t_mshell *mshell, char *str, int *i);
-int			is_redir(char *str, int *i);
+int			is_redir(char *str, int *i, t_mshell *mshell);
 /**************PARSE_UTLIS****************/
 int			check_args(int ac, char **av);
 int			next_phrase(int *i, t_phrase **temp_phrase, \

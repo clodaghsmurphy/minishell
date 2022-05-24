@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:26:06 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/19 15:10:17 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:50:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_mshell	*init_mshell(char **env)
 
 void	syntax_error(t_mshell *mshell)
 {
+	if (mshell->s_error != 1)
+		printf("\033[1m\033[31m  Syntax Error RIP\n");
 	mshell->s_error = 1;
-	printf("\033[1m\033[31m  Syntax Error RIP");
 	g_estatus = 2;
 }
