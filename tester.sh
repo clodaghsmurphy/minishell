@@ -132,3 +132,11 @@ exec_test 'echo $USE=ho'
 exec_test 'echo $USER"$USER"'
 exec_test 'echo "   $TEST| lol$TEST"'
 exec_test 'echo "   $TEST<< lol$TEST"'
+
+#exit status tests
+exec_test 'echo $?'
+exec_test 'echo $?hello'
+exec_test 'echo "$?"'
+exec_test 'echo hello$?'
+exec_test 'echo "$?hello"'
+

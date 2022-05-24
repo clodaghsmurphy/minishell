@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:37:04 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/17 13:36:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:57:29 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 	{
 		*i += 2;
 		mshell->res = ft_strjoin(mshell->res, ft_strdup("$"));
+		return (1);
+	}
+	if (str[*i] == '$' && str[*i + 1] == '?')
+	{
+		mshell->res = ft_strjoin(mshell->res, ft_strdup(ft_itoa(g_estatus)));
+		*i += 2;
 		return (1);
 	}
 	if (number_after_dollar(mshell, str, i) == 1)
