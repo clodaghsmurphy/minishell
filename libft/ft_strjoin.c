@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:38:19 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/18 10:53:20 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:41:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*strcat;
 	int		i;
 
-	if (!s1)
-		s1 = ft_strdup("");
 	lens1 = ft_strlen((char *)s1);
 	i = 0;
 	strcat = malloc(sizeof(char) * (lens1 + ft_strlen((char *)s2) + 1));
@@ -38,6 +36,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	strcat[i + lens1] = '\0';
-	free((void *)s1);
 	return (strcat);
 }

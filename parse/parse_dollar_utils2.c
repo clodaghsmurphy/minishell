@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:17:16 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/17 14:30:14 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:43:09 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	eq_in_dollar(int *type, t_mshell *mshell, char *str, int *i)
 	{
 		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 		if (mshell->var != NULL)
-			mshell->res = ft_strjoin(mshell->res, mshell->var);
+			mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 		j = (*i);
 		while (is_delim_dollar(str, *i) && str[*i] != *type && str[*i] != '$')
 			(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strndup(str + j, (*i - j)));
+		mshell->res = ft_strjoin_f2(mshell->res, ft_strndup(str + j, (*i - j)));
 		j = (*i);
 		mshell->j = j;
 		free(mshell->var);
@@ -42,7 +42,7 @@ int	another_dollar(int *j, t_mshell *mshell, char *str, int *i)
 	{
 		mshell->var = is_in_env(mshell, ft_strndup(str + *j, (*i - *j)));
 		if (mshell->var != NULL)
-			mshell->res = ft_strjoin(mshell->res, mshell->var);
+			mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 		mshell->j = (*i);
 		free(mshell->var);
 		mshell->var = NULL;
@@ -50,7 +50,7 @@ int	another_dollar(int *j, t_mshell *mshell, char *str, int *i)
 		{
 			(*i)++;
 			(*i)++;
-			mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+			mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("$="));
 			return (2);
 		}
 		return (1);
@@ -71,7 +71,7 @@ int	parse_quotes_in_destring(int *type, t_mshell *mshell, char *str, int *i)
 			ft_strndup(str + j, (*i - j)));
 			if (mshell->var != NULL)
 			{
-				mshell->res = ft_strjoin(mshell->res, mshell->var);
+				mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 			}
 			j = *i;
 			mshell->j = j;
@@ -90,7 +90,7 @@ int	eq_in_pdollar(t_mshell *mshell, char *str, int *i)
 	{
 		(*i)++;
 		(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("$="));
 		return (1);
 	}
 	return (0);

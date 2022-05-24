@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:22:15 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 12:18:48 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:41:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,33 @@ int	check_args(int ac, char **av)
 	}
 	return (1);
 }
+
+char	*ft_strjoin_f2(char *s1, char const *s2)
+{
+	int		lens1;
+	char	*strcat;
+	int		i;
+
+	if (!s1)
+		s1 = ft_strdup("");
+	lens1 = ft_strlen((char *)s1);
+	i = 0;
+	strcat = malloc(sizeof(char) * (lens1 + ft_strlen((char *)s2) + 1));
+	if (!strcat)
+		return (0);
+	while (s1[i])
+	{
+		strcat[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		strcat[i + lens1] = s2[i];
+		i++;
+	}
+	strcat[i + lens1] = '\0';
+	free(s1);
+	return (strcat);
+}
+

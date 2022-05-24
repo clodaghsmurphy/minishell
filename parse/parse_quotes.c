@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/18 11:45:56 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:43:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 	int	type;
 
 	if (*word)
-		mshell->res = ft_strjoin(mshell->res, make_word(word, mshell));
+		mshell->res = ft_strjoin_f2(mshell->res, make_word(word, mshell));
 	type = str[*i];
 	(*i)++;
 	if (empty_quote(type, mshell, str, i) == 1)

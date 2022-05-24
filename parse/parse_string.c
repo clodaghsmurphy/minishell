@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 10:17:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:43:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 	new_word = make_word(word, mshell);
 	if (new_word)
 	{
-		mshell->res = ft_strjoin(mshell->res, new_word);
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
 		free(new_word);
 	}
 	if (mshell->res)
