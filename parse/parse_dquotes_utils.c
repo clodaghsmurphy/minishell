@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:31:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 10:45:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:03:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	parse_dquote_string2(int type, t_mshell *mshell, char *str, int *i)
 	{
 		if (str[*i - 1] == '$' && type == 34)
 		{
-			while (str[*i] != type && str[*i] != '$' && \
+			while (str[*i] != 34 && str[*i] != 39 && str[*i] != '$' && \
 			is_delim_dollar(str, *i) == 1)
 			{
 				if (dquote_is_digit(mshell, str, i) == 1)
@@ -60,6 +60,11 @@ void	make_var2(t_mshell *mshell, char *str, int *i)
 	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (mshell->var != NULL)
 		mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
+	if (str[*i] == 39)
+	{
+		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("'"));
+		(*i)++;
+	}
 	free(mshell->var);
 	mshell->var = NULL;
 }
