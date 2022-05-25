@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:24:32 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 16:55:01 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:02:23 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 	if (str[*i] == '|')
 	{
 		if (str[(*i) + 1] == '|')
+		{
+			syntax_error(mshell);
+			(*i) += 2;
+			return (-1);
+		}
+		if (str[(*i) + 1] == '\0')
 		{
 			syntax_error(mshell);
 			(*i) += 2;

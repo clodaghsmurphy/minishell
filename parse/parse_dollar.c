@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 15:43:17 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:37:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	make_var(t_mshell *mshell, char *str, int *i)
 	j = mshell->j;
 	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (mshell->var != NULL)
-		mshell->res = (mshell->res, mshell->var);
+		mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 	else
 	{
 		free(mshell->var);

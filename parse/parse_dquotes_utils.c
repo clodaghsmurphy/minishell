@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:31:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/17 14:42:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:45:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	dquote_eq(t_mshell *mshell, char *str, int *i)
 	{
 		(*i)++;
 		(*i)++;
-		mshell->res = ft_strjoin(mshell->res, ft_strdup("$="));
+		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("$="));
 		return (1);
 	}
 	return (0);
@@ -47,6 +47,8 @@ int	parse_dquote_string2(int type, t_mshell *mshell, char *str, int *i)
 		}
 		(*i)++;
 	}
+	if (type == 39)
+		mshell->res = ft_strjoin_f2(mshell->res, ft_strndup(str + j, (*i - j)));
 	return (0);
 }
 
@@ -57,7 +59,7 @@ void	make_var2(t_mshell *mshell, char *str, int *i)
 	j = mshell->j;
 	mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 	if (mshell->var != NULL)
-		mshell->res = ft_strjoin(mshell->res, mshell->var);
+		mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 	free(mshell->var);
 	mshell->var = NULL;
 }
@@ -73,7 +75,7 @@ int	dquote_is_digit(t_mshell *mshell, char *str, int *i)
 		mshell->var = is_in_env(mshell, \
 		ft_strndup(str + j, (*i - j)));
 		if (mshell->var != NULL)
-			mshell->res = ft_strjoin(mshell->res, mshell->var);
+			mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 		else
 		{
 			free(mshell->var);

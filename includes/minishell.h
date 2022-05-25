@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Updated: 2022/05/24 16:48:04 by clmurphy         ###   ########.fr       */
-/*   Updated: 2022/05/25 15:52:00 by amontant         ###   ########.fr       */
+/*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
+/*   Updated: 2022/05/25 16:11:51 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 
 # define KEY_UP 38
 
-struct		s_command;
-struct		s_mshell;
-extern int	g_estatus;
-extern int retour;
-typedef struct	s_redir_in
+struct			s_command;
+struct			s_mshell;
+extern int		g_estatus;
+extern int		retour;
+typedef struct s_redir_in
 {
 	char				*name;
 	int					type;
@@ -237,7 +237,9 @@ t_mshell	*init_mshell(char **env);
 void		syntax_error(t_mshell *mshell);
 /**************ARM_SIGNAL************/
 void		armsignals(void);
-void		sig_handler(int signum);
+void		sig_handler(int signum, siginfo_t *info, void *context);
+void		signal_def(void);
+void		end_signals(void);
 
 /************ASSIGN_TOKENS***********/
 void		assign_tokens(t_mshell *mshell);
