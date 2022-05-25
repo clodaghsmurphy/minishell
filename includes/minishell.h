@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/25 17:01:50 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:15:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,10 @@ char			*make_word(t_split **word, t_mshell *mshell);
 int				parse_string(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
 void			parse_delimiter(t_split **word, t_mshell *mshell, \
+				char *str, int *i);
+void			parse_string_bis(t_split **word, t_mshell *mshell, \
+				char *str, int *i);
+void			new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
 				char *str, int *i);
 
 /***********PARSE_DELIM_UTILS*******************/
