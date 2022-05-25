@@ -12,6 +12,7 @@ SRC = src/main.c \
 	parse/parse_dquotes.c \
 	parse/parse_dquotes_utils.c \
 	parse/parse_dquotes_bis.c \
+	parse/parse_string_bis.c \
 	parse/parse_string.c \
 	parse/parse_quotes.c \
 	parse/parse_dollar.c \

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/25 17:15:08 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:46:15 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int				parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
 			t_command **command);
 int				is_delim(t_mshell *mshell, char *str, int *i);
 int				is_redir(char *str, int *i, t_mshell *mshell);
+int				init_values(int	*i, int *size, t_command **temp_command, \
+				t_phrase **phrase);
 /**************PARSE_UTLIS****************/
 int				check_args(int ac, char **av);
 int				next_phrase(int *i, t_phrase **temp_phrase, \
@@ -190,6 +192,7 @@ void			parse_string_bis(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
 void			new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
 				char *str, int *i);
+int				check_redirs(t_mshell *mshell, char *str, int *i);
 
 /***********PARSE_DELIM_UTILS*******************/
 int				parse_redir(t_split **delimiter, t_mshell *mshell, \

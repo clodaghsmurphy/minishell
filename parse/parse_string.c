@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 17:14:56 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:27:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ int	is_delim(t_mshell *mshell, char *str, int *i)
 			syntax_error(mshell);
 		return (0);
 	}
+	if (check_redirs(mshell, str, i) == 0)
+		return (0);
+	return (1);
+}
+
+int	check_redirs(t_mshell *mshell, char *str, int *i)
+{
 	if (str[*i] == '>')
 	{	
 		if (str[*i + 1] == '<')
@@ -112,39 +119,4 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 	new_word = make_word(word, mshell);
 	if (flag == 1)
 		new_word_afte_pipe(&delimiter, mshell, str, i);
-}
-
-void	new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
-		char *str, int *i)
-{
-	char	*new_word;
-
-	new_word = make_word(delimiter, mshell);
-	if (new_word)
-	{
-		phrase_lstadd_back(&mshell->phrase, \
-		phrase_lstnew(ft_strdup(new_word)));
-		free(new_word);
-	}	
-}
-
-int	is_redir(char *str, int *i, t_mshell *mshell)
-{
-	if (ft_strncmp(str + *i, ">>", 2) == 0)
-		return (2);
-	if (ft_strncmp(str + *i, "<<", 2) == 0)
-		return (2);
-	if (str[*i] == '>')
-	{	
-		if (str[*i + 1] == '<')
-			syntax_error(mshell);
-		return (1);
-	}
-	if (str[*i] == '<')
-	{	
-		if (str[*i + 1] == '>')
-			syntax_error(mshell);
-		return (1);
-	}
-	return (0);
 }

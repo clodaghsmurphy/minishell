@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:22:15 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 15:41:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:28:17 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ char	*ft_strjoin_f2(char *s1, char const *s2)
 	free(s1);
 	return (strcat);
 }
-

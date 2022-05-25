@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 10:32:54 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:45:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	parse_command(char *str, t_mshell *mshell)
 		free_phrase(&mshell->phrase);
 		ft_exe(mshell);
 	}
-	//free_command(&mshell->command);
+	else
+		free_command(&mshell->command);
 	return (0);
 }
 
@@ -70,14 +71,11 @@ int	parse_command_list(t_mshell *mshell, \
 	temp_command = *command;
 	while (temp_phrase != NULL)
 	{
-		i = 0;
-		size = phrase_lstsize(temp_phrase);
-		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
+		if (init_values(&i, &size, &temp_command, &temp_phrase) == -1)
+			return (-1);
 		while (temp_phrase != NULL && \
 		ft_strncmp(temp_phrase->str, "|", 10) != 0)
-		{
 			next_phrase(&i, &temp_phrase, temp_command);
-		}
 		if (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) == 0)
 		{
 			if (next_command(&i, &temp_phrase, &temp_command, command) == 1)
@@ -90,5 +88,16 @@ int	parse_command_list(t_mshell *mshell, \
 			break ;
 		}
 	}
+	return (0);
+}
+
+int	init_values(int	*i, int *size, t_command **temp_command, \
+				t_phrase **temp_phrase)
+{
+	*i = 0;
+	*size = phrase_lstsize(*temp_phrase);
+	(*temp_command)->value = (char **)malloc(sizeof(char *) * (*size + 1));
+	if (!(*temp_command))
+		return (-1);
 	return (0);
 }
