@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/24 16:36:46 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/25 16:09:16 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_exe(t_mshell *mini)
 	exec_cmd(mini);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
+	//reactiver signaux minishell
 	free_command(&mini->command);
 }
 void	delete_hd(t_command *command)
@@ -68,19 +69,22 @@ void	exec_cmd(t_mshell *mini)
 	current = mini->command;
 	while (current)
 	{
+		//ignore les signaux
 		pid = fork();
 		if (pid > 0)
 			pids[j] = pid;
 		if (pid == 0)
 		{
+			//reactivve les signaux par defaut
 			exit_if_builtin_only(mini, current);
-		 	execute(mini, current, i);
+			execute(mini, current, i);
 		}
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
 			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
 				execute(mini, current, i);
 		}
+		//reactive les signaux de minishell
 		i += 2;
 		j ++;
 		current = current->next;
