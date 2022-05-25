@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 10:56:10 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:17:41 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_read(char *str, t_mshell *mshell)
 	else
 	{
 		printf("exit\n");
-		//free_mshell(mshell, str);
+		free_mshell(mshell, str);
 		return (-1);
 	}
 }
