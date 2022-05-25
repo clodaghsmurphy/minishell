@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/25 16:09:16 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:18:29 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_exe(t_mshell *mini)
 	exec_cmd(mini);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
-	//reactiver signaux minishell
+	armsignals();
 	free_command(&mini->command);
 }
 void	delete_hd(t_command *command)
@@ -69,13 +69,13 @@ void	exec_cmd(t_mshell *mini)
 	current = mini->command;
 	while (current)
 	{
-		//ignore les signaux
+		end_signals();
 		pid = fork();
 		if (pid > 0)
 			pids[j] = pid;
 		if (pid == 0)
 		{
-			//reactivve les signaux par defaut
+			signal_def();
 			exit_if_builtin_only(mini, current);
 			execute(mini, current, i);
 		}
@@ -84,7 +84,6 @@ void	exec_cmd(t_mshell *mini)
 			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
 				execute(mini, current, i);
 		}
-		//reactive les signaux de minishell
 		i += 2;
 		j ++;
 		current = current->next;
