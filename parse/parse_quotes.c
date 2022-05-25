@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 15:43:47 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:08:33 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i)
 	new_word = make_word(word, mshell);
 	if (new_word)
 	{
-		mshell->res = ft_strjoin(mshell->res, new_word);
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
 		free(new_word);
 	}
 	if (str[*i] == '\0')
@@ -93,8 +93,8 @@ int	dollar_in_quote_string(t_split **word, t_mshell *mshell, char *str, int *i)
 		new_word = make_word(word, mshell);
 		if (new_word)
 		{
-			mshell->res = ft_strjoin(mshell->res, new_word);
-			//free(new_word);
+			mshell->res = ft_strjoin_f2(mshell->res, new_word);
+			free(new_word);
 		}
 		return (1);
 	}

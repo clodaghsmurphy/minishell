@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:05:08 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 15:43:30 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:09:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	check_dquote_in_env(int type, t_mshell *mshell, char *str, int *i)
 	{
 		mshell->var = is_in_env(mshell, ft_strndup(str + j, (*i - j)));
 		if (mshell->var != NULL)
-				mshell->res = ft_strjoin(mshell->res, mshell->var);
+				mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 		else
-			mshell->res = ft_strjoin(mshell->res, ft_strdup(""));
+			mshell->res = ft_strjoin_f2(mshell->res, ft_strdup(""));
 	}
 	else if (type == 39)
 	{
-		mshell->res = ft_strjoin(mshell->res, mshell->var);
+		mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
 		(*i)++;
 	}
 	return (0);
