@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 17:55:34 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:26:58 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_mshell
 	int			*pipe_fd;
 	t_env		*env;
 	char		**path;
+	int			*pids;
 	char		*res;
 	char		*var;
 	int			j;

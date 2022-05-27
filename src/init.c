@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:26:06 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 14:26:02 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:27:13 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_mshell	*init_mshell(char **env)
 		return (NULL);
 	mshell->s_error = 0;
 	mshell->env = parse_env(env);
+	mshell->pids = NULL;
 	return (mshell);
 }
 
