@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 18:26:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:33:49 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ int				make_redir_in(t_command *command, t_mshell *mini);
 void			free_redir_in(t_redir_in *lst);
 void			free_redir_out(t_redir_out *lst);
 void			free_mini(t_mshell *mini);
-void			error(char *str, t_mshell *mini);
+void			error(char *str, t_mshell *mini, int erreur);
 
 int				lataille(char **command);
 char			**ft_dup_tab(char **command);

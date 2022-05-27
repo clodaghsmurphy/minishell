@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 14:25:48 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:40:15 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	free_mshell(t_mshell *mshell, char *str)
 	if (str)
 		free (str);
 	env_free(mshell->env);
+	free_phrase(&mshell->phrase);
  	if (mshell)
 		free(mshell); 
 }
