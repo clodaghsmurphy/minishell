@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/26 14:03:18 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:52:59 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
-	int			*pids;
-
-	pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
-	pids[cmd_list_size(mini->command)] = 0;
+	
+	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
+	mini->pids[cmd_list_size(mini->command)] = 0;
 	mini->pipe_fd = set_pipe(mini->command);
 	i = 0;
 	j = 0;
@@ -72,7 +71,7 @@ void	exec_cmd(t_mshell *mini)
 		end_signals();
 		pid = fork();
 		if (pid > 0)
-			pids[j] = pid;
+			mini->pids[j] = pid;
 		if (pid == 0)
 		{
 			signal_def();
@@ -88,7 +87,7 @@ void	exec_cmd(t_mshell *mini)
 		j ++;
 		current = current->next;
 	}
-	close_pipe_n_wait(mini->pipe_fd, pids);
+	close_pipe_n_wait(mini->pipe_fd, mini->pids);
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
@@ -110,7 +109,7 @@ void	execute(t_mshell *mini, t_command *current, int i)
 	if (path == NULL)
 	{
 		ft_putstr_fd(current->value[0], 2);
-		error(" ", mini);
+		error(" ", mini, 127);
 	}
 	execve(path, current->value, env_to_tab(mini->env));
 	exit(0);
@@ -156,7 +155,7 @@ int	make_redir_out(t_command *command, t_mshell *mini)
 		else if (command->out->append == 0)
 			fd = open(command->out->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
-			error(command->out->name, mini);
+			error(command->out->name, mini, 1);
 		if (command->out->next)
 			close(fd);
 		command->out = command->out->next;
@@ -174,18 +173,18 @@ int	make_redir_in(t_command *command, t_mshell *mini)
 		if (command->in->type == 0)
 			fd = open(command->in->name, O_RDONLY);
 		if (fd < 0)
-			error(command->in->name, mini);
+			error(command->in->name, mini, 1);
 		command->in = command->in->next;
 	}
 	return (fd);
 }
 
-void	error(char *str, t_mshell *mini)
+void	error(char *str, t_mshell *mini, int erreur)
 {
 	perror(str);
 	free(mini->pipe_fd);
 	free_command(&mini->command);
 	env_free(mini->env);
 	free(mini);
-	exit(EXIT_FAILURE);
+	exit(erreur);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/26 13:33:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:47:17 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 		{
 			free(mini->pipe_fd);
 			free_command(&mini->command);
+			free(mini->pids);
 			env_free(mini->env);
 			free(mini);
 			exit(0);
@@ -38,9 +39,12 @@ void	close_pipe_n_wait(int *pipe_fd, int *pids)
 	i = 0;
 	while (pids[i])
 	{
-		waitpid(pids[i], &retour, 0);
+		waitpid(pids[i], &g_estatus, 0);
+		if (g_estatus >= 256)
+			g_estatus = g_estatus / 256;
 		i++;
 	}
+	free(pids);
 }
 
 int	*set_pipe(t_command *command)

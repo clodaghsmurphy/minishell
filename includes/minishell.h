@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 12:07:53 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:50:20 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 struct			s_command;
 struct			s_mshell;
 extern int		g_estatus;
-extern int		retour;
+//extern int		retour;
 typedef struct s_redir_in
 {
 	char				*name;
@@ -103,6 +103,7 @@ typedef struct s_mshell
 	int			*pipe_fd;
 	t_env		*env;
 	char		**path;
+	int			*pids;
 	char		*res;
 	char		*var;
 	int			j;
@@ -317,7 +318,7 @@ int				make_redir_in(t_command *command, t_mshell *mini);
 void			free_redir_in(t_redir_in *lst);
 void			free_redir_out(t_redir_out *lst);
 void			free_mini(t_mshell *mini);
-void			error(char *str, t_mshell *mini);
+void			error(char *str, t_mshell *mini, int erreur);
 
 int				lataille(char **command);
 char			**ft_dup_tab(char **command);
