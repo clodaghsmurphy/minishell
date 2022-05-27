@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/26 14:29:51 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:07:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
-	if (mshell->q_error != 1 && mshell->s_error != 1)
+	if (mshell->s_error != 1)
 	{
 		mshell->command = create_command(mshell);
 		free_phrase(&mshell->phrase);

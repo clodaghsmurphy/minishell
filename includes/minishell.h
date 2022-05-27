@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/25 17:46:15 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:07:53 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_mshell
 	char		*res;
 	char		*var;
 	int			j;
-	int			q_error;
+	int			hdoc_flag;
 	int			s_error;
 	t_command	*command;
 	t_phrase	*phrase;
