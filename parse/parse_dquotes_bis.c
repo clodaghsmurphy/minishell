@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:05:08 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 10:09:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:27:17 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	check_dquote_error(t_mshell *mshell, char *str, int *i)
 	if (str[*i] == '\0')
 	{
 		printf("quote error\n");
-		mshell->q_error = 1;
 		return (1);
 	}
 	return (0);

@@ -140,3 +140,5 @@ exec_test 'echo "$?"'
 exec_test 'echo hello$?'
 exec_test 'echo "$?hello"'
 
+
+bash ./test_pipe.sh

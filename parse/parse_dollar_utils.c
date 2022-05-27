@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/17 11:24:37 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:26:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i)
 	parse_dquote_string(type, mshell, str, i);
 	if (eq_in_dquote(mshell, str, i) == 1)
 		return ;
-	if (check_dquote_error(mshell, str, i) == 1)
-		return ;
+	/* if (check_dquote_error(mshell, str, i) == 1)
+		return ; */
 	free(mshell->var);
 	mshell->var = NULL;
 	return ;

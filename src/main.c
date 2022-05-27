@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:17:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:25:48 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_read(char *str, t_mshell *mshell)
 	if (str)
 	{
 		add_history(str);
-		mshell->q_error = 0;
 		mshell->s_error = 0;
 		parse_command(str, mshell);
 		rl_redisplay();
