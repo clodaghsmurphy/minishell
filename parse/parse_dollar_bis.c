@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/26 13:39:59 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:50:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	define_quote_type(char	*str, int *i)
 int	dollar_only(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	char	*new_word;
-	
+
 	if ((str[*i] == '$' && is_delim_dollar(str, (*i) + 1) == 0))
 	{
 		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("$"));
