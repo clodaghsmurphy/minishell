@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 14:46:05 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:19:17 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	ft_exe(t_mshell *mini)
 	exec_cmd(mini);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
+	armsignals();
 	free_command(&mini->command);
-	printf("retour = %d", retour / 256);
-	//free_mini(mini);
 }
 void	delete_hd(t_command *command)
 {
@@ -69,13 +68,15 @@ void	exec_cmd(t_mshell *mini)
 	current = mini->command;
 	while (current)
 	{
+		end_signals();
 		pid = fork();
 		if (pid > 0)
 			mini->pids[j] = pid;
 		if (pid == 0)
 		{
+			signal_def();
 			exit_if_builtin_only(mini, current);
-		 	execute(mini, current, i);
+			execute(mini, current, i);
 		}
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{

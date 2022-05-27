@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/04 15:14:27 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 12:07:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,45 +20,69 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
-	mshell->command = create_command(mshell);
-	free_phrase(&mshell->phrase);
-	//print_command(mshell->command);
-	ft_exe(mshell);
+	if (mshell->s_error != 1)
+	{
+		mshell->command = create_command(mshell);
+		free_phrase(&mshell->phrase);
+		ft_exe(mshell);
+	}
+	else
+	{
+		free_phrase(&mshell->phrase);
+		free_command(&mshell->command);
+	}
 	return (0);
+}
+
+void	split_command(char *str, t_mshell *mshell)
+{
+	int	i;
+
+	mshell->word = NULL;
+	mshell->phrase = NULL;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		parse_delimiter(&mshell->word, mshell, str, &i);
+		if (parse_string(&mshell->word, mshell, str, &i) == 2)
+			continue ;
+		parse_delimiter(&mshell->word, mshell, str, &i);
+	}
 }
 
 t_command	*create_command(t_mshell *mshell)
 {
 	t_phrase	*temp_phrase;
 	t_command	*command;
-	t_command	*temp_command;
 	int			size;
 	int			i;
 
 	command = NULL;
 	command_lstadd_back(&command, command_lstnew(NULL));
-	temp_command = command;
 	temp_phrase = mshell->phrase;
+	parse_command_list(mshell, temp_phrase, &command);
+	return (command);
+}
+
+int	parse_command_list(t_mshell *mshell, \
+						t_phrase *temp_phrase, t_command **command)
+{
+	int			i;
+	int			size;
+	t_command	*temp_command;
+
+	temp_command = *command;
 	while (temp_phrase != NULL)
 	{
-		i = 0;
-		size = phrase_lstsize(temp_phrase);
-		temp_command->value = (char **)malloc(sizeof(char *) * (size + 1));
-		while (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) != 0)
-		{
-			//temp_command->value[i] = (char *)malloc(sizeof(char) * ft_strlen(temp_phrase->str) + 1);
-			temp_command->value[i] = temp_phrase->str;
-			i++;
-			temp_phrase = temp_phrase->next;
-		}
+		if (init_values(&i, &size, &temp_command, &temp_phrase) == -1)
+			return (-1);
+		while (temp_phrase != NULL && \
+		ft_strncmp(temp_phrase->str, "|", 10) != 0)
+			next_phrase(&i, &temp_phrase, temp_command);
 		if (temp_phrase != NULL && ft_strncmp(temp_phrase->str, "|", 10) == 0)
 		{
-			temp_command->value[i] = 0;
-			temp_phrase = temp_phrase->next;
-			if (temp_phrase == NULL)
+			if (next_command(&i, &temp_phrase, &temp_command, command) == 1)
 				break ;
-			command_lstadd_back(&command, command_lstnew(NULL));
-			temp_command = temp_command->next;
 		}
 		else
 		{
@@ -67,15 +91,16 @@ t_command	*create_command(t_mshell *mshell)
 			break ;
 		}
 	}
-	return (command);
+	return (0);
 }
 
-int check_args(int ac, char **av)
+int	init_values(int	*i, int *size, t_command **temp_command, \
+				t_phrase **temp_phrase)
 {
-	if (ac != 1)
-	{
-		printf("%s %s directory not found\n", av[0], av[1]);
-		exit(0);
-	}
-	return (1);
+	*i = 0;
+	*size = phrase_lstsize(*temp_phrase);
+	(*temp_command)->value = (char **)malloc(sizeof(char *) * (*size + 1));
+	if (!(*temp_command))
+		return (-1);
+	return (0);
 }

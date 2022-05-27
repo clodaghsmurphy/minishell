@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/04 15:30:36 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 14:25:48 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int ac, char **av, char	**env)
 	mshell = init_mshell(env);
 	if (mshell == NULL)
 		return (-1);
+	armsignals();
 	str = NULL;
 	while (1)
 	{
@@ -39,6 +40,7 @@ int	ft_read(char *str, t_mshell *mshell)
 	if (str)
 	{
 		add_history(str);
+		mshell->s_error = 0;
 		parse_command(str, mshell);
 		rl_redisplay();
 		return (1);
@@ -46,7 +48,7 @@ int	ft_read(char *str, t_mshell *mshell)
 	else
 	{
 		printf("exit\n");
-		//free_mshell(mshell, str);
+		free_mshell(mshell, str);
 		return (-1);
 	}
 }
@@ -55,9 +57,25 @@ void	free_mshell(t_mshell *mshell, char *str)
 {
 	if (str)
 		free (str);
-	//free_command(&mshell->command);
 	env_free(mshell->env);
  	if (mshell)
 		free(mshell); 
+}
+
+void	free_command(t_command **command)
+{
+	t_command	*temp;
+	t_command	*current;
+
+	if (command == NULL)
+		return ;
+	current = *command;
+	while (current != NULL)
+	{
+		free_tab(current->value);
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
 }
 	

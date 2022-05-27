@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:05:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/03 16:50:39 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:35:27 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,4 @@ int	command_size(t_command*command)
 		i++;
 	}
 	return (i);
-}
-
-void	free_command(t_command **command)
-{
-	t_command	*temp;
-	t_command	*current;
-
-	if (command == NULL)
-		return ;
-	current = *command;
-	while (current != NULL)
-	{
-		free_redir_in(current->in);
-		free_redir_out(current->out);
-		free_tab(current->value);
-		temp = current;
-		current = current->next;
-		free(temp);
-	}
 }
