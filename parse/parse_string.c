@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/26 14:07:18 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:23:53 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 		return ;
 	else if (is_redir(str, i, mshell) == 1 || is_redir(str, i, mshell) == 2)
 		flag = parse_redir(&delimiter, mshell, str, i);
-	new_word = make_word(word, mshell);
+	//new_word = make_word(word, mshell);
 	if (flag == 1)
 		new_word_afte_pipe(&delimiter, mshell, str, i);
 }

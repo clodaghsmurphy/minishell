@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 17:24:44 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:55:34 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,8 @@ t_mshell		*init_mshell(char **env);
 void			syntax_error(t_mshell *mshell);
 /**************ARM_SIGNAL************/
 void			armsignals(void);
-void			sig_handler(int signum, siginfo_t *info, void *context);
 void			signal_def(void);
 void			end_signals(void);
-
 /************ASSIGN_TOKENS***********/
 void			assign_tokens(t_mshell *mshell);
 int				is_variable(char *str);
