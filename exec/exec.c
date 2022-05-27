@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/19 15:25:05 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:11:26 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_exe(t_mshell *mini)
 		current = current->next;
 	}
 	mini->pipe_fd = NULL;
-	//error("random", mini);
 	launch_hd(mini);
 	exec_cmd(mini);
 	delete_hd(mini->command);
