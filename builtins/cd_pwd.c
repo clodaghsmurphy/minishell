@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/21 19:57:05 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:58:08 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	cd(char **params)
 	if (params[2])
 	{
 		ft_putstr_fd("cd : too much arguments\n", 2);
+		g_estatus = 1;
 		return;
 	}
 	error = ft_strjoin("cd: ", params[1]);
 	if (chdir(params[1]) != 0)
 		perror(error);
+	g_estatus = 0;
 }
 
 void	pwd(void)
@@ -35,4 +37,5 @@ void	pwd(void)
 	getcwd(wd, 10000);
 	ft_putstr_fd(wd, 1);
 	ft_putchar_fd('\n', 1);
+	g_estatus = 0;
 }

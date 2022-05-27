@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:56:46 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 15:17:51 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:56:44 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_unset(t_env	**env, char **params)
 
 	i = 1;
 	if (params[i] == NULL)
-		ft_putstr_fd("unset: not enough arguments\n", 2);
+		;
 	else
 	{
 		while (params[i])
@@ -30,6 +30,7 @@ void	ft_unset(t_env	**env, char **params)
 			i++;
 		}
 	}
+	g_estatus = 0;
 }
 
 void	unset_variable(t_env **env, char *variable_name)

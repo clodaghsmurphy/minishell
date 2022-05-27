@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:55:50 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:55:01 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	echo(char **args)
 	}
 	if (arg == 0)
 		ft_putchar_fd('\n', 1);
+	g_estatus = 0;
 }
 
 int	get_opt(char **args)

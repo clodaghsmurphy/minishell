@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/14 18:55:17 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:07:44 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_export(t_env	**env, char **params)
 			i++;
 		}
 	}
+	g_estatus = 0;
 }
 
 void	export_variable(t_env **env, char *new_v)
