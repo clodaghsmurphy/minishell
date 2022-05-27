@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:37:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 18:55:29 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:39:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,26 @@ void	free_phrase(t_phrase **phrase)
 	{
 		temp = current;
 		current = current->next;
-		free(temp->str);
+		//free(temp->str);
+		free(temp);
+	}
+	*phrase = NULL;
+}
+
+void	free_phrase2(t_phrase **phrase)
+{
+	t_phrase	*current;
+	t_phrase	*temp;
+
+	if (*phrase == NULL)
+		return ;
+	current = *phrase;
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		if (temp->str)
+			free(temp->str);
 		free(temp);
 	}
 	*phrase = NULL;

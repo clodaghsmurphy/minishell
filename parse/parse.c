@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 18:54:45 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:39:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	parse_command(char *str, t_mshell *mshell)
 	}
 	else
 	{
-		free_phrase(&mshell->phrase);
+		free_phrase2(&mshell->phrase);
 		free_command(&mshell->command);
 	}
 	return (0);

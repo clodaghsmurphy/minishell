@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 18:33:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:23:11 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ void			ft_wordclear(t_split **lst);
 t_phrase		*phrase_lstnew(char *str);
 int				phrase_lstsize(t_phrase *lst);
 void			free_phrase(t_phrase **phrase);
+void			free_phrase2(t_phrase **phrase);
 /************COMMAND_UTILS**********/
 void			command_lstadd_back(t_command **alst, t_command *new);
 t_command		*command_lstnew(char **commands);

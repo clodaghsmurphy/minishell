@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:22:15 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 17:28:17 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:42:13 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	next_phrase(int *i, t_phrase **temp_phrase, t_command *temp_command)
 {
-	temp_command->value[*i] = (*temp_phrase)->str;
+	temp_command->value[*i] = ft_strdup((*temp_phrase)->str);
+	free((*temp_phrase)->str);
 	(*i)++;
 	*temp_phrase = (*temp_phrase)->next;
 	return (0);
@@ -24,6 +25,7 @@ int	next_command(int *i, t_phrase **temp_phrase, t_command **temp_command, \
 t_command **command)
 {
 	(*temp_command)->value[*i] = 0;
+	free((*temp_phrase)->str);
 	(*temp_phrase) = (*temp_phrase)->next;
 	if (temp_phrase == NULL)
 		return (1);
