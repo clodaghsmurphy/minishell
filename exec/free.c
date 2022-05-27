@@ -33,5 +33,6 @@ void	free_mini(t_mshell *mini)
 	free(mini->pipe_fd);
 	free_command(&mini->command);
 	env_free(mini->env);
+	free(mini->pids);
 	free(mini);
 }

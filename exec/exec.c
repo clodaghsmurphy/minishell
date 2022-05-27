@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 13:11:26 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 14:46:05 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,9 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
-	int			*pids;
 	
-	pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
-	pids[cmd_list_size(mini->command)] = 0;
+	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
+	mini->pids[cmd_list_size(mini->command)] = 0;
 	mini->pipe_fd = set_pipe(mini->command);
 	i = 0;
 	j = 0;
@@ -72,7 +71,7 @@ void	exec_cmd(t_mshell *mini)
 	{
 		pid = fork();
 		if (pid > 0)
-			pids[j] = pid;
+			mini->pids[j] = pid;
 		if (pid == 0)
 		{
 			exit_if_builtin_only(mini, current);
@@ -87,7 +86,7 @@ void	exec_cmd(t_mshell *mini)
 		j ++;
 		current = current->next;
 	}
-	close_pipe_n_wait(mini->pipe_fd, pids);
+	close_pipe_n_wait(mini->pipe_fd, mini->pids);
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
