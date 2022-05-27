@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 20:19:35 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/14 19:16:38 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 17:42:35 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	**create_paths(t_env *env)
 	t_env	*current;
 
 	current = env;
-	while (current && ft_strncmp(current->name, "PATH", 4) != 0)
+	while (current && ft_strncmp(current->name, "PATH", 5) != 0)
 		current = current->next;
+	if (current == NULL)
+		return (NULL);
 	paths = ft_split(current->value, ':');
 	return (paths);
 }
@@ -31,9 +33,7 @@ void	free_tab(char **tab)
 
 	i = 0;
 	if (tab == NULL)
-	{
 		return ;
-	}
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -80,14 +80,12 @@ char	*find_path(t_env *env, char **cmd_params)
 	i = -1;
 	find = 0;
 	path = NULL;
-	// if (*cmd_params[0] == NULL)
-	// 	free_to_exit(paths, p);
-	while (paths[++i] && !find)
+	while (paths && paths[++i] && !find)
 	{
 		free(path);
 		paths[i] = ft_strjoin_f(paths[i], "/");
 		path = ft_strjoin(paths[i], cmd_params[0]);
-		if (access(path, F_OK) == 0)
+		if (access(path, X_OK) == 0)
 			find = 1;
 	}
 	free_tab(paths);
@@ -99,7 +97,7 @@ char	*find_path(t_env *env, char **cmd_params)
 
 char	*check_absolute_path(char *path)
 {
-	if (access(path, F_OK) == 0)
+	if (access(path, X_OK) == 0)
 		return (ft_strdup(path));
 	else
 		return (NULL);

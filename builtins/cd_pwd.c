@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 15:58:08 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 17:14:18 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	cd(char **params)
 	error = ft_strjoin("cd: ", params[1]);
 	if (chdir(params[1]) != 0)
 		perror(error);
+	free(error);
 	g_estatus = 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 15:52:59 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/27 17:45:43 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ void	error(char *str, t_mshell *mini, int erreur)
 {
 	perror(str);
 	free(mini->pipe_fd);
+	free(mini->pids);
 	free_command(&mini->command);
 	env_free(mini->env);
 	free(mini);
