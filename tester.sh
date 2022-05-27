@@ -44,8 +44,8 @@ exec_test()
 		echo
 		printf $BOLDRED"Your output : \n%.20s\n$BOLDRED$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
 		printf $BOLDGREEN"Expected output : \n%.20s\n$BOLDGREEN$TEST2\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
-	else
-		printf $BOLDGREEN"\nYour output : \n%.20s\n$BOLDGREEN$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
+	##else
+	##	printf $BOLDGREEN"\nYour output : \n%.20s\n$BOLDGREEN$TEST1\n%.20s$RESET\n" "-----------------------------------------" "-----------------------------------------"
 	fi
 	if [ "$ES_1" != "$ES_2" ]; then
 		echo

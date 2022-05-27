@@ -1,1 +1,19 @@
-free(): double free detected in tcache 2
+builtins
+diff3.txt
+exec
+file
+GNL
+grep
+hi
+includes
+libft
+Makefile
+minishell
+parse
+phrase,
+src
+test
+tester
+tester.sh
+test_pipe.sh
+valgrind_readline_leaks_ignore.txt
