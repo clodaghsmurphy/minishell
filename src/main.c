@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 14:25:48 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/28 19:10:34 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	free_command(t_command **command)
 	while (current != NULL)
 	{
 		free_tab(current->value);
+		free_redir_in(current->in);
+		free_redir_out(current->out);
 		temp = current;
 		current = current->next;
 		free(temp);

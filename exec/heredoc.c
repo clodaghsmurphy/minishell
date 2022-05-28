@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/11 10:48:04 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/28 18:05:05 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	launch_hd(t_mshell *mini)
 		current = current->next;
 	}
 }
-
 void	heredoc(t_mshell *mini, char *name, char *stop)
 {
 	int		fd;
