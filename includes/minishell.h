@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 13:31:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:11:27 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,9 @@ int				parse_redir(t_split **delimiter, t_mshell *mshell, \
 			char *str, int *i);
 int				is_pipe(t_split **delimiter, t_mshell *mshell, \
 				char *str, int *i);
+int				end_of_string(t_split **delimiter, t_mshell *mshell, \
+				char *str, int *i);
+
 /***********PARSE_DOLLAR*******************/
 void			parse_dollar(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
@@ -230,6 +233,8 @@ int				dquote_is_digit(t_mshell *mshell, char *str, int *i);
 int				parse_dquote_string2(int type, t_mshell *mshell, \
 				char *str, int *i);
 int				dquote_eq(t_mshell *mshell, char *str, int *i);
+void			single_quote_var(t_mshell *mshell, char *str, int *i);
+
 /***********SPLIT_UTILS*******************/
 t_split			*split_lstnew(char c);
 void			split_lstadd_back(t_split **alst, t_split *new);
