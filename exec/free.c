@@ -31,8 +31,11 @@ void	free_redir_out(t_redir_out *lst)
 void	free_mini(t_mshell *mini)
 {
 	free(mini->pipe_fd);
+	mini->pipe_fd = NULL;
 	free_command(&mini->command);
+	mini->command = NULL;
 	env_free(mini->env);
 	free(mini->pids);
+	mini->pids = NULL;
 	free(mini);
 }
