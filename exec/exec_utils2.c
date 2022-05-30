@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/30 17:14:07 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:33:23 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,6 @@ void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 		}
 	}
 }
-
-// void	close_pipe_n_wait(int *pipe_fd, int *pids)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (pipe_fd[i])
-// 		close(pipe_fd[i++]);
-// 	i = 0;
-// 	while (pids[i])
-// 	{
-// 		waitpid(pids[i], &g_estatus, 0);
-// 		if (g_estatus >= 256)
-// 			g_estatus = g_estatus / 256;
-// 		i++;
-// 	}
-// 	free(pids);
-// }
 
 void	close_pipe_n_wait(int *pipe_fd, int *pids)
 {

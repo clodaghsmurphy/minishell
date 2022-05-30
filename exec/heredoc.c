@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 17:09:11 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:35:37 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ void	find_replace_hd(t_redir_in *lst)
 	}
 }
 
-void	launch_hd(t_mshell *mini)
+int	launch_hd(t_mshell *mini)
 {
 	t_command	*current;
 	t_redir_in	*temp;
 	int			pid;
+	int			retour;
 	
 	end_signals();
 	pid = fork();
@@ -91,7 +92,10 @@ void	launch_hd(t_mshell *mini)
 		free_mini(mini);
 		exit(0);		
 	}
-	wait(0);
+	waitpid(-1, &retour, 0);
+	if (WIFSIGNALED(retour))
+		return (1);
+	return (0);
 }
 void	heredoc(t_mshell *mini, char *name, char *stop)
 {

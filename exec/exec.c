@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 17:14:33 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:40:29 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int retour;
 void	ft_exe(t_mshell *mini)
 {
 	t_command	*current;
+	int			signal_hd;
 	
 	current = mini->command;
 	while (current)
@@ -32,8 +33,11 @@ void	ft_exe(t_mshell *mini)
 		current = current->next;
 	}
 	mini->pipe_fd = NULL;
-	launch_hd(mini);
-	exec_cmd(mini);
+	signal_hd = launch_hd(mini);
+	if (!signal_hd)
+		exec_cmd(mini);
+	else
+		ft_putstr_fd("\n", 1);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
 	free_command(&mini->command);

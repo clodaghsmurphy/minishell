@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 13:31:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:38:04 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,7 @@ void			replace_heredoc(t_redir_in *to_change, char *hd_name);
 char			*get_hd_name(void);
 void			find_replace_hd(t_redir_in *lst);
 void			heredoc(t_mshell *mini, char *name, char *stop);
-void			launch_hd(t_mshell *mini);
+int				launch_hd(t_mshell *mini);
 void			delete_hd(t_command *command);
 
 #endif
