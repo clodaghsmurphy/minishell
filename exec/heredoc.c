@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/28 18:05:05 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:29:04 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ char	*get_hd_name(void)
 	int		i;
 	char	*base;
 	char	*temp;
-
 	i = 0;
-	
 	base = ft_strdup(".hd");
 	hd = ft_strdup(base);
 	while (!access(hd, F_OK) && i < 300)
@@ -71,19 +69,27 @@ void	launch_hd(t_mshell *mini)
 {
 	t_command	*current;
 	t_redir_in	*temp;
-
+	int			pid;
+	
+	//pid = fork();
 	current = mini->command;
-	while (current)
-	{
-		temp = current->in;
-		while (temp)
+	//if (pid == 0)
+	//{
+		while (current)
 		{
-			if (temp->stop)
-				heredoc(mini, temp->name, temp->stop);
-			temp = temp->next;
+			temp = current->in;
+			while (temp)
+			{
+				if (temp->stop)
+					heredoc(mini, temp->name, temp->stop);
+				temp = temp->next;
+			}
+			current = current->next;
 		}
-		current = current->next;
-	}
+	//	free_mini(mini);
+	//	exit(0);		
+	//}
+	//wait(0);
 }
 void	heredoc(t_mshell *mini, char *name, char *stop)
 {
@@ -106,6 +112,6 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 		write(fd, str, ft_strlen(str));
 		free(str);
 	}
-	printf("fin de heredoc = ctrl-d\n");
+	ft_putstr_fd("fin de heredoc = ctrl-d\n", 1);
 	close(fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/28 19:20:17 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:52:21 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
-	
+
 	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
 	mini->pids[cmd_list_size(mini->command)] = 0;
 	mini->pipe_fd = set_pipe(mini->command);
@@ -96,8 +96,9 @@ void	exec_cmd(t_mshell *mini)
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
-{
+{	
 	char	*path;
+
 	ft_dup(mini, current, i);
 	if (is_builtins(current->value))
 	{
@@ -141,45 +142,57 @@ void	ft_dup(t_mshell *mini, t_command *current, int i)
 	out_fd = make_redir_out(current, mini);
 	in_fd = make_redir_in(current, mini);
 	if (out_fd)
-	 	dup2(out_fd, 1);
+	{		
+		dup2(out_fd, 1);
+		close(out_fd);
+	}
 	if (in_fd)
+	{
 	  	dup2(in_fd, 0);
+		close(in_fd);		
+	}
 	while (mini->pipe_fd[j])
 		close(mini->pipe_fd[j++]);
 }
 
 int	make_redir_out(t_command *command, t_mshell *mini)
 {
-	int	fd;
+	int			fd;
+	t_redir_out	*current;
 
 	fd = 0;
-	while (command->out)
+	current = command->out;
+	while (current)
 	{
-		if (command->out->append == 1)
-			fd = open(command->out->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
-		else if (command->out->append == 0)
-			fd = open(command->out->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (current->append == 1)
+			fd = open(current->name, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		else if (current->append == 0)
+			fd = open(current->name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
-			error(command->out->name, mini, 1);
-		if (command->out->next)
+			error(current->name, mini, 1);
+		if (current->next)
 			close(fd);
-		command->out = command->out->next;
+		current = current->next;
 	}
 	return (fd);
 }
 
 int	make_redir_in(t_command *command, t_mshell *mini)
 {
-	int	fd;
+	t_redir_in	*current;
+	int			fd;
 
 	fd = 0;
-	while (command->in)
+	current = command->in;
+	while (current)
 	{
-		if (command->in->type == 0)
-			fd = open(command->in->name, O_RDONLY);
+		if (current->type == 0)
+			fd = open(current->name, O_RDONLY);
 		if (fd < 0)
-			error(command->in->name, mini, 1);
-		command->in = command->in->next;
+			error(current->name, mini, 1);
+		if (current->next)
+			close(fd);
+		current = current->next;
 	}
 	return (fd);
 }
@@ -187,10 +200,6 @@ int	make_redir_in(t_command *command, t_mshell *mini)
 void	error(char *str, t_mshell *mini, int erreur)
 {
 	perror(str);
-	free(mini->pipe_fd);
-	free(mini->pids);
-	free_command(&mini->command);
-	env_free(mini->env);
-	free(mini);
+	free_mini(mini);
 	exit(erreur);
 }
