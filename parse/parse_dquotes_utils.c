@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:31:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:03:36 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:59:31 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	dquote_eq(t_mshell *mshell, char *str, int *i)
 int	parse_dquote_string2(int type, t_mshell *mshell, char *str, int *i)
 {
 	int	j;
+	char	*new_word;
 
 	j = mshell->j;
 	while (str[*i] != type && is_delim_dollar(str, *i) == 1)
@@ -48,7 +49,12 @@ int	parse_dquote_string2(int type, t_mshell *mshell, char *str, int *i)
 		(*i)++;
 	}
 	if (type == 39)
-		mshell->res = ft_strjoin_f2(mshell->res, ft_strndup(str + j, (*i - j)));
+	{
+		new_word = ft_strndup(str + j, (*i - j));
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
+		free(new_word);
+		new_word = NULL;
+	}
 	return (0);
 }
 
