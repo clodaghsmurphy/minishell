@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 11:51:56 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:12:59 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	free_mshell(t_mshell *mshell, char *str)
 		free (str);
 	env_free(mshell->env);
 	free_phrase(&mshell->phrase);
- 	if (mshell)
-		free(mshell); 
+	if (mshell)
+		free(mshell);
 }
 
 void	free_command(t_command **command)
@@ -82,4 +82,3 @@ void	free_command(t_command **command)
 		free(temp);
 	}
 }
-	

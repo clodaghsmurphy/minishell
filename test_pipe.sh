@@ -19,12 +19,13 @@ BOLDWHITE="\033[1m\033[37m"
 
 exec_pipe_test()
 {
-	rm diff3.txt
 	echo $@ | ./minishell 2>&- > diff3.txt
 	ES_1=$?
 	TEST2=$(echo $@ "; exit" | bash 2>&-)
 	ES_2=$?
 	TEST1=$(sed -i '$ d' diff3.txt && sed -i '1,1d' diff3.txt && cat diff3.txt )
+	rm diff3.txt
+
 	if [ "$TEST1" = "$TEST2" ] && [ "$ES_1" = "$ES_2" ]; then
 		printf " $BOLDGREEN%s$RESET" "✓ "
 	else
