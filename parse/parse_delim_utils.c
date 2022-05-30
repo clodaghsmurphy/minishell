@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:24:32 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 16:02:23 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:53:56 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 		if (str[(*i) + 1] == '\0')
 		{
 			syntax_error(mshell);
-			(*i) += 2;
+			(*i) += 1;
 			return (-1);
 		}
 		split_lstadd_back(delimiter, split_lstnew(str[*i]));
@@ -34,6 +34,12 @@ int	is_pipe(t_split **delimiter, t_mshell *mshell, char *str, int *i)
 		{
 			while (str[*i] == 32)
 				(*i)++;
+			if (str[*i] == '\0')
+			{
+				syntax_error(mshell);
+				ft_wordclear(delimiter);
+				return (-1);
+			}				
 		}
 	}
 	return (1);
