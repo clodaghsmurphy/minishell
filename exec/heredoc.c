@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 16:29:04 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:09:11 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	launch_hd(t_mshell *mini)
 	t_redir_in	*temp;
 	int			pid;
 	
-	//pid = fork();
+	end_signals();
+	pid = fork();
 	current = mini->command;
-	//if (pid == 0)
-	//{
+	if (pid == 0)
+	{
+		signal_def();
 		while (current)
 		{
 			temp = current->in;
@@ -86,10 +88,10 @@ void	launch_hd(t_mshell *mini)
 			}
 			current = current->next;
 		}
-	//	free_mini(mini);
-	//	exit(0);		
-	//}
-	//wait(0);
+		free_mini(mini);
+		exit(0);		
+	}
+	wait(0);
 }
 void	heredoc(t_mshell *mini, char *name, char *stop)
 {

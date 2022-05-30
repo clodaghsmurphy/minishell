@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 16:52:21 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:14:33 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	exec_cmd(t_mshell *mini)
 		current = current->next;
 	}
 	close_pipe_n_wait(mini->pipe_fd, mini->pids);
+	mini->pids = NULL;
 }
 
 void	execute(t_mshell *mini, t_command *current, int i)
