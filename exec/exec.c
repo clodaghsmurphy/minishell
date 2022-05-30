@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 17:45:43 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/28 19:20:17 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,25 @@ void	ft_exe(t_mshell *mini)
 	exec_cmd(mini);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
-	armsignals();
 	free_command(&mini->command);
+	armsignals();
 }
 void	delete_hd(t_command *command)
 {
-	while (command)
+	t_command *current;
+	t_redir_in *cur;
+
+	current = command;
+	while (current)
 	{
-		while (command->in)
+		cur = current->in;
+		while (cur)
 		{
-			if (command->in->stop)
-				unlink(command->in->name);
-			command->in = command->in->next;
+			if (cur->stop)
+				unlink(cur->name);
+			cur = cur->next;
 		}
-		command = command->next;
+		current = current->next;
 	}
 }
 

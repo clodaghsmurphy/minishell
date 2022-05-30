@@ -97,7 +97,6 @@ char	**command_clear_one(char **command)
 	i = 0;
 	while (command[i])
 		i ++;
-	//new = malloc(sizeof(char *) * (i + 1));
 	new = malloc(sizeof(char *) * lataille(command));
 	i = 0;
 	j = 0;
