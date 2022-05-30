@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/27 19:44:44 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:54:31 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_string(t_split **word, t_mshell *mshell, char *str, int *i)
 			parse_quotes(word, mshell, str, i);
 			continue ;
 		}
-		if (str[*i] == '$')
+		if (str[*i] == '$' && mshell->hdoc_flag != 1)
 		{
 			parse_dollar(word, mshell, str, i);
 			continue ;
@@ -55,15 +55,25 @@ void	parse_string_bis(t_split **word, t_mshell *mshell, char *str, int *i)
 int	is_delim(t_mshell *mshell, char *str, int *i)
 {
 	if (str[*i] == 32)
+	{
+		mshell->hdoc_flag = 0;
 		return (0);
+	}
 	if (str[*i] == '|')
+	{
+		mshell->hdoc_flag = 0;
 		return (0);
+	}
 	if (str[*i] == '\0')
+	{
+		mshell->hdoc_flag = 0;
 		return (0);
+	}
 	if (str[*i] == '<')
 	{	
 		if (str[*i + 1] == '>')
 			syntax_error(mshell);
+		mshell->hdoc_flag = 0;
 		return (0);
 	}
 	if (check_redirs(mshell, str, i) == 0)
@@ -77,6 +87,7 @@ int	check_redirs(t_mshell *mshell, char *str, int *i)
 	{	
 		if (str[*i + 1] == '<')
 			syntax_error(mshell);
+		mshell->hdoc_flag = 0;
 		return (0);
 	}
 	if (ft_strncmp(str + *i, ">>", 2) == 0)
@@ -85,6 +96,7 @@ int	check_redirs(t_mshell *mshell, char *str, int *i)
 			syntax_error(mshell);
 		if (str[*i + 2] == '<')
 			syntax_error(mshell);
+		mshell->hdoc_flag = 0;
 		return (0);
 	}
 	if (ft_strncmp(str + *i, "<<", 2) == 0)
@@ -93,6 +105,7 @@ int	check_redirs(t_mshell *mshell, char *str, int *i)
 			syntax_error(mshell);
 		if (str[*i + 2] == '<')
 			syntax_error(mshell);
+		mshell->hdoc_flag = 1;
 		return (0);
 	}
 	return (1);

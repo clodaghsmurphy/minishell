@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 11:32:04 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:51:56 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	ft_read(char *str, t_mshell *mshell)
 	{
 		add_history(str);
 		mshell->s_error = 0;
+		mshell->hdoc_flag = 0;
 		parse_command(str, mshell);
 		rl_redisplay();
 		return (1);

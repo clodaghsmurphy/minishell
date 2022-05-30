@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 19:23:11 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:25:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void			parse_string_bis(t_split **word, t_mshell *mshell, \
 void			new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
 				char *str, int *i);
 int				check_redirs(t_mshell *mshell, char *str, int *i);
+int				is_redir2(char *str, int *i, t_mshell *mshell);
 
 /***********PARSE_DELIM_UTILS*******************/
 int				parse_redir(t_split **delimiter, t_mshell *mshell, \
