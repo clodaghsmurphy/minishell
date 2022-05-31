@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:14:45 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/18 14:01:28 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/31 14:45:59 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,26 @@ void	exe_builtins(char **params, t_env **env, t_mshell *mini)
 	{
 		print_env(*env);
 	}
+}
+
+int	simul_exe_builtins(char **params, t_mshell *mini)
+{
+	if (!ft_strncmp(params[0], "pwd", 5))
+		return (0);
+	if (!ft_strncmp(params[0], "cd", 5))
+		return (simul_cd(params, mini));
+	if (!ft_strncmp(params[0], "echo", 5))
+		return (0);
+	if (!ft_strncmp(params[0], "export", 7))
+		return (0);
+	if (!ft_strncmp(params[0], "unset", 7))
+		return (0);
+	if (!ft_strncmp(params[0], "exit", 5))
+		return (simul_ft_exit(params, mini));
+	if (!ft_strncmp(params[0], "env", 5))
+		return (0);
+	else
+		return (-1);
 }
 
 int	is_builtins(char **params)
