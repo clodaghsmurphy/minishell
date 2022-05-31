@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 16:29:04 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:57:21 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,14 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 		ft_putstr_fd("> ", 1);
 		str = get_next_line(0);
 		if (!str)
-			break;
+			break ;
 		if (!ft_strncmp(str, stop, ft_strlen(stop) + 1))
 		{
 			free(str);
 			close(fd);
 			return ;
 		}
+		str = hdoc_expand(str, mini);
 		write(fd, str, ft_strlen(str));
 		free(str);
 	}
