@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 15:11:50 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:05:49 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
+	int			in;
+	int out;
 
 	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
 	mini->pids[cmd_list_size(mini->command)] = 0;
@@ -90,7 +92,13 @@ void	exec_cmd(t_mshell *mini)
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
 			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
+			{
+				in = dup(0);
+				out = dup(1);
 				execute(mini, current, i);
+				dup2(0, in);
+				dup2(1, out);
+			}
 		}
 		i += 2;
 		j ++;
