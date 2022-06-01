@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/01 13:47:38 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:49:18 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 			close(fd);
 			return ;
 		}
+		str = hdoc_expand(str, mini);
 		write(fd, str, ft_strlen(str));
 		free(str);
 	}

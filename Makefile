@@ -14,6 +14,7 @@ SRC = src/main.c \
 	parse/parse_dquotes_bis.c \
 	parse/parse_string_bis.c \
 	parse/parse_string.c \
+	parse/hdoc_expand.c \
 	parse/parse_quotes.c \
 	parse/parse_dollar.c \
 	parse/parse_dollar_bis.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 15:47:34 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:06:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void			split_lstadd_back(t_split **alst, t_split *new);
 int				split_lstsize(t_split *lst);
 void			phrase_lstadd_back(t_phrase **alst, t_phrase *new);
 void			print_split(t_split **split);
+char			*hdoc_expand(char *str, t_mshell *mshell);
 
 /***********WORD_UTILS*******************/
 void			print_phrase(t_phrase **phrase);
