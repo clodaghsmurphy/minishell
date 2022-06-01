@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 15:11:50 by amontant         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:03:10 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
+	int			save_in;
+	int			save_out;
 
 	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
 	mini->pids[cmd_list_size(mini->command)] = 0;
@@ -90,7 +92,13 @@ void	exec_cmd(t_mshell *mini)
 		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 		{
 			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
+			{
+				save_in = dup(0);
+				save_out = dup(1);
 				execute(mini, current, i);
+				dup2(save_in, 0);
+				dup2(save_out, 1);
+			}
 		}
 		i += 2;
 		j ++;
