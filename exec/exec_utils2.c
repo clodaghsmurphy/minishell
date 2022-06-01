@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/31 14:04:20 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:56:04 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command)
 	&& cmd_list_size(mini->command) == 1)
 	{
-		if (is_builtins(current->value))
+		if (is_builtins(current->value) )
 		{
 			free(mini->pipe_fd);
 			free_command(&mini->command);
