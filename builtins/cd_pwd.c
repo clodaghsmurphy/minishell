@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:17:23 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 17:14:18 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/05/31 15:24:22 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	cd(char **params)
 	char	*error;
 
 	if (!params[1])
+	{
+		ft_putstr_fd("cd : no argument\n", 2);		
 		return ;
+	}
 	if (params[2])
 	{
 		ft_putstr_fd("cd : too much arguments\n", 2);
@@ -29,6 +32,46 @@ void	cd(char **params)
 		perror(error);
 	free(error);
 	g_estatus = 0;
+}
+void	free_mini_simul_cd(t_mshell *mini);
+
+int	simul_cd(char **params, t_mshell *mini)
+{
+	char	*error;
+	int		ret;
+	int		pid;
+
+	if (!params[1])
+		return (1);
+	if (params[2])
+		return (1);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (chdir(params[1]) != 0)
+		{
+			free_mini_simul_cd(mini);
+			exit(1);
+		}
+		else
+		{
+			free_mini_simul_cd(mini);
+			exit(0);
+		}
+	}
+	waitpid(-1, &ret, 0);
+	return (ret / 256);
+}
+void	free_mini_simul_cd(t_mshell *mini)
+{
+	free(mini->pipe_fd);
+	mini->pipe_fd = NULL;
+	free_command(&mini->command);
+	mini->command = NULL;
+	env_free(mini->env);
+	//free(mini->pids);
+	mini->pids = NULL;
+	free(mini);
 }
 
 void	pwd(void)

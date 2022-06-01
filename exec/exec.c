@@ -6,7 +6,7 @@
 /*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 16:52:21 by amontant         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:11:50 by amontant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int retour;
 void	ft_exe(t_mshell *mini)
 {
 	t_command	*current;
+	int			signal_hd;
 	
 	current = mini->command;
 	while (current)
@@ -32,8 +33,11 @@ void	ft_exe(t_mshell *mini)
 		current = current->next;
 	}
 	mini->pipe_fd = NULL;
-	launch_hd(mini);
-	exec_cmd(mini);
+	signal_hd = launch_hd(mini);
+	if (!signal_hd)
+		exec_cmd(mini);
+	else
+		ft_putstr_fd("\n", 1);
 	delete_hd(mini->command);
 	free(mini->pipe_fd);
 	free_command(&mini->command);
@@ -93,7 +97,25 @@ void	exec_cmd(t_mshell *mini)
 		current = current->next;
 	}
 	close_pipe_n_wait(mini->pipe_fd, mini->pids);
+	get_last_retour_builtin(mini->command, mini);
+	mini->pids = NULL;
 }
+
+void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
+{
+	t_command	*current;
+	int			value;
+
+	value = -1;
+	current = lst;
+	while (current->next)
+		current = current->next;
+	if (is_builtins(current->value))
+		value = simul_exe_builtins(current->value, mini);
+	if (value != -1)
+		g_estatus = value;
+}
+
 
 void	execute(t_mshell *mini, t_command *current, int i)
 {	
