@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hdoc_expand.c                                      :+:      :+:    :+:   */
+/*   hdocmain.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 13:31:13 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/01 13:48:58 by clmurphy         ###   ########.fr       */
+/*   Created: 2022/06/01 11:46:29 by clmurphy          #+#    #+#             */
+/*   Updated: 2022/06/01 11:50:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "../includes/minishell.h"
 
-char	*hdoc_expand(char *str, t_mshell *mshell)
+int	main(int ac, char **av, char	**env)
 {
-	t_split	*word;
-	int		i;
-	int		type;
+	t_mshell	*mshell;
+	char		*str;
 
-	type = 0;
-	while (str[i] != '\0')
-	{
-		if (dollar_in_quote_string(&word, mshell, str, &i) == 1)
-		{
-			parse_dollar_dquotes(type, mshell, str, &i);
-			continue ;
-		}
-		split_lstadd_back(&word, split_lstnew(str[i]));
-		i++;
-	}
-	parse_if_word(&word, mshell, str, &i);
-	return (ft_strdup(mshell->res));
+	mshell = init_mshell(env);
+	str = hdoc_expand(str, mshell);
+	printf("%s\n", str);
 }

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 13:57:06 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:06:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,7 @@ void			ft_exit(char **params, t_mshell *mini);
 /*************EXEC*********************/
 void			ft_exe(t_mshell *mini);
 void			exe_builtins(char **params, t_env **env, t_mshell *mini);
+int				simul_exe_builtins(char **params, t_mshell *mini);
 void			exec_cmd(t_mshell *mini);
 int				lst_env_size(t_env *env);
 char			**env_to_tab(t_env *env);
@@ -333,7 +334,13 @@ void			replace_heredoc(t_redir_in *to_change, char *hd_name);
 char			*get_hd_name(void);
 void			find_replace_hd(t_redir_in *lst);
 void			heredoc(t_mshell *mini, char *name, char *stop);
-void			launch_hd(t_mshell *mini);
+int				launch_hd(t_mshell *mini);
 void			delete_hd(t_command *command);
+
+int				simul_cd(char **params, t_mshell *mini);
+int				simul_ft_exit(char **params, t_mshell *mini);
+void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
+
+
 
 #endif
