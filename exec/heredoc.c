@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/30 20:35:37 by amontant         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:47:38 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*get_hd_name(void)
 	int		i;
 	char	*base;
 	char	*temp;
+
 	i = 0;
 	base = ft_strdup(".hd");
 	hd = ft_strdup(base);
@@ -49,7 +50,7 @@ void	find_replace_hd(t_redir_in *lst)
 	t_redir_in	*current;
 	char		*str;
 	int			hd_fd;
-	
+
 	current = lst;
 	while (current)
 	{
@@ -71,7 +72,7 @@ int	launch_hd(t_mshell *mini)
 	t_redir_in	*temp;
 	int			pid;
 	int			retour;
-	
+
 	end_signals();
 	pid = fork();
 	current = mini->command;
@@ -90,13 +91,14 @@ int	launch_hd(t_mshell *mini)
 			current = current->next;
 		}
 		free_mini(mini);
-		exit(0);		
+		exit(0);
 	}
 	waitpid(-1, &retour, 0);
 	if (WIFSIGNALED(retour))
 		return (1);
 	return (0);
 }
+
 void	heredoc(t_mshell *mini, char *name, char *stop)
 {
 	int		fd;
@@ -108,7 +110,7 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 		ft_putstr_fd("> ", 1);
 		str = get_next_line(0);
 		if (!str)
-			break;
+			break ;
 		if (!ft_strncmp(str, stop, ft_strlen(stop) + 1))
 		{
 			free(str);
