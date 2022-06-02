@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:00:11 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 15:30:04 by amontant         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:28:31 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 int	ft_str_is_only_digit(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 	{
@@ -26,7 +25,6 @@ int	ft_str_is_only_digit(char *str)
 	}
 	return (1);
 }
-
 
 void	ft_exit(char **params, t_mshell *mini)
 {
@@ -50,7 +48,7 @@ void	ft_exit(char **params, t_mshell *mini)
 			code = ft_atoi(params[1]);
 	}
 	free_mini(mini);
-	exit(code);
+	exit(code % 256);
 }
 
 int	simul_ft_exit(char **params, t_mshell *mini)
@@ -66,5 +64,5 @@ int	simul_ft_exit(char **params, t_mshell *mini)
 		if (!ft_str_is_only_digit(params[1]))
 			code = 2;
 	}
-	return(code);
+	return (code % 256);
 }
