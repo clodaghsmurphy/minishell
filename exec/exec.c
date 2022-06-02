@@ -6,16 +6,11 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/01 17:03:10 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:22:04 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-int retour;
 
 void	ft_exe(t_mshell *mini)
 {
@@ -61,6 +56,7 @@ void	delete_hd(t_command *command)
 		current = current->next;
 	}
 }
+void	test(t_mshell *mini, t_command *current, int i, int pid);
 
 void	exec_cmd(t_mshell *mini)
 {
@@ -68,8 +64,6 @@ void	exec_cmd(t_mshell *mini)
 	int			i;
 	int			j;
 	t_command	*current;
-	int			save_in;
-	int			save_out;
 
 	mini->pids = malloc(sizeof(int) * (cmd_list_size(mini->command) + 1));
 	mini->pids[cmd_list_size(mini->command)] = 0;
@@ -83,23 +77,7 @@ void	exec_cmd(t_mshell *mini)
 		pid = fork();
 		if (pid > 0)
 			mini->pids[j] = pid;
-		if (pid == 0)
-		{
-			signal_def();
-			exit_if_builtin_only(mini, current);
-			execute(mini, current, i);
-		}
-		else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
-		{
-			if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
-			{
-				save_in = dup(0);
-				save_out = dup(1);
-				execute(mini, current, i);
-				dup2(save_in, 0);
-				dup2(save_out, 1);
-			}
-		}
+		test(mini, current, i, pid);
 		i += 2;
 		j ++;
 		current = current->next;
@@ -109,6 +87,30 @@ void	exec_cmd(t_mshell *mini)
 	mini->pids = NULL;
 }
 
+
+void	test(t_mshell *mini, t_command *current, int i, int pid)
+{
+	int			save_in;
+	int			save_out;
+
+	if (pid == 0)
+	{
+		signal_def();
+		exit_if_builtin_only(mini, current);
+		execute(mini, current, i);
+	}
+	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
+	{
+		if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
+		{
+			save_in = dup(0);
+			save_out = dup(1);
+			execute(mini, current, i);
+			dup2(save_in, 0);
+			dup2(save_out, 1);
+		}
+	}
+}
 void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
 {
 	t_command	*current;
