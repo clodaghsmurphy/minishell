@@ -6,20 +6,17 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/02 18:52:11 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:22:04 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 void	ft_exe(t_mshell *mini)
 {
 	t_command	*current;
 	int			signal_hd;
-
+	
 	current = mini->command;
 	while (current)
 	{
@@ -32,7 +29,6 @@ void	ft_exe(t_mshell *mini)
 	}
 	mini->pipe_fd = NULL;
 	signal_hd = launch_hd(mini);
-	g_estatus = 130;
 	if (!signal_hd)
 		exec_cmd(mini);
 	else
@@ -42,11 +38,10 @@ void	ft_exe(t_mshell *mini)
 	free_command(&mini->command);
 	armsignals();
 }
-
 void	delete_hd(t_command *command)
 {
-	t_command	*current;
-	t_redir_in	*cur;
+	t_command *current;
+	t_redir_in *cur;
 
 	current = command;
 	while (current)
@@ -61,6 +56,7 @@ void	delete_hd(t_command *command)
 		current = current->next;
 	}
 }
+void	test(t_mshell *mini, t_command *current, int i, int pid);
 
 void	exec_cmd(t_mshell *mini)
 {
@@ -81,7 +77,7 @@ void	exec_cmd(t_mshell *mini)
 		pid = fork();
 		if (pid > 0)
 			mini->pids[j] = pid;
-		deal_with_pid(mini, current, i, pid);
+		test(mini, current, i, pid);
 		i += 2;
 		j ++;
 		current = current->next;
@@ -91,30 +87,30 @@ void	exec_cmd(t_mshell *mini)
 	mini->pids = NULL;
 }
 
-void	deal_with_pid(t_mshell *mini, t_command *cur, int i, int pid)
+
+void	test(t_mshell *mini, t_command *current, int i, int pid)
 {
-	int			in;
-	int			out;
+	int			save_in;
+	int			save_out;
 
 	if (pid == 0)
 	{
 		signal_def();
-		exit_if_builtin_only(mini, cur);
-		execute(mini, cur, i);
+		exit_if_builtin_only(mini, current);
+		execute(mini, current, i);
 	}
-	else if (cmd_lst_pos(mini->command, cur) == cmd_list_size(mini->command))
+	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command))
 	{
-		if (is_builtins(cur->value) && cmd_list_size(mini->command) == 1)
+		if (is_builtins(current->value) && cmd_list_size(mini->command) == 1)
 		{
-			in = dup(0);
-			out = dup(1);
-			execute(mini, cur, i);
-			dup2(0, in);
-			dup2(1, out);
+			save_in = dup(0);
+			save_out = dup(1);
+			execute(mini, current, i);
+			dup2(save_in, 0);
+			dup2(save_out, 1);
 		}
 	}
 }
-
 void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
 {
 	t_command	*current;
@@ -129,6 +125,7 @@ void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
 	if (value != -1)
 		g_estatus = value;
 }
+
 
 void	execute(t_mshell *mini, t_command *current, int i)
 {	
@@ -159,28 +156,21 @@ void	execute(t_mshell *mini, t_command *current, int i)
 void	ft_dup(t_mshell *mini, t_command *current, int i)
 {
 	int	j;
+	int	out_fd;
+	int	in_fd;
 
 	j = 0;
 	if (cmd_lst_pos(mini->command, current) == 1 && cmd_list_size(mini->command) > 1)
 		dup2(mini->pipe_fd[1], 1);
 	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command) &&\
 	cmd_list_size(mini->command) > 1 && !is_builtins(current->value))
-		dup2(mini->pipe_fd[i - 2], 0);
+	  	dup2(mini->pipe_fd[i - 2], 0);
 	else if (cmd_list_size(mini->command) > 1)
 	{
 		if (!is_builtins(current->value))
-			dup2(mini->pipe_fd[i - 2], 0);
-		dup2(mini->pipe_fd[i + 1], 1);
+	 		dup2(mini->pipe_fd[i - 2], 0);
+	 	dup2(mini->pipe_fd[i + 1], 1);
 	}
-	while (mini->pipe_fd[j])
-		close(mini->pipe_fd[j++]);
-}
-
-void	dup_redir_in_out(t_command *current, t_mshell *mini)
-{
-	int	out_fd;
-	int	in_fd;
-
 	out_fd = make_redir_out(current, mini);
 	in_fd = make_redir_in(current, mini);
 	if (out_fd)
@@ -190,9 +180,11 @@ void	dup_redir_in_out(t_command *current, t_mshell *mini)
 	}
 	if (in_fd)
 	{
-		dup2(in_fd, 0);
-		close(in_fd);
+	  	dup2(in_fd, 0);
+		close(in_fd);		
 	}
+	while (mini->pipe_fd[j])
+		close(mini->pipe_fd[j++]);
 }
 
 int	make_redir_out(t_command *command, t_mshell *mini)
