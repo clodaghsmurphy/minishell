@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 15:06:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:35:28 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,59 +297,95 @@ int				get_opt(char **args);
 void			echo(char **args);
 void			ft_exit(char **params, t_mshell *mini);
 
-/*************EXEC*********************/
-void			ft_exe(t_mshell *mini);
-void			exe_builtins(char **params, t_env **env, t_mshell *mini);
-int				simul_exe_builtins(char **params, t_mshell *mini);
-void			exec_cmd(t_mshell *mini);
-int				lst_env_size(t_env *env);
-char			**env_to_tab(t_env *env);
-char			**create_paths(t_env *env);
-void			free_tab(char **tab);
-char			*ft_strjoin_f(char *s1, char const *s2);
-char			*find_path(t_env *env, char **cmd_params);
-char			*check_absolute_path(char *path);
-int				is_builtins(char **params);
+//**************************cmd_list_utils.c********************************
+
 int				cmd_list_size(t_command *lst);
 int				cmd_lst_pos(t_command *lst, t_command *current);
-void			ft_dup(t_mshell *mini, t_command *current, int i);
-t_pipe			*set_lst_pipe(t_command *command);
-void			add_back_pipe(t_pipe **pipe);
-void			execute(t_mshell *mini, t_command *current, int i);
-int				*set_pipe(t_command *command);
-void			close_pipe_n_wait(int *pipe_fd, int *pids);
-void			exit_if_builtin_only(t_mshell *mini, t_command *current);
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
-char			**command_clear_one(char **command);
-char			**command_clear_all_out(char **command);
-t_redir_out		*parse_redir_out(char **command);
-int				make_redir_out(t_command *command, t_mshell *mini);
 
-void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
-char			**command_clear_one_in(char **command);
-char			**command_clear_all_in(char **command);
-t_redir_in		*parse_redir_in(char **command);
+//**************************exec.c********************************
+
+void			ft_exe(t_mshell *mini);
+void			delete_hd(t_command *command);
+void			exec_cmd(t_mshell *mini);
+void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
+void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
+void			execute(t_mshell *mini, t_command *current, int i);
+void			ft_dup(t_mshell *mini, t_command *current, int i);
+void			dup_redir_in_out(t_command *current, t_mshell *mini);
+void			error(char *str, t_mshell *mini, int erreur);
+void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
+void			execute(t_mshell *mini, t_command *current, int i);
+void			ft_dup(t_mshell *mini, t_command *current, int i);
+int				make_redir_out(t_command *command, t_mshell *mini);
 int				make_redir_in(t_command *command, t_mshell *mini);
+void			error(char *str, t_mshell *mini, int erreur);
+void			error(char *str, t_mshell *mini, int erreur);
+
+//**************************exec_utils2.c********************************
+
+void			exit_if_builtin_only(t_mshell *mini, t_command *current);
+void			close_pipe_n_wait(int *pipe_fd, int *pids);
+void			close_pipe_n_wait(int *pipe_fd, int *pids);
+int				*set_pipe(t_command *command);
+
+//**************************exec_utils.c********************************
+
+void			exe_builtins(char **params, t_env **env, t_mshell *mini);
+int				simul_exe_builtins(char **params, t_mshell *mini);
+int				is_builtins(char **params);
+int				lst_env_size(t_env *env);
+void			exe_builtins(char **params, t_env **env, t_mshell *mini);
+int				simul_exe_builtins(char **params, t_mshell *mini);
+int				is_builtins(char **params);
+char			**env_to_tab(t_env *env);
+
+//**************************free.c********************************
 
 void			free_redir_in(t_redir_in *lst);
 void			free_redir_out(t_redir_out *lst);
 void			free_mini(t_mshell *mini);
-void			error(char *str, t_mshell *mini, int erreur);
 
-int				lataille(char **command);
-char			**ft_dup_tab(char **command);
+//**************************heredoc.c********************************
 
 void			replace_heredoc(t_redir_in *to_change, char *hd_name);
 char			*get_hd_name(void);
 void			find_replace_hd(t_redir_in *lst);
 void			heredoc(t_mshell *mini, char *name, char *stop);
 int				launch_hd(t_mshell *mini);
-void			delete_hd(t_command *command);
+void			replace_heredoc(t_redir_in *to_change, char *hd_name);
+char			*get_hd_name(void);
+void			heredoc(t_mshell *mini, char *name, char *stop);
 
-int				simul_cd(char **params, t_mshell *mini);
-int				simul_ft_exit(char **params, t_mshell *mini);
-void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
-void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
-void			dup_redir_in_out(t_command *current, t_mshell *mini);
+//**************************redir_in.c********************************
+
+void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
+void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
+t_redir_in		*parse_redir_in(char **command);
+void			add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
+char			**command_clear_all_in(char **command);
+char			**command_clear_one_in(char **command);
+t_redir_in		*parse_redir_in(char **command);
+
+//**************************redir_out.c********************************
+
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+int				lataille(char **command);
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+t_redir_out		*parse_redir_out(char **command);
+char			**ft_dup_tab(char **command);
+char			**command_clear_all_out(char **command);
+char			**command_clear_one(char **command);
+int				lataille(char **command);
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+t_redir_out		*parse_redir_out(char **command);
+
+//**************************utils.c********************************
+
+void			free_tab(char **tab);
+char			**create_paths(t_env *env);
+void			free_tab(char **tab);
+char			*ft_strjoin_f(char *s1, char const *s2);
+char			*find_path(t_env *env, char **cmd_params);
+char			*check_absolute_path(char *path);
 
 #endif
