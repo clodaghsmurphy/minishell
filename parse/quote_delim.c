@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:40:16 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 16:55:30 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:22:10 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	quote_delim2(int type, t_mshell *mshell, char *str, int *i)
 			*i += 2;
 		return (1);
 	}
+	if (str[*i] == '\0')
+		return (0);
 	if (str[*i + 1] != '\0')
 	{
 		if (quote_delim3(type, mshell, str, i) == 1)

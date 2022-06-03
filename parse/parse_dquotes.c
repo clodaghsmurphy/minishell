@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:37:04 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/24 15:43:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:25:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,25 @@ int	digit_in_dquote(t_mshell *mshell, char *str, int *i)
 
 int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 {
-	int	j;
+	int		j;
+	char	*new_word;
 
+	new_word = NULL;
 	if (dquote_eq(mshell, str, i) == 1)
 		return (1);
 	if (str[*i] == '$' && str[*i + 1] == type)
 	{
 		*i += 2;
-		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup("$"));
+		new_word = ft_strdup("$");
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
+		free(new_word);
 		return (1);
 	}
-	if (str[*i] == '$' && str[*i + 1] == '?')
+	if (str[*i] == '$' && str[*i + 1] == '?' && type == 34)
 	{
-		mshell->res = ft_strjoin_f2(mshell->res, ft_strdup(ft_itoa(g_estatus)));
+		new_word = ft_itoa(g_estatus);
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
+		free(new_word);
 		*i += 2;
 		return (1);
 	}
