@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 16:54:16 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:41:06 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ void			check_serror(t_phrase **phrase, t_mshell *mshell);
 int				define_quote_type(char	*str, int *i);
 int				dollar_only(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
-int				define_quote_type(char	*str, int *i);
 int				parse_dollar_string(int *j, t_mshell *mshell, \
 				char *str, int *i);
 int				dollar_only(t_split **word, t_mshell *mshell, \
@@ -171,7 +170,8 @@ int				quote_after_dollar(t_split **word, t_mshell *mshell, \
 			char *str, int *i);
 int				not_quotes(int type, char *str, int *i);
 /************PARSE_VARS*******************/
-
+int				parse_dquote_string_bis(int type, t_mshell *mshell, \
+				char *str, int *i);
 int				dquotes_only(int type, t_mshell *mshell, char *str, int *i);
 int				eq_start_dquote(t_mshell *mshell, char *str, int *i);
 int				digit_in_dquote(t_mshell *mshell, char *str, int *i);

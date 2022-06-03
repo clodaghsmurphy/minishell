@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:37:04 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 17:25:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:46:20 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,8 @@ int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 	new_word = NULL;
 	if (dquote_eq(mshell, str, i) == 1)
 		return (1);
-	if (str[*i] == '$' && str[*i + 1] == type)
-	{
-		*i += 2;
-		new_word = ft_strdup("$");
-		mshell->res = ft_strjoin_f2(mshell->res, new_word);
-		free(new_word);
+	if (parse_dquote_string_bis(type, mshell, str, i) == 1)
 		return (1);
-	}
 	if (str[*i] == '$' && str[*i + 1] == '?' && type == 34)
 	{
 		new_word = ft_itoa(g_estatus);
@@ -85,5 +79,20 @@ int	parse_dquote_string(int type, t_mshell *mshell, char *str, int *i)
 	j = mshell->j;
 	if (parse_dquote_string2(type, mshell, str, i) == 1)
 		return (1);
+	return (0);
+}
+
+int	parse_dquote_string_bis(int type, t_mshell *mshell, char *str, int *i)
+{
+	char	*new_word;
+
+	if (str[*i] == '$' && str[*i + 1] == type)
+	{
+		*i += 2;
+		new_word = ft_strdup("$");
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
+		free(new_word);
+		return (1);
+	}
 	return (0);
 }

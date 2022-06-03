@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:11:37 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/31 16:46:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:45:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av, char	**env)
 
 int	ft_read(char *str, t_mshell *mshell)
 {
-	str = readline("\001\033[1;32;48;2;50;157;168m\002  Shell \001✗\002 \001\033[0m\002");
+	str = readline("\001\033[1;48;2;50;157;168m\002  Shell \001✗\002 \001\033[0m\002");
 	if (str)
 	{
 		add_history(str);
