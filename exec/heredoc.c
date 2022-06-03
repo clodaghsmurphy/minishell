@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 13:48:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:13:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ void	heredoc(t_mshell *mini, char *name, char *stop)
 		write(fd, "\n", 1);
 		free(str);
 	}
-	ft_putstr_fd("fin de heredoc = ctrl-d\n", 1);
+	ft_putstr_fd("bash: warning: here-document delimited by end-of-file\n", 1);
 	close(fd);
 }
