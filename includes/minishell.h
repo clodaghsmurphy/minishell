@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/02 18:49:24 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/02 23:27:13 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,7 +340,7 @@ void			delete_hd(t_command *command);
 int				simul_cd(char **params, t_mshell *mini);
 int				simul_ft_exit(char **params, t_mshell *mini);
 void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
-void			deal_with_pid(t_mshell *mini, t_command *cur, int i, int pid);
+void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
 void			dup_redir_in_out(t_command *current, t_mshell *mini);
 
 #endif

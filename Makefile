@@ -29,7 +29,6 @@ SRC = src/main.c \
 	exec/exec.c \
 	exec/exec_utils.c \
 	exec/exec_utils2.c \
-	exec/pipe_lst.c\
 	exec/utils.c\
 	exec/cmd_list_utils.c\
 	exec/redir_in.c\
