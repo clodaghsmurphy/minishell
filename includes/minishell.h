@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 15:06:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:16:22 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ int				quote_delim(int type, t_mshell *mshell, char *str, int *i);
 int				quote_delim2(int type, t_mshell *mshell, char *str, int *i);
 int				quote_delim3(int type, t_mshell *mshell, char *str, int *i);
 void			if_word(t_split **word, t_mshell *mshell, char *str, int *i);
+char			*hdoc_expand2(char *str, char *s1, t_mshell *mshell);
 
 /************BUILTINS*****************/
 void			del_one(t_env **lst, t_env *to_del);

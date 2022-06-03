@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 13:04:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:10:51 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i)
 	int	q_delim;
 
 	type = 0;
-	//type = define_quote_type(str, i);
 	mshell->j = *j;
 	while (is_delim_dollar(str, *i))
 	{

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:31:13 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 13:26:05 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:09:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*hdoc_expand(char *str, t_mshell *mshell)
 	int			len;
 	char		*res;
 	char		*s1;
-	t_phrase	*temp;
 
 	if (str == NULL)
 		return (ft_strdup(""));
@@ -31,14 +30,24 @@ char	*hdoc_expand(char *str, t_mshell *mshell)
 	mshell->hdoc_flag = 0;
 	len = ft_strlen(str) - 1;
 	s1 = ft_strndup2(str, len);
-	free(str);
-	while (s1[i] != '\0' && s1[i] != '\n')
+	while (s1[i] != '\0')
 	{
 		parse_string2(&mshell->word, mshell, s1, &i);
 		if (s1[i - 1] == 32 && mshell->phrase)
 			phrase_lstadd_back(&mshell->phrase, \
 		phrase_lstnew(ft_strdup(" ")));
 	}
+	res = hdoc_expand2(str, s1, mshell);
+	return (res);
+}
+
+char	*hdoc_expand2(char *str, char *s1, t_mshell *mshell)
+{
+	t_phrase	*temp;
+	char		*res;
+
+	free(str);
+	res = NULL;
 	temp = mshell->phrase;
 	while (temp != NULL)
 	{
@@ -57,11 +66,6 @@ int	parse_string2(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	while (is_delim(mshell, str, i) == 1 && str[*i] != '\n')
 	{
-		/* if (str[*i] == 34 || str[*i] == 39)
-		{
-			parse_quotes(word, mshell, str, i);
-			continue ;
-		} */
 		if (str[*i] == '$' && mshell->hdoc_flag != 1)
 		{
 			parse_dollar(word, mshell, str, i);
