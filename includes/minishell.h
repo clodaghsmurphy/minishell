@@ -6,9 +6,10 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 13:39:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:48:49 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -344,7 +345,7 @@ void			delete_hd(t_command *command);
 int				simul_cd(char **params, t_mshell *mini);
 int				simul_ft_exit(char **params, t_mshell *mini);
 void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
-
-
+void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
+void			dup_redir_in_out(t_command *current, t_mshell *mini);
 
 #endif
