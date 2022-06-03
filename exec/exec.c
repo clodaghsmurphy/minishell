@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/02 23:34:04 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/03 15:28:58 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,11 @@ void	exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid)
 			execute(mini, cur, i);
 			dup2(save_in, 0);
 			dup2(save_out, 1);
+			close(save_in);
+			close(save_out);
 		}
 	}
 }
-
 void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
 {
 	t_command	*current;
@@ -163,12 +164,13 @@ void	ft_dup(t_mshell *mini, t_command *current, int i)
 	if (cmd_lst_pos(mini->command, current) == 1 && cmd_list_size(mini->command) > 1)
 		dup2(mini->pipe_fd[1], 1);
 	else if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command) &&\
-	cmd_list_size(mini->command) > 1 && !is_builtins(current->value))
+	cmd_list_size(mini->command) > 1)
+	{
 		dup2(mini->pipe_fd[i - 2], 0);
+	}
 	else if (cmd_list_size(mini->command) > 1)
 	{
-		if (!is_builtins(current->value))
-			dup2(mini->pipe_fd[i - 2], 0);
+		dup2(mini->pipe_fd[i - 2], 0);
 		dup2(mini->pipe_fd[i + 1], 1);
 	}
 	dup_redir_in_out(current, mini);

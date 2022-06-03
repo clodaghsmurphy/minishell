@@ -69,9 +69,6 @@ char	*get_hd_name(void);
 void	heredoc(t_mshell *mini, char *name, char *stop);
 
 
-//**************************pipe_lst.c********************************
-
-
 //**************************redir_in.c********************************
 
 void	add_back_redir_in(t_redir_in **lst, char *file_name, int bol);
@@ -95,13 +92,6 @@ char	**command_clear_one(char **command);
 int		lataille(char **command);
 void	add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
 t_redir_out	*parse_redir_out(char **command);
-
-
-//**************************test.c********************************
-
-void   ft_fork(char *str);
-int main();
-void   ft_fork(char *str);
 
 
 //**************************utils.c********************************
