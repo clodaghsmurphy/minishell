@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:31:13 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 16:09:52 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:06:51 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*hdoc_expand2(char *str, char *s1, t_mshell *mshell)
 	if (res == NULL)
 		res = ft_strdup("");
 	free(s1);
-	printf("Res is %s\n", res);
 	return (res);
 }
 
