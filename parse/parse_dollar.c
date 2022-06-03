@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 17:27:43 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:28:32 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ void	parse_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	int		j;
 	int		type;
 	int		res;
+	char	*new_word;
 
 	j = *i;
 	if (*word)
-		mshell->res = ft_strjoin_f2(mshell->res, make_word(word, mshell));
+	{
+		new_word = make_word(word, mshell);
+		mshell->res = ft_strjoin_f2(mshell->res, new_word);
+		free(new_word);
+	}
 	if (quote_after_dollar(word, mshell, str, i) == 1)
 		return ;
 	if (dollar_only(word, mshell, str, i) == 1)

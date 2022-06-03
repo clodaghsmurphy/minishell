@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 17:06:37 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:39:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_mshell
 	char		*var;
 	int			j;
 	int			hdoc_flag;
+	int			hd_parse;
 	int			s_error;
 	t_command	*command;
 	t_phrase	*phrase;
@@ -156,6 +157,7 @@ void			env_free(t_env *env);
 t_env			*parse_env(char **env_t);
 void			parse_quotes(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
+void			check_serror(t_phrase **phrase, t_mshell *mshell);
 /************PARSE_VARS BIS*******************/
 int				define_quote_type(char	*str, int *i);
 int				dollar_only(t_split **word, t_mshell *mshell, \
@@ -270,6 +272,8 @@ void			end_signals(void);
 void			assign_tokens(t_mshell *mshell);
 int				is_variable(char *str);
 int				is_builtin(char *str);
+int				parse_string2(t_split **word, t_mshell *mshell, char *str, int *i);
+void			parse_string_bis2(t_split **word, t_mshell *mshell, char *str, int *i);
 
 /************BUILTINS*****************/
 void			del_one(t_env **lst, t_env *to_del);

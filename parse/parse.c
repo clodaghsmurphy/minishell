@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 15:54:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:44:24 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	parse_command(char *str, t_mshell *mshell)
 	if (ft_strncmp(str, "", 10) == 0)
 		return (0);
 	split_command(str, mshell);
+	//check_serror(&mshell->phrase, mshell);
 	if (mshell->s_error != 1 && mshell->phrase != NULL)
 	{
 		mshell->command = create_command(mshell);
@@ -32,6 +33,19 @@ int	parse_command(char *str, t_mshell *mshell)
 		free_command(&mshell->command);
 	}
 	return (0);
+}
+
+void	check_serror(t_phrase **phrase, t_mshell *mshell)
+{
+	t_phrase	*temp;
+	int			i;
+
+	i = 0;
+	temp = *phrase;
+	while (temp->next != NULL)
+		temp = temp->next;
+	if (temp->str[i] == '|' )
+		syntax_error(mshell);
 }
 
 void	split_command(char *str, t_mshell *mshell)
