@@ -6,12 +6,25 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 15:55:01 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/03 15:39:18 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "minishell.h"
+
+void	ft_putstr_no_quote(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '"')
+			ft_putchar_fd(str[i], 1);
+		i++;
+	}
+}
 
 void	echo(char **args)
 {
@@ -22,7 +35,7 @@ void	echo(char **args)
 	i = arg + 1;
 	while (args[i] != NULL)
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_no_quote(args[i]);
 		if (args[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
