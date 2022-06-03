@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/31 14:44:43 by amontant         ###   ########.fr       */
+/*   Updated: 2022/06/02 23:27:13 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,9 @@ int				parse_redir(t_split **delimiter, t_mshell *mshell, \
 			char *str, int *i);
 int				is_pipe(t_split **delimiter, t_mshell *mshell, \
 				char *str, int *i);
+int				end_of_string(t_split **delimiter, t_mshell *mshell, \
+				char *str, int *i);
+
 /***********PARSE_DOLLAR*******************/
 void			parse_dollar(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
@@ -230,12 +233,15 @@ int				dquote_is_digit(t_mshell *mshell, char *str, int *i);
 int				parse_dquote_string2(int type, t_mshell *mshell, \
 				char *str, int *i);
 int				dquote_eq(t_mshell *mshell, char *str, int *i);
+void			single_quote_var(t_mshell *mshell, char *str, int *i);
+
 /***********SPLIT_UTILS*******************/
 t_split			*split_lstnew(char c);
 void			split_lstadd_back(t_split **alst, t_split *new);
 int				split_lstsize(t_split *lst);
 void			phrase_lstadd_back(t_phrase **alst, t_phrase *new);
 void			print_split(t_split **split);
+char			*hdoc_expand(char *str, t_mshell *mshell);
 
 /***********WORD_UTILS*******************/
 void			print_phrase(t_phrase **phrase);
@@ -334,7 +340,7 @@ void			delete_hd(t_command *command);
 int				simul_cd(char **params, t_mshell *mini);
 int				simul_ft_exit(char **params, t_mshell *mini);
 void			get_last_retour_builtin(t_command *lst, t_mshell *mini);
-
-
+void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
+void			dup_redir_in_out(t_command *current, t_mshell *mini);
 
 #endif

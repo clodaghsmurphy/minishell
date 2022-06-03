@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:57:12 by amontant          #+#    #+#             */
-/*   Updated: 2022/04/13 14:56:12 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:26:30 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	check_rm_double(t_env **env)
 		{
 			if (!ft_strncmp(i->name, j->name, ft_strlen(i->name) + 1))
 			{
-				printf("trouvé\n");
 				save = i;
 				i = i->next;
 				del_one(env, save);

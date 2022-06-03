@@ -1,0 +1,30 @@
+j'exec 
+
+[1;33m  Shell  ✗ [0mlslslslslslslslslslslslfkdjghgfsdjdfsjfhsdflsdfjdfdfj
+outfd = 0
+[1;33m  Shell  ✗ [0mls
+outfd = 0
+builtins
+exec
+GNL
+includes
+libft
+Makefile
+minishell
+out
+parse
+salut
+src
+test
+tester
+tester.sh
+test_pipe.sh
+tmp
+valgrind_readline_leaks_ignore.txt
+[1;33m  Shell  ✗ [0mlsexi
+outfd = 0
+[1;33m  Shell  ✗ [0m
+[1;33m  Shell  ✗ [0mexit
+outfd = 0
+j'exec 
+exit

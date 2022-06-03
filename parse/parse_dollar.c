@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:56:42 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 11:37:11 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:27:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	if_another_dollar(t_split **word, t_mshell *mshell, char *str, int *i)
 	if (mshell->var != NULL)
 	{
 		mshell->res = ft_strjoin_f2(mshell->res, mshell->var);
+		free(mshell->var);
+		mshell->var = NULL;
 		return (1);
 	}
 	else
