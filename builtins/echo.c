@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:38:20 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 15:39:18 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:58:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 
 void	ft_putstr_no_quote(char *str)
 {
-	int	i;
+	int		i;
+	char	*var;
 
 	i = 0;
-	while (str[i])
+	var = delim_q(str);
+	while (var[i])
 	{
-		if (str[i] != '"')
-			ft_putchar_fd(str[i], 1);
+		ft_putchar_fd(var[i], 1);
 		i++;
 	}
+	free(var);
 }
 
 void	echo(char **args)

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:40:16 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 15:07:45 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:55:30 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,20 @@ void	if_word(t_split **word, t_mshell *mshell, char *str, int *i)
 			mshell->res = ft_strjoin_f2(mshell->res, new_word);
 		free(new_word);
 	}
+}
+
+char	*delim_q(char	*str)
+{
+	if (ft_strncmp(str, "\"|\"", 10) == 0)
+		return (ft_strdup("|"));
+	if (ft_strncmp(str, "\"<\"", 10) == 0)
+		return (ft_strdup("<"));
+	if (ft_strncmp(str, "\">\"", 10) == 0)
+		return (ft_strdup(">"));
+	if (ft_strncmp(str, "\">>\"", 10) == 0)
+		return (ft_strdup(">>"));
+	if (ft_strncmp(str, "\"<<\"", 10) == 0)
+		return (ft_strdup("<<"));
+	else
+		return (ft_strdup(str));
 }

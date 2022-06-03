@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 16:15:52 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:54:16 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int				parse_if_word(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
 int				dollar_in_quote_string(t_split **word, t_mshell *mshell, \
 			char *str, int *i);
+char			*delim_q(char	*str);
 
 /*************ENV_LIST****************/
 void			print_env(t_env *env);
@@ -379,6 +380,8 @@ char			**command_clear_one(char **command);
 int				lataille(char **command);
 void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 t_redir_out		*parse_redir_out(char **command);
+int				simul_cd(char **params, t_mshell *mini);
+int				simul_ft_exit(char **params, t_mshell *mini);
 
 //**************************utils.c********************************
 
