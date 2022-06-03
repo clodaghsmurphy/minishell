@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 14:54:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:09:39 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,5 @@ int	parse_command_list(t_mshell *mshell, \
 			break ;
 		}
 	}
-	return (0);
-}
-
-int	init_values(int	*i, int *size, t_command **temp_command, \
-				t_phrase **temp_phrase)
-{
-	*i = 0;
-	*size = phrase_lstsize(*temp_phrase);
-	(*temp_command)->value = (char **)malloc(sizeof(char *) * (*size + 1));
-	if (!(*temp_command))
-		return (-1);
 	return (0);
 }
