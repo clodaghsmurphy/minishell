@@ -6,10 +6,9 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 16:15:02 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:15:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -370,15 +369,15 @@ t_redir_in		*parse_redir_in(char **command);
 
 //**************************redir_out.c********************************
 
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 int				lataille(char **command);
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 t_redir_out		*parse_redir_out(char **command);
 char			**ft_dup_tab(char **command);
 char			**command_clear_all_out(char **command);
 char			**command_clear_one(char **command);
 int				lataille(char **command);
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int	bol);
+void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 t_redir_out		*parse_redir_out(char **command);
 
 //**************************utils.c********************************

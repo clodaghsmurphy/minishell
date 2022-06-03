@@ -6,10 +6,9 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:27:24 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 16:13:36 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:16:02 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
