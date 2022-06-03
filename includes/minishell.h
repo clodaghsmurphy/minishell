@@ -6,10 +6,9 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 13:48:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:46:01 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -109,7 +108,6 @@ typedef struct s_mshell
 	char		*var;
 	int			j;
 	int			hdoc_flag;
-	int			hd_parse;
 	int			s_error;
 	t_command	*command;
 	t_phrase	*phrase;
@@ -273,8 +271,13 @@ void			end_signals(void);
 void			assign_tokens(t_mshell *mshell);
 int				is_variable(char *str);
 int				is_builtin(char *str);
-int				parse_string2(t_split **word, t_mshell *mshell, char *str, int *i);
-void			parse_string_bis2(t_split **word, t_mshell *mshell, char *str, int *i);
+int				parse_string2(t_split **word, t_mshell *mshell, \
+				char *str, int *i);
+void			parse_string_bis2(t_split **word, t_mshell *mshell, \
+				char *str, int *i);
+int				quote_delim(int type, t_mshell *mshell, char *str, int *i);
+int				quote_delim2(int type, t_mshell *mshell, char *str, int *i);
+int				quote_delim3(int type, t_mshell *mshell, char *str, int *i);
 
 /************BUILTINS*****************/
 void			del_one(t_env **lst, t_env *to_del);
