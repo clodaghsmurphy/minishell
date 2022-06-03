@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/06/03 15:00:13 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/03 23:10:07 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	exit_if_builtin_only(t_mshell *mini, t_command *current)
 {
-	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command)
+	if (cmd_lst_pos(mini->command, current) == cmd_list_size(mini->command) \
 	&& cmd_list_size(mini->command) == 1)
 	{
-		if (is_builtins(current->value) )
+		if (is_builtins(current->value))
 		{
 			free(mini->pipe_fd);
 			free_command(&mini->command);
@@ -63,4 +63,19 @@ int	*set_pipe(t_command *command)
 	}
 	pipe_fd[i * 2] = 0;
 	return (pipe_fd);
+}
+
+void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
+{
+	t_command	*current;
+	int			value;
+
+	value = -1;
+	current = lst;
+	while (current->next)
+		current = current->next;
+	if (is_builtins(current->value))
+		value = simul_exe_builtins(current->value, mini);
+	if (value != -1)
+		g_estatus = value;
 }

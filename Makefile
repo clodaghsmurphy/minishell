@@ -36,8 +36,12 @@ SRC = src/main.c \
 	exec/redir_out.c\
 	exec/free.c\
 	exec/heredoc.c\
+	exec/dup_redir_in_out.c\
+	exec/hd_utils.c\
 	GNL/get_next_line.c\
 	GNL/get_next_line_utils.c\
+	exec/lataille.c\
+	exec/decla.c\
 
 NO_OF_FILES := $(words $(SRC)) 
 

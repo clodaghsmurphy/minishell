@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 17:41:06 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 00:32:52 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,7 @@ int				is_valid_opt(char *arg);
 int				get_opt(char **args);
 void			echo(char **args);
 void			ft_exit(char **params, t_mshell *mini);
+void			free_mini_simul_cd(t_mshell *mini);
 
 //**************************cmd_list_utils.c********************************
 
@@ -317,11 +318,6 @@ void			dup_redir_in_out(t_command *current, t_mshell *mini);
 void			error(char *str, t_mshell *mini, int erreur);
 void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
 void			execute(t_mshell *mini, t_command *current, int i);
-void			ft_dup(t_mshell *mini, t_command *current, int i);
-int				make_redir_out(t_command *command, t_mshell *mini);
-int				make_redir_in(t_command *command, t_mshell *mini);
-void			error(char *str, t_mshell *mini, int erreur);
-void			error(char *str, t_mshell *mini, int erreur);
 
 //**************************exec_utils2.c********************************
 
@@ -357,6 +353,8 @@ int				launch_hd(t_mshell *mini);
 void			replace_heredoc(t_redir_in *to_change, char *hd_name);
 char			*get_hd_name(void);
 void			heredoc(t_mshell *mini, char *name, char *stop);
+void			jsuisbourre(t_command *current, t_redir_in *temp, \
+													t_mshell *mini);
 
 //**************************redir_in.c********************************
 
@@ -370,18 +368,15 @@ t_redir_in		*parse_redir_in(char **command);
 
 //**************************redir_out.c********************************
 
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
-int				lataille(char **command);
-void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 t_redir_out		*parse_redir_out(char **command);
 char			**ft_dup_tab(char **command);
 char			**command_clear_all_out(char **command);
 char			**command_clear_one(char **command);
-int				lataille(char **command);
 void			add_back_redir_out(t_redir_out **lst, char *file_name, int bol);
 t_redir_out		*parse_redir_out(char **command);
 int				simul_cd(char **params, t_mshell *mini);
 int				simul_ft_exit(char **params, t_mshell *mini);
+int				lataille(char **command);
 
 //**************************utils.c********************************
 
@@ -391,5 +386,17 @@ void			free_tab(char **tab);
 char			*ft_strjoin_f(char *s1, char const *s2);
 char			*find_path(t_env *env, char **cmd_params);
 char			*check_absolute_path(char *path);
+
+//************************dup-redir_in_out.c*************************
+void			ft_dup(t_mshell *mini, t_command *current, int i);
+int				make_redir_out(t_command *command, t_mshell *mini);
+int				make_redir_in(t_command *command, t_mshell *mini);
+void			error(char *str, t_mshell *mini, int erreur);
+
+//*************************decla.h*********************************
+int				decla(int *i, int *j, int *found, char **command);
+int				decla_v2(int *i, int *j, int *found, char **command);
+void			init_things_to_save_two_little_lines_for_norme(int *i, \
+												int *j, int *found);
 
 #endif

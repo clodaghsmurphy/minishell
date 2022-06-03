@@ -1,10 +1,21 @@
-#include "../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 23:10:50 by shiloub           #+#    #+#             */
+/*   Updated: 2022/06/03 23:11:04 by shiloub          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../includes/minishell.h"
 
 void	free_redir_in(t_redir_in *lst)
 {
-	t_redir_in *temp;
-	
+	t_redir_in	*temp;
+
 	while (lst)
 	{
 		temp = lst;
@@ -17,8 +28,8 @@ void	free_redir_in(t_redir_in *lst)
 
 void	free_redir_out(t_redir_out *lst)
 {
-	t_redir_out *temp;
-	
+	t_redir_out	*temp;
+
 	while (lst)
 	{
 		temp = lst;

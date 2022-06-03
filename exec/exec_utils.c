@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontant <amontant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:14:45 by shiloub           #+#    #+#             */
-/*   Updated: 2022/05/31 14:45:59 by amontant         ###   ########.fr       */
+/*   Updated: 2022/06/03 23:46:06 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ char	**env_to_tab(t_env *env)
 	i = 0;
 	while (current)
 	{
-		env_tab[i++] = ft_strjoin_f(ft_strjoin(current->name, "="), current->value);
+		env_tab[i++] = ft_strjoin_f(ft_strjoin(current->name, "="), \
+		 current->value);
 		current = current->next;
 	}
 	env_tab[i] = NULL;

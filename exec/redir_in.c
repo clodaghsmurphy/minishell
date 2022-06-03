@@ -15,14 +15,14 @@ t_redir_in	*parse_redir_in(char **command)
 		{
 			add_back_redir_in(&lst, tab[i + 1], 1);
 			tab = command_clear_one_in(tab);
-			i = - 1;
+			i = i - 1;
 		}
 		else if (!ft_strncmp(tab[i], "<", 2) && tab[i + 1])
 		{
 			add_back_redir_in(&lst, tab[i + 1], 0);
 			tab = command_clear_one_in(tab);
-			i = - 1;
-		} 
+			i = i - 1;
+		}
 		i++;
 	}
 	free_tab(tab);
@@ -31,8 +31,8 @@ t_redir_in	*parse_redir_in(char **command)
 
 void	add_back_redir_in(t_redir_in **lst, char *file_name, int bol)
 {
-	t_redir_in *new;
-	t_redir_in *current;
+	t_redir_in	*new;
+	t_redir_in	*current;
 
 	new = malloc(sizeof(t_redir_in));
 	new->name = ft_strdup(file_name);
@@ -55,17 +55,13 @@ char	**command_clear_all_in(char **command)
 	char	**new;
 	int		i;
 	int		j;
-	int		found = 0;
+	int		found;
 
-	i = 0;
-	while (command[i])
-		i ++;
-	new = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	j = 0;
+	new = malloc(sizeof(char *) * (decla(&i, &j, &found, command) + 1));
 	while (command[i])
 	{
-		if ((!ft_strncmp("<<", command[i], 3) || !ft_strncmp("<", command[i], 2)))
+		if ((!ft_strncmp("<<", command[i], 3) || \
+			!ft_strncmp("<", command[i], 2)))
 		{
 			if (command[i + 1])
 				i += 2;
@@ -87,17 +83,13 @@ char	**command_clear_one_in(char **command)
 	char	**new;
 	int		i;
 	int		j;
-	int		found = 0;
+	int		found;
 
-	i = 0;
-	while (command[i])
-		i ++;
-	new = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	j = 0;
+	new = malloc(sizeof(char *) * (decla_v2(&i, &j, &found, command) + 1));
 	while (command[i])
 	{
-		if ((!ft_strncmp("<<", command[i], 3) || !ft_strncmp("<", command[i], 2)) && found == 0)
+		if ((!ft_strncmp("<<", command[i], 3) || \
+			!ft_strncmp("<", command[i], 2)) && found == 0)
 		{
 			if (command[i + 1])
 			{
@@ -106,11 +98,7 @@ char	**command_clear_one_in(char **command)
 			}
 		}
 		else
-		{
-			new[j] = ft_strdup(command[i]);
-			j++;
-			i++;
-		}
+			new[j++] = ft_strdup(command[i++]);
 	}
 	new[j] = 0;
 	free_tab(command);
