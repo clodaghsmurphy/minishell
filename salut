@@ -1,0 +1,13 @@
+builtins
+exec
+GNL
+includes
+libft
+Makefile
+minishell
+parse
+salut
+src
+tester.sh
+test_pipe.sh
+valgrind_readline_leaks_ignore.txt

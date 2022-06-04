@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/04 11:20:47 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:30:22 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ int	parse_if_word(t_split **word, t_mshell *mshell, char *str, int *i)
 	(*i)++;
 	if (str[*i] == 32)
 	{
-		/* while (str[*i] == 32)
-			(*i)++; */
 		parse_string_bis(word, mshell, str, i);
 	}
 	return (0);

@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_out.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/04 11:37:14 by clmurphy          #+#    #+#             */
+/*   Updated: 2022/06/04 11:37:34 by clmurphy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
+
 t_redir_out	*parse_redir_out(char **command)
 {
 	t_redir_out	*lst;
@@ -104,7 +117,7 @@ char	**command_clear_one(char **command)
 	return (new);
 }
 
-void	add_back_redir_out(t_redir_out **lst, char *file_name, int	bol)
+void	add_back_redir_out(t_redir_out **lst, char *file_name, int bol)
 {
 	t_redir_out	*new;
 	t_redir_out	*current;
