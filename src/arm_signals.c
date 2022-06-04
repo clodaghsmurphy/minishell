@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:20:52 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/25 16:40:55 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:43:15 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	armsignals(void)
 	struct sigaction	sa;
 
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = (void *)sig_handler;
