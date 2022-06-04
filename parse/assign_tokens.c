@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:13:20 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/06 18:22:36 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:48:52 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,13 @@ int	is_variable(char *str)
 		return (1);
 	else
 		return (0);
+}
+
+void	if_word_free_word(t_split **word, t_mshell *mshell)
+{
+	if (*word)
+	{
+		ft_wordclear(word);
+		*word = NULL;
+	}
 }
