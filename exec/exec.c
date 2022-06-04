@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:02:54 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/03 23:09:20 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 23:09:00 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ void	ft_exe(t_mshell *mini)
 	}
 	mini->pipe_fd = NULL;
 	signal_hd = launch_hd(mini);
+	if (exit_if_pas_de_commande(mini))
+		return ;
 	g_estatus = 130;
 	if (!signal_hd)
 		exec_cmd(mini);
 	else
 		ft_putstr_fd("\n", 1);
-	delete_hd(mini->command);
-	free(mini->pipe_fd);
-	free_command(&mini->command);
-	armsignals();
+	end_fonction(mini);
 }
 
 void	delete_hd(t_command *command)

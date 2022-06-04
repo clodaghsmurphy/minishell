@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 23:56:57 by shiloub           #+#    #+#             */
-/*   Updated: 2022/06/03 23:57:06 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 23:08:46 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,25 @@ int	lataille(char **command)
 	if (found)
 		return (i - 1);
 	return (i + 1);
+}
+
+void	end_fonction(t_mshell *mini)
+{
+	delete_hd(mini->command);
+	free(mini->pipe_fd);
+	free_command(&mini->command);
+	armsignals();
+}
+
+int	exit_if_pas_de_commande(t_mshell *mini)
+{
+	if (mini->command->value[0] == NULL)
+	{
+		delete_hd(mini->command);
+		free(mini->pipe_fd);
+		free_command(&mini->command);
+		armsignals();
+		return (1);
+	}
+	return (0);
 }

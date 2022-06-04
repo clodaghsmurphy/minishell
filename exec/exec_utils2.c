@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:25:03 by shiloub           #+#    #+#             */
-/*   Updated: 2022/06/03 23:10:07 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 22:38:04 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	get_last_retour_builtin(t_command *lst, t_mshell *mini)
 
 	value = -1;
 	current = lst;
+	if (!current)
+		return ;
 	while (current->next)
 		current = current->next;
 	if (is_builtins(current->value))
