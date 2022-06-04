@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 16:59:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:05:46 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	check_serror(t_phrase **phrase, t_mshell *mshell)
 
 	i = 0;
 	temp = *phrase;
+	if (temp == NULL)
+		return ;
 	while (temp->next != NULL)
 		temp = temp->next;
 	if (temp->str[i] == '|' )
