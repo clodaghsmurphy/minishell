@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:57:12 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/02 18:26:30 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/05 15:48:35 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,21 @@ void	check_rm_double(t_env **env)
 	}
 }
 
+int	char_is_digit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
 int	check_valid_variable(char *variable)
 {
 	int	i;
 
 	i = 0;
+	if (char_is_digit(variable[i]))
+		return (2);
 	while (variable[i])
 	{
 		i++;

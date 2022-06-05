@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:14:45 by shiloub           #+#    #+#             */
-/*   Updated: 2022/06/04 11:36:48 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:06:39 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	simul_exe_builtins(char **params, t_mshell *mini)
 	if (!ft_strncmp(params[0], "echo", 5))
 		return (0);
 	if (!ft_strncmp(params[0], "export", 7))
-		return (0);
+		return (simul_ft_export(&mini->env, params));
 	if (!ft_strncmp(params[0], "unset", 7))
 		return (0);
 	if (!ft_strncmp(params[0], "exit", 5))

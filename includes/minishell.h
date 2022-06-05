@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/04 23:09:29 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/05 16:02:43 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ char			*hdoc_expand2(char *str, char *s1, t_mshell *mshell);
 void			del_one(t_env **lst, t_env *to_del);
 char			*get_value(char *line);
 char			*get_name(char *line);
-void			export_variable(t_env **env, char *new_v);
+int				export_variable(t_env **env, char *new_v);
 void			ft_export(t_env **env, char **params);
 int				check_valid_variable(char *variable);
 void			check_rm_double(t_env **env);
@@ -400,5 +400,6 @@ void			init_things_to_save_two_little_lines_for_norme(int *i, \
 												int *j, int *found);
 void			end_fonction(t_mshell *mini);
 int				exit_if_pas_de_commande(t_mshell *mini);
+int				simul_ft_export(t_env	**env, char **params);
 
 #endif

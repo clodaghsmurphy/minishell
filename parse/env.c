@@ -6,7 +6,7 @@
 /*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 16:07:44 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/05 16:04:52 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_env	*parse_env(char **env_t)
 void	ft_export(t_env	**env, char **params)
 {
 	int	i;
+	int	ret;
 
 	i = 1;
 	if (params[i] == NULL)
@@ -38,22 +39,61 @@ void	ft_export(t_env	**env, char **params)
 	{
 		while (params[i])
 		{
-			export_variable(env, params[i]);
+			ret = export_variable(env, params[i]);
 			check_rm_double(env);
 			i++;
 		}
 	}
-	g_estatus = 0;
 }
 
-void	export_variable(t_env **env, char *new_v)
+int	simul_export_variable(t_env **env, char *new_v)
+{
+	if (check_valid_variable(new_v) == 0)
+		return (0);
+	else if (check_valid_variable(new_v) == 2)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	simul_ft_export(t_env **env, char **params)
+{
+	int	i;
+	int	ret;
+	int	final;
+
+	i = 1;
+	ret = 0;
+	if (params[i] == NULL)
+		return (0);
+	else
+	{
+		while (params[i])
+		{
+			ret = simul_export_variable(env, params[i]);
+			if (ret)
+				return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+int	export_variable(t_env **env, char *new_v)
 {
 	char	*name;
 	char	*value;
 
-	if (!check_valid_variable(new_v))
-		return ;
+	if (check_valid_variable(new_v) == 0)
+		return (0);
+	else if (check_valid_variable(new_v) == 2)
+	{
+		printf("export: %s : not a valid identifier\n", new_v);
+		return (1);
+	}
 	name = get_name(new_v);
 	value = get_value(new_v);
 	env_add_back(env, env_new(name, value));
+	return (0);
 }
