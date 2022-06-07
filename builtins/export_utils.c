@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:57:12 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/07 19:35:28 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:45:27 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	del_one(t_env **lst, t_env *to_del);
 
 void	check_rm_double(t_env **env)
 {
@@ -38,14 +36,6 @@ void	check_rm_double(t_env **env)
 	}
 }
 
-int	char_is_digit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
 int	check_valid_variable(char *variable)
 {
 	int	i;
@@ -55,9 +45,11 @@ int	check_valid_variable(char *variable)
 		return (2);
 	while (variable[i])
 	{
-		i++;
+		if (!is_alpha_num(variable[i]) && variable[i] != '=')
+			return (2);
 		if (variable[i] == '=')
 			return (1);
+		i++;
 	}
 	return (0);
 }

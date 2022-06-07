@@ -42,6 +42,7 @@ SRC = src/main.c \
 	GNL/get_next_line_utils.c\
 	exec/lataille.c\
 	exec/decla.c\
+	builtins/file.c\
 
 NO_OF_FILES := $(words $(SRC)) 
 

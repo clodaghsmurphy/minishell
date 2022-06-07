@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/07 19:48:12 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:49:06 by shiloub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,11 @@ int				get_opt(char **args);
 void			echo(char **args);
 void			ft_exit(char **params, t_mshell *mini);
 void			free_mini_simul_cd(t_mshell *mini);
+int				is_alpha_num(char c);
+int				char_is_digit(char c);
+int				valid_param(char *param);
+int				simul_ft_unset(char **params);
+
 
 //**************************cmd_list_utils.c********************************
 
