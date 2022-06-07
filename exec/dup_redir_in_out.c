@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_redir_in_out.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 22:56:41 by shiloub           #+#    #+#             */
-/*   Updated: 2022/06/03 23:08:48 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:24:04 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	ft_dup(t_mshell *mini, t_command *current, int i)
 {
 	int	j;
-	int	out_fd;
-	int	in_fd;
 
 	j = 0;
 	if (cmd_lst_pos(mini->command, current) == 1 && \

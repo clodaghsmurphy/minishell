@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:34:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/04 18:05:46 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:54:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_serror(t_phrase **phrase, t_mshell *mshell)
 
 	i = 0;
 	temp = *phrase;
-	if (temp == NULL)
+	if (!temp)
 		return ;
 	while (temp->next != NULL)
 		temp = temp->next;
@@ -63,10 +63,10 @@ void	split_command(char *str, t_mshell *mshell)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		parse_delimiter(&mshell->word, mshell, str, &i);
+		parse_delimiter(mshell, str, &i);
 		if (parse_string(&mshell->word, mshell, str, &i) == 2)
 			continue ;
-		parse_delimiter(&mshell->word, mshell, str, &i);
+		parse_delimiter(mshell, str, &i);
 	}
 }
 
@@ -74,18 +74,15 @@ t_command	*create_command(t_mshell *mshell)
 {
 	t_phrase	*temp_phrase;
 	t_command	*command;
-	int			size;
-	int			i;
 
 	command = NULL;
 	command_lstadd_back(&command, command_lstnew(NULL));
 	temp_phrase = mshell->phrase;
-	parse_command_list(mshell, temp_phrase, &command);
+	parse_command_list(temp_phrase, &command);
 	return (command);
 }
 
-int	parse_command_list(t_mshell *mshell, \
-						t_phrase *temp_phrase, t_command **command)
+int	parse_command_list(t_phrase *temp_phrase, t_command **command)
 {
 	int			i;
 	int			size;

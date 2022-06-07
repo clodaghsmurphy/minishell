@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:33:36 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/05 16:02:43 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:48:12 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void			free_mshell(t_mshell *mshell, char *str);
 
 int				parse_command(char *str, t_mshell *mshell);
 t_command		*create_command(t_mshell *mshell);
-int				parse_command_list(t_mshell *mshell, t_phrase *temp_phrase, \
+int				parse_command_list(t_phrase *temp_phrase, \
 			t_command **command);
 int				is_delim(t_mshell *mshell, char *str, int *i);
 int				is_redir(char *str, int *i, t_mshell *mshell);
@@ -180,7 +180,7 @@ int				parse_dquote_string(int type, t_mshell *mshell, \
 
 /************PARSE_DQUOTES_BIS*******************/
 int				eq_in_dquote(t_mshell *mshell, char *str, int *i);
-int				check_dquote_error(t_mshell *mshell, char *str, int *i);
+int				check_dquote_error(char *str, int *i);
 int				check_dquote_in_env(int type, t_mshell *mshell, \
 				char *str, int *i);
 
@@ -189,12 +189,11 @@ void			split_command(char *str, t_mshell *mshell);
 char			*make_word(t_split **word, t_mshell *mshell);
 int				parse_string(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
-void			parse_delimiter(t_split **word, t_mshell *mshell, \
+void			parse_delimiter(t_mshell *mshell, \
 				char *str, int *i);
 void			parse_string_bis(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
-void			new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
-				char *str, int *i);
+void			new_word_afte_pipe(t_split **delimiter, t_mshell *mshell);
 int				check_redirs(t_mshell *mshell, char *str, int *i);
 int				is_redir2(char *str, int *i, t_mshell *mshell);
 int				check_redirs2(t_mshell *mshell, char *str, int *i);
@@ -244,7 +243,7 @@ int				split_lstsize(t_split *lst);
 void			phrase_lstadd_back(t_phrase **alst, t_phrase *new);
 void			print_split(t_split **split);
 char			*hdoc_expand(char *str, t_mshell *mshell);
-void			if_word_free_word(t_split **word, t_mshell *mshell);
+void			if_word_free_word(t_split **word);
 /***********WORD_UTILS*******************/
 void			print_phrase(t_phrase **phrase);
 void			ft_wordclear(t_split **lst);
@@ -278,8 +277,8 @@ void			parse_string_bis2(t_split **word, t_mshell *mshell, \
 				char *str, int *i);
 int				quote_delim(int type, t_mshell *mshell, char *str, int *i);
 int				quote_delim2(int type, t_mshell *mshell, char *str, int *i);
-int				quote_delim3(int type, t_mshell *mshell, char *str, int *i);
-void			if_word(t_split **word, t_mshell *mshell, char *str, int *i);
+int				quote_delim3(t_mshell *mshell, char *str, int *i);
+void			if_word(t_split **word, t_mshell *mshell);
 char			*hdoc_expand2(char *str, char *s1, t_mshell *mshell);
 
 /************BUILTINS*****************/
@@ -288,6 +287,7 @@ char			*get_value(char *line);
 char			*get_name(char *line);
 int				export_variable(t_env **env, char *new_v);
 void			ft_export(t_env **env, char **params);
+int				simul_ft_export(t_env	**env, char **params);
 int				check_valid_variable(char *variable);
 void			check_rm_double(t_env **env);
 void			ft_unset(t_env **env, char **params);
@@ -318,6 +318,8 @@ void			dup_redir_in_out(t_command *current, t_mshell *mini);
 void			error(char *str, t_mshell *mini, int erreur);
 void			exe_child_daron(t_mshell *mini, t_command *cur, int i, int pid);
 void			execute(t_mshell *mini, t_command *current, int i);
+void			end_fonction(t_mshell *mini);
+int				exit_if_pas_de_commande(t_mshell *mini);
 
 //**************************exec_utils2.c********************************
 
@@ -398,8 +400,5 @@ int				decla(int *i, int *j, int *found, char **command);
 int				decla_v2(int *i, int *j, int *found, char **command);
 void			init_things_to_save_two_little_lines_for_norme(int *i, \
 												int *j, int *found);
-void			end_fonction(t_mshell *mini);
-int				exit_if_pas_de_commande(t_mshell *mini);
-int				simul_ft_export(t_env	**env, char **params);
 
 #endif

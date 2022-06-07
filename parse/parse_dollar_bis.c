@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:46:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 17:33:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:19:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	dollar_only(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	char	*new_word;
 
+	(void)word;
 	if ((str[*i] == '$' && is_delim_dollar(str, (*i) + 1) == 0))
 	{
 		new_word = ft_strdup("$");
@@ -62,7 +63,6 @@ int	dollar_only(t_split **word, t_mshell *mshell, char *str, int *i)
 int	parse_dollar_string(int *j, t_mshell *mshell, char *str, int *i)
 {
 	int	type;
-	int	q_delim;
 
 	type = define_quote_type(str, i);
 	mshell->j = *j;

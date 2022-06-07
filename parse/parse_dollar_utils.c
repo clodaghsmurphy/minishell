@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:34:17 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 13:23:56 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:19:57 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	parse_dollar_dquotes(int type, t_mshell *mshell, char *str, int *i)
 {
-	char	*res;
-
 	mshell->j = *i;
 	(*i)++;
 	if (dquotes_only(type, mshell, str, i) == 1)

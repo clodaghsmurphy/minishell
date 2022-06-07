@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dquotes_bis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:05:08 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 23:58:54 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:12:12 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	eq_in_dquote(t_mshell *mshell, char *str, int *i)
 	return (0);
 }
 
-int	check_dquote_error(t_mshell *mshell, char *str, int *i)
+int	check_dquote_error(char *str, int *i)
 {
 	if (str[*i] == '\0')
 	{

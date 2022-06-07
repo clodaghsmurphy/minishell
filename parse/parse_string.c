@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:22:21 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 13:04:33 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:14:15 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ int	is_delim(t_mshell *mshell, char *str, int *i)
 	return (1);
 }
 
-void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
+void	parse_delimiter(t_mshell *mshell, char *str, int *i)
 {
 	t_split	*delimiter;
 	int		flag;
-	char	*new_word;
 
 	flag = 0;
 	delimiter = NULL;
@@ -100,5 +99,5 @@ void	parse_delimiter(t_split **word, t_mshell *mshell, char *str, int *i)
 	else if (is_redir(str, i, mshell) == 1 || is_redir(str, i, mshell) == 2)
 		flag = parse_redir(&delimiter, mshell, str, i);
 	if (flag == 1)
-		new_word_afte_pipe(&delimiter, mshell, str, i);
+		new_word_afte_pipe(&delimiter, mshell);
 }

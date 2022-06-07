@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_delim.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:40:16 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/03 23:59:35 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:16:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int	quote_delim2(int type, t_mshell *mshell, char *str, int *i)
 		return (0);
 	if (str[*i + 1] != '\0')
 	{
-		if (quote_delim3(type, mshell, str, i) == 1)
+		if (quote_delim3(mshell, str, i) == 1)
 			return (1);
 	}
 	return (0);
 }
 
-int	quote_delim3(int type, t_mshell *mshell, char *str, int *i)
+int	quote_delim3(t_mshell *mshell, char *str, int *i)
 {
 	if (str[*i] == '>' && str[*i + 1] == '>')
 	{
@@ -86,7 +86,7 @@ int	quote_delim3(int type, t_mshell *mshell, char *str, int *i)
 	return (0);
 }
 
-void	if_word(t_split **word, t_mshell *mshell, char *str, int *i)
+void	if_word(t_split **word, t_mshell *mshell)
 {
 	char	*new_word;
 

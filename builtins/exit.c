@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:00:11 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/02 18:28:31 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 13:18:10 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int	simul_ft_exit(char **params, t_mshell *mini)
 {
 	int	code;
 
+	(void)mini;
 	code = 0;
 	if (params[1])
 	{
 		if (params[2])
 			return (1);
 		code = ft_atoi(params[1]);
-		if (!ft_str_is_only_digit(params[1]))
+		if (!ft_str_is_only_digit(params[1]) || ft_strlen(params[1]) >= 20)
 			code = 2;
 	}
 	return (code % 256);

@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:20:52 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/04 11:43:15 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:08:13 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	sig_handler(int signum, siginfo_t *info, void *context)
 {
+	(void)info;
+	(void)context;
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);

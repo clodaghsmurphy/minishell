@@ -6,14 +6,13 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:28 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/05/30 13:31:02 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 14:00:21 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-void	new_word_afte_pipe(t_split **delimiter, t_mshell *mshell, \
-		char *str, int *i)
+void	new_word_afte_pipe(t_split **delimiter, t_mshell *mshell)
 {
 	char	*new_word;
 
@@ -31,13 +30,17 @@ int	is_redir(char *str, int *i, t_mshell *mshell)
 	if (ft_strncmp(str + *i, ">>", 2) == 0)
 	{
 		mshell->hdoc_flag = 0;
-		if (str[*i + 1] == '<')
+		if (str[*i + 2] == '<')
+			syntax_error(mshell);
+		if (str[*i + 2] == '>')
 			syntax_error(mshell);
 		return (2);
 	}
 	if (ft_strncmp(str + *i, "<<", 2) == 0)
 	{
-		if (str[*i + 1] == '>')
+		if (str[*i + 2] == '>')
+			syntax_error(mshell);
+		if (str[*i + 2] == '<')
 			syntax_error(mshell);
 		mshell->hdoc_flag = 1;
 		return (2);

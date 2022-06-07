@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:03:31 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/06/04 11:30:22 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:17:41 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	parse_quotes(t_split **word, t_mshell *mshell, char *str, int *i)
 {
 	int		type;
 
-	if_word(word, mshell, str, i);
+	if_word(word, mshell);
 	type = str[*i];
 	(*i)++;
 	if (empty_quote(type, mshell, str, i) == 1)
@@ -55,6 +55,7 @@ int	empty_quote(int type, t_mshell *mshell, char *str, int *i)
 
 int	quote_error(t_split **word, t_mshell *mshell, char *str, int *i)
 {
+	(void)mshell;
 	if (str[*i] == '\0')
 	{
 		printf("quote error\n");

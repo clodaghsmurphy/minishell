@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:41:42 by amontant          #+#    #+#             */
-/*   Updated: 2022/06/05 16:04:52 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:42:20 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_export(t_env	**env, char **params)
 
 int	simul_export_variable(t_env **env, char *new_v)
 {
+	(void)env;
 	if (check_valid_variable(new_v) == 0)
 		return (0);
 	else if (check_valid_variable(new_v) == 2)
@@ -61,7 +62,6 @@ int	simul_ft_export(t_env **env, char **params)
 {
 	int	i;
 	int	ret;
-	int	final;
 
 	i = 1;
 	ret = 0;

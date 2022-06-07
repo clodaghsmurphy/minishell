@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shiloub <shiloub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 20:19:35 by amontant          #+#    #+#             */
-/*   Updated: 2022/05/27 17:42:35 by shiloub          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:21:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	**create_paths(t_env *env)
 {
-	int		i;
 	char	**paths;
 	t_env	*current;
 

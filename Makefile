@@ -45,7 +45,7 @@ SRC = src/main.c \
 
 NO_OF_FILES := $(words $(SRC)) 
 
-CFLAGS = # -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 CC = clang
 
 NAME = minishell
